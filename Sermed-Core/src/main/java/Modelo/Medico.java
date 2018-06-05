@@ -14,4 +14,12 @@ public class Medico {
         this.matricula = matricula;
         this.telefono = telefono;
     }
+
+    public int getIdMedico() {
+        return idMedico;
+    }
+
+    public Integer getMatricula() {
+        return matricula;
+    }
 }

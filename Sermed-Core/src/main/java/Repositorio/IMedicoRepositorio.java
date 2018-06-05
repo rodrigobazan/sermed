@@ -6,5 +6,7 @@ public interface IMedicoRepositorio {
 
     boolean persist(Medico unMedico);
 
-    Medico find(Medico medico);
+    Medico findById(Integer id);
+
+    Medico findByMatricula(Integer matricula);
 }

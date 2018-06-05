@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 
 public class CrearMedicoUnitTest {
 
+
+
     @Test
     public void crearMedico_MedicoNoExiste_GuardarMedico(){
         //arrange
         FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
-        repositorioMedico.respuesta=true;
+        repositorioMedico.respuestaPersist =true;
         CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
-        Medico medico = new Medico(1,"Torres","German",190202,"674678");
+        Medico medico = crearUnMedico();
 
         //Act
         boolean resultado = crearMedicoUseCase.crearMedico(medico);
@@ -27,8 +29,8 @@ public class CrearMedicoUnitTest {
     public void crearMedico_MedicoSiExiste_NoGuardaMedico(){
         //arrange
         FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
-        repositorioMedico.MedicoFind=new Medico(1,"Torres","German",190202,"674678");
-        repositorioMedico.respuesta=false;
+        repositorioMedico.MedicoFindById =crearUnMedico();
+        repositorioMedico.respuestaPersist =false;
 
         CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
         Medico medico = new Medico(1,"Torres","German",190202,"674678");
@@ -40,19 +42,81 @@ public class CrearMedicoUnitTest {
         Assertions.assertEquals(false,resultado);
     }
 
+    @Test
+    public void crearMedico_MatriculaSiExiste_NoGuardaMedico(){
+        //arrange
+        FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
+        repositorioMedico.MedicoFindByMatricula =crearUnMedico();
+        repositorioMedico.respuestaPersist =false;
+
+        CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
+        Medico medico = new Medico(45,"Torres","German",190202,"674678");
+
+        //Act
+        boolean resultado = crearMedicoUseCase.crearMedico(medico);
+
+        //Assert
+        Assertions.assertEquals(false,resultado);
+    }
+
+    @Test void validarMedicoExiste_MedicoExisteID_ReturnTrue(){
+        FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
+        repositorioMedico.MedicoFindById =crearUnMedico();
+        repositorioMedico.MedicoFindByMatricula =null;
+        CrearMedicoUseCase crearMedicoUseCase=new CrearMedicoUseCase(repositorioMedico);
+
+        boolean respuestaValidar=crearMedicoUseCase.validarMedicoExiste(crearUnMedico());
+
+        Assertions.assertEquals(true,respuestaValidar);
+    }
+
+    @Test void validarMedicoExiste_MedicoExisteMatricula_ReturnTrue(){
+        FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
+        repositorioMedico.MedicoFindById =null;
+        repositorioMedico.MedicoFindByMatricula =crearUnMedico();
+        CrearMedicoUseCase crearMedicoUseCase=new CrearMedicoUseCase(repositorioMedico);
+
+        boolean respuestaValidar=crearMedicoUseCase.validarMedicoExiste(crearUnMedico());
+
+        Assertions.assertEquals(true,respuestaValidar);
+    }
+
+    @Test void validarMedicoExiste_MedicoNoExiste_ReturnFalse(){
+        FakeMedicoRepositorio repositorioMedico=new FakeMedicoRepositorio();
+        repositorioMedico.MedicoFindById =null;
+        repositorioMedico.MedicoFindByMatricula =null;
+        CrearMedicoUseCase crearMedicoUseCase=new CrearMedicoUseCase(repositorioMedico);
+
+        boolean respuestaValidar=crearMedicoUseCase.validarMedicoExiste(crearUnMedico());
+
+        Assertions.assertEquals(false,respuestaValidar);
+    }
+
+
+    //Factories
+    protected Medico crearUnMedico(){
+        return new Medico(1,"Torres","German",190202,"674678");
+    }
+
+
 }
 
 
 class FakeMedicoRepositorio implements IMedicoRepositorio{
 
-    boolean respuesta;
-    Medico MedicoFind;
+    boolean respuestaPersist;
+    Medico MedicoFindById;
+    Medico MedicoFindByMatricula;
 
     public boolean persist(Medico unMedico) {
-        return respuesta;
+        return respuestaPersist;
     }
 
-    public Medico find(Medico medico) {
-        return MedicoFind;
+    public Medico findById(Integer id) {
+        return MedicoFindById;
+    }
+
+    public  Medico findByMatricula(Integer matricula){
+        return MedicoFindByMatricula;
     }
 }

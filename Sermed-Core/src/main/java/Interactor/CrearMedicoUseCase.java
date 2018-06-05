@@ -13,10 +13,19 @@ public class CrearMedicoUseCase {
     }
 
     public boolean crearMedico(Medico medico) {
-        Medico elMedico=repositorioMedico.find(medico);
-        if(null == elMedico) {
+        if(!validarMedicoExiste(medico)) {
             return repositorioMedico.persist(medico);
         }
         return false;
+    }
+
+    public boolean validarMedicoExiste(Medico medico) {
+        if(repositorioMedico.findById(medico.getIdMedico()) != null){
+            return  true;
+        }
+        if(repositorioMedico.findByMatricula(medico.getMatricula())!=null){
+            return  true;
+        }
+        return  false;
     }
 }
