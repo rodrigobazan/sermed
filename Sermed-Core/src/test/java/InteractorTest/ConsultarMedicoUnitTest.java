@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 
 public class ConsultarMedicoUnitTest {
 
@@ -55,7 +56,7 @@ public class ConsultarMedicoUnitTest {
         assertEquals(repositorioMedico.arrayMedicosDevuelto, medicos);
     }
 
-    @Test void consultarMedicosPorApellido_CriterioCandenaConDatos_DevolverAlgunos(){
+    @Test void consultarMedicosPorApellido_CriterioCadenaConDatos_DevolverAlgunos(){
         FakeMedicoRepositorio repositorioMedico = new FakeMedicoRepositorio();
         repositorioMedico.arrayMedicoFiltro=crearMedicoFiltroArray();
 
@@ -64,6 +65,35 @@ public class ConsultarMedicoUnitTest {
         List<Medico> medicos = consultarMedicoUseCase.consultarMedicosPorApellido("ve");
 
         assertThat(medicos, hasSize(1));
+
+    }
+    @Test
+    void consultarMedicoMatricula_MatriculaExiste_RetornaMedico()
+    {
+        FakeMedicoRepositorio repositorioMedico = new FakeMedicoRepositorio();
+        repositorioMedico.arrayMedicoOrigen=crearMedicosArray();
+        repositorioMedico.matriculaExiste=true;
+
+        ConsultarMedicoUseCase consultarMedicoUseCase=new ConsultarMedicoUseCase(repositorioMedico);
+
+        Medico medicoBuscado=consultarMedicoUseCase.consultarMedicoPorMatricula(190252);
+
+        assertEquals(2,medicoBuscado.getIdMedico());
+
+    }
+
+    @Test
+    void consultarMedicoMatricula_MatriculaNoExiste_RetornaMedicoVacio()
+    {
+        FakeMedicoRepositorio repositorioMedico = new FakeMedicoRepositorio();
+        repositorioMedico.arrayMedicoOrigen=crearMedicosArray();
+        repositorioMedico.matriculaExiste=false;
+
+        ConsultarMedicoUseCase consultarMedicoUseCase=new ConsultarMedicoUseCase(repositorioMedico);
+
+        Medico medicoBuscado=consultarMedicoUseCase.consultarMedicoPorMatricula(190123);
+
+        assertEquals(0,medicoBuscado.getIdMedico());
 
     }
 
@@ -86,6 +116,7 @@ public class ConsultarMedicoUnitTest {
         List<Medico> arrayMedicosDevuelto;
         List<Medico> arrayMedicoFiltro;
         List<Medico> arrayMedicoOrigen;
+        boolean matriculaExiste;
 
 
         public boolean persist(Medico unMedico) {
@@ -96,8 +127,14 @@ public class ConsultarMedicoUnitTest {
             return null;
         }
 
-        public Medico findByMatricula(Integer matricula) {
-            return null;
+        public Medico findByMatricula(final Integer matricula) {
+            if(matriculaExiste){
+                return arrayMedicoOrigen.get(1);
+            }
+            else{
+                return new Medico(0,"","",0,"");
+            }
+
         }
 
         public List<Medico> findAll() {

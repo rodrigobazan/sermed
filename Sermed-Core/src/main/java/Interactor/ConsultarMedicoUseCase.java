@@ -20,4 +20,8 @@ public class ConsultarMedicoUseCase {
     public List<Medico> consultarMedicosPorApellido(String apellido) {
         return this.repositorioMedico.findByApellido(apellido);
     }
+
+    public Medico consultarMedicoPorMatricula(int matricula) {
+        return this.repositorioMedico.findByMatricula(matricula);
+    }
 }
