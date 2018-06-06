@@ -128,6 +128,11 @@ public class CrearMedicoUnitTest {
             return null;
         }
 
+        @Override
+        public boolean update(Medico medico) {
+            return false;
+        }
+
 
     }
 }

@@ -15,4 +15,6 @@ public interface IMedicoRepositorio {
     List<Medico> findAll();
 
     List<Medico> findByApellido(String apellido);
+
+    boolean update(Medico medico);
 }

@@ -146,5 +146,10 @@ public class ConsultarMedicoUnitTest {
                 return arrayMedicosDevuelto;
             return arrayMedicoFiltro;
         }
+
+        @Override
+        public boolean update(Medico medico) {
+            return false;
+        }
     }
 }

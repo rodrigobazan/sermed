@@ -19,11 +19,23 @@ public class Medico {
         return idMedico;
     }
 
-    public Integer getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 
     public String mostrarMedico() {
         return this.apellido+", "+this.nombre+". Matricula "+this.matricula+". Tel. "+this.telefono;
+    }
+
+    public void modificarDatos(Medico nuevo) throws Exception{
+        if(nuevo.apellido==null || nuevo.nombre==null || nuevo.telefono==null){
+            throw new Exception();
+        }
+            this.apellido = nuevo.apellido;
+            this.nombre = nuevo.nombre;
+            this.telefono = nuevo.telefono;
+            this.matricula = nuevo.matricula;
+
+
     }
 }
