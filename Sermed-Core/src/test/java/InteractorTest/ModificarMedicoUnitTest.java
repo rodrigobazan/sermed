@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +23,7 @@ public class ModificarMedicoUnitTest {
         ModificarMedicoUseCase modificarMedicoUseCase = new ModificarMedicoUseCase(repositorioMedico);
 
         when(repositorioMedico.findById(1)).thenReturn(new Medico(1,"Vega", "Romina", 190106, "4813148"));
-        when(repositorioMedico.findByMatricula(190106)).thenReturn(null);
+        when(repositorioMedico.findByMatricula(123)).thenReturn(null);
         when(repositorioMedico.update(any(Medico.class))).thenReturn(true);
 
 

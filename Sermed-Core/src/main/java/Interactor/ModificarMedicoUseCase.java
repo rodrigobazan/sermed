@@ -14,25 +14,16 @@ public class ModificarMedicoUseCase {
 
     public boolean modificarMedico(Medico nuevosDatos) {
         try {
-            Medico elMedicoOriginal=repositorioMedico.findById(nuevosDatos.getIdMedico());
-
-            if(elMedicoOriginal.getMatricula() == nuevosDatos.getMatricula()){
+            Medico elMedicoOriginal = repositorioMedico.findById(nuevosDatos.getIdMedico());
+            if (elMedicoOriginal.getMatricula() == nuevosDatos.getMatricula() || repositorioMedico.findByMatricula(nuevosDatos.getMatricula()) == null) {
                 elMedicoOriginal.modificarDatos(nuevosDatos);
                 return this.repositorioMedico.update(elMedicoOriginal);
-            }else{
-                if(repositorioMedico.findByMatricula(nuevosDatos.getMatricula()) == null){
-                    elMedicoOriginal.modificarDatos(nuevosDatos);
-                    return this.repositorioMedico.update(elMedicoOriginal);
-                }else{
-                    return false;
-                }
-            }
-        }catch (Exception e){
+            } else
+                return false;
+        } catch (Exception e) {
             return false;
         }
     }
-
-
 
 
 }
