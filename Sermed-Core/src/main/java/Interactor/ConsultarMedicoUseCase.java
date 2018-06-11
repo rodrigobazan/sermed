@@ -2,8 +2,6 @@ package Interactor;
 
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConsultarMedicoUseCase {

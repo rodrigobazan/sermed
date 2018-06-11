@@ -4,20 +4,17 @@ import Interactor.ConsultarMedicoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
-import javafx.beans.binding.When;
 import org.hamcrest.collection.IsEmptyCollection;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 
 import java.util.ArrayList;

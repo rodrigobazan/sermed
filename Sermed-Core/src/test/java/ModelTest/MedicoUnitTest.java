@@ -4,8 +4,6 @@ import Modelo.Medico;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Executable;
-
 public class MedicoUnitTest {
 
     @Test
