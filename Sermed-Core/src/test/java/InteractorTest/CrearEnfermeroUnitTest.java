@@ -24,6 +24,8 @@ public class CrearEnfermeroUnitTest {
     public void crearEnfermero_EnfermeroNoExiste_GuardarEnfermero() {
         Enfermero Enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
         CrearEnfermeroUseCase crearEnfermeroUseCase = new CrearEnfermeroUseCase(repositorioEnfermero);
+        when(repositorioEnfermero.findByMatricula(12015)).thenReturn(null);
+        when(repositorioEnfermero.findById(1)).thenReturn(null);
         when(repositorioEnfermero.persist(any(Enfermero.class))).thenReturn(true);
 
         boolean resultado = crearEnfermeroUseCase.crearEnfermero(Enfermero);

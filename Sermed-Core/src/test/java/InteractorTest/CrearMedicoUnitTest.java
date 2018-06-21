@@ -23,6 +23,8 @@ public class CrearMedicoUnitTest {
     public void crearMedico_MedicoNoExiste_GuardarMedico() {
         Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
         CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
+        when(repositorioMedico.findByMatricula(12015)).thenReturn(null);
+        when(repositorioMedico.findById(1)).thenReturn(null);
         when(repositorioMedico.persist(any(Medico.class))).thenReturn(true);
 
         boolean resultado = crearMedicoUseCase.crearMedico(medico);
