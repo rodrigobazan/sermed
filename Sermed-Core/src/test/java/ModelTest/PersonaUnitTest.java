@@ -6,18 +6,10 @@ import Modelo.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-
 import java.time.LocalDate;
-import java.util.Collection;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonaUnitTest {
-
-    @Mock
-    Persona laPersona;
 
     @Test
     void instanciarPersona_atributosObligatorios_personaInstanciada() throws PersonaIncompletaException {
@@ -30,7 +22,7 @@ public class PersonaUnitTest {
     }
 
     @Test
-    void instanciaPersona_sinAtributosObligatorios_PersonaIncompletaException() throws PersonaIncompletaException {
+    void instanciaPersona_sinAtributosObligatorios_personaIncompletaException() {
 
         Assertions.assertThrows(PersonaIncompletaException.class, () -> Persona.instancia(null, "Ruitti", "Javiel", LocalDate.of(1984,1,31),null,new TipoDocumento(1, "DNI"),
                 "30672405",null,null, null, "190000-01",null));
