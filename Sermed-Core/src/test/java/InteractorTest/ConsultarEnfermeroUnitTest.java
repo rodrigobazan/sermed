@@ -88,7 +88,7 @@ public class ConsultarEnfermeroUnitTest {
         ConsultarEnfermeroUseCase consultarEnfermeroUseCase=new ConsultarEnfermeroUseCase(repositorioEnfermero);
         Enfermero EnfermeroBuscado=consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190252);
 
-        assertEquals(2,EnfermeroBuscado.getIdEnfermero());
+        assertEquals(2,EnfermeroBuscado.getIdEnfermero().intValue());
         verify(repositorioEnfermero).findByMatricula(190252);
 
     }
@@ -102,7 +102,7 @@ public class ConsultarEnfermeroUnitTest {
 
         Enfermero EnfermeroBuscado=consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190123);
 
-        assertEquals(0,EnfermeroBuscado.getIdEnfermero());
+        assertEquals(0,EnfermeroBuscado.getIdEnfermero().intValue());
         verify(repositorioEnfermero).findByMatricula(190123);
 
     }

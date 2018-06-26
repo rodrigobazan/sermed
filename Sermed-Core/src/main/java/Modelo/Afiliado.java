@@ -40,5 +40,16 @@ public class Afiliado {
 
     }
 
+    public String getNumeroAfiliado() {
+        return this.numeroAfiliado;
+    }
+
+    public Persona getTitular() {
+        return this.titular;
+    }
+
+    public String mostrarAfiliado(){
+        return this.numeroAfiliado +". Titular: "+ this.titular.mostrarTitular();
+    }
 
 }

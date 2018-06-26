@@ -16,6 +16,20 @@ import java.util.List;
 public class AfiliadoUnitTest {
 
     @Test
+    void mostrarAfiliado_AfiliadoCompleto_MuestraFormateado(){
+        try {
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+            String mostrarAfiliado = unAfiliado.mostrarAfiliado();
+            Assertions.assertEquals("190000. Titular: Ruitti, Javiel (190000-00).", mostrarAfiliado);
+
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     void instanciaAfiliado_personaNoNula_afiliadoInstanciado() {
         try {
             Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);

@@ -35,7 +35,7 @@ public class ModificarEnfermeroUnitTest {
         verify(repositorioEnfermero).update(EnfermeroAModificar);
         Assertions.assertTrue(resultado);
         Assertions.assertEquals(nuevosDatos.mostrarEnfermero(),EnfermeroAModificar.mostrarEnfermero());
-        Assertions.assertEquals(1,EnfermeroAModificar.getIdEnfermero());
+        Assertions.assertEquals(1,EnfermeroAModificar.getIdEnfermero().intValue());
 
     }
 

@@ -53,6 +53,26 @@ public class CrearAfiliadoUnitTest {
     }
 
 
+    @Test
+    public void crearAfiliado_TitularConDistintoNumero_NoGuardaAfiliado(){
+        try {
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190002", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+            when(repositorioAfiliado.findById(1)).thenReturn(null);
+            when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
+            CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
+            boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
+            Assertions.assertNotEquals(afiliado.getNumeroAfiliado(),afiliado.getTitular().getNumeroAfiliado().split("-")[0]);
+            Assertions.assertEquals(false, resultado);
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
     public Persona factoryPersonaTitular() {
         try {
             return Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984,1,31),"25 de mayo",new TipoDocumento(1, "DNI"),

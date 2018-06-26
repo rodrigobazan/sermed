@@ -24,7 +24,7 @@ public class EnfermeroUnitTest {
         EnfermeroOriginal.modificarDatos(nuevosDatos);
 
         Assertions.assertEquals(EnfermeroOriginal.mostrarEnfermero(), nuevosDatos.mostrarEnfermero());
-        Assertions.assertEquals(1, EnfermeroOriginal.getIdEnfermero());
+        Assertions.assertEquals(1, EnfermeroOriginal.getIdEnfermero().intValue());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class EnfermeroUnitTest {
         Enfermero nuevosDatos = new Enfermero(6, null, null, 123, "123123");
 
         Assertions.assertThrows(Exception.class,()->EnfermeroOriginal.modificarDatos(nuevosDatos));
-        Assertions.assertEquals(1, EnfermeroOriginal.getIdEnfermero());
+        Assertions.assertEquals(1, EnfermeroOriginal.getIdEnfermero().intValue());
     }
 
 

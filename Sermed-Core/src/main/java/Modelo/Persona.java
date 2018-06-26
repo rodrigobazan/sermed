@@ -66,4 +66,12 @@ public class Persona {
     public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }
+
+    public String getNumeroAfiliado() {
+        return this.nroAfiliado;
+    }
+
+    public String mostrarTitular() {
+        return this.apellidos +", "+this.nombres+" ("+this.nroAfiliado+").";
+    }
 }

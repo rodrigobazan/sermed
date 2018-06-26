@@ -1,13 +1,13 @@
 package Modelo;
 
 public class Enfermero {
-    private int idEnfermero;
+    private Integer idEnfermero;
     private String apellido;
     private String nombre;
-    private int matricula;
+    private Integer matricula;
     private String telefono;
 
-    public Enfermero(int idEnfermero, String apellido, String nombre, int matricula, String telefono) {
+    public Enfermero(Integer idEnfermero, String apellido, String nombre, Integer matricula, String telefono) {
         this.idEnfermero = idEnfermero;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -15,11 +15,11 @@ public class Enfermero {
         this.telefono = telefono;
     }
 
-    public int getIdEnfermero() {
+    public Integer getIdEnfermero() {
         return idEnfermero;
     }
 
-    public int getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
 
