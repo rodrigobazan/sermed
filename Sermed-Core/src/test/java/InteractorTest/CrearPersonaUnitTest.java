@@ -1,5 +1,6 @@
 package InteractorTest;
 
+import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
 import Interactor.CrearPersonaUseCase;
 import Mockito.MockitoExtension;
@@ -28,80 +29,95 @@ public class CrearPersonaUnitTest {
 
     @Test
     public void crearPersona_PersonaNoExiste_GuardarPersona() throws PersonaIncompletaException {
-        Persona persona = Persona.instancia(1,"Torres","German Federico Nicolas", LocalDate.of(1982,9,12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1,"B","RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+        try {
+            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
 
-        when(repositorioPersona.findById(1)).thenReturn(null);
-        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001","DNI")).thenReturn(null);
-        when(repositorioPersona.persist(any(Persona.class))).thenReturn(true);
-        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
+            when(repositorioPersona.findById(1)).thenReturn(null);
+            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(null);
+            when(repositorioPersona.persist(any(Persona.class))).thenReturn(true);
+            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
 
-        boolean resultado = crearPersonaUseCase.crearPersona(persona);
+            boolean resultado = crearPersonaUseCase.crearPersona(persona);
 
-        Assertions.assertEquals(true, resultado);
-        verify(repositorioPersona).persist(any(Persona.class));
-
+            Assertions.assertEquals(true, resultado);
+            verify(repositorioPersona).persist(any(Persona.class));
+        } catch (PersonaIncompletaException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void crearPersona_PersonaExiste_NoGuardarPersona() throws PersonaIncompletaException {
-        Persona persona = Persona.instancia(1,"Torres","German Federico Nicolas", LocalDate.of(1982,9,12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1,"B","RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+    public void crearPersona_PersonaExiste_NoGuardarPersona() {
+        try {
+            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
 
-        when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
-        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001","DNI")).thenReturn(factoryPersona());
+            when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
+            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
 
-        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-        boolean resultado = crearPersonaUseCase.crearPersona(persona);
+            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
+            boolean resultado = crearPersonaUseCase.crearPersona(persona);
 
-        verify(repositorioPersona, never()).persist(persona);
-        Assertions.assertEquals(false, resultado);
+            verify(repositorioPersona, never()).persist(persona);
+            Assertions.assertEquals(false, resultado);
+        } catch (PersonaIncompletaException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Test
-    public void validarPersona_existePorIDyDocumento_true() throws PersonaIncompletaException {
+    public void validarPersona_existePorIDyDocumento_true() {
+        try {
+            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
 
-        Persona persona = Persona.instancia(1,"Torres","German Federico Nicolas", LocalDate.of(1982,9,12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1,"B","RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+            when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
+            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
 
-        when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
-        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001","DNI")).thenReturn(factoryPersona());
-
-        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-
-        try{
+            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
             Method privateMethod = CrearPersonaUseCase.class.getDeclaredMethod("validarPersonaExiste", Persona.class);
             privateMethod.setAccessible(true);
 
             boolean resultado = (boolean) privateMethod.invoke(crearPersonaUseCase, persona);
 
             Assertions.assertEquals(true, resultado);
-        }catch(Exception e){
-            System.out.println("error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
         }
     }
 
-    private Collection<AntecedenteMedico> factoryAntecedenteMedico(){
-        AntecedenteMedico dislexia = new AntecedenteMedico(1, new Afeccion(1,"Dislexia"), "Cronica");
-        AntecedenteMedico gonorrea = new AntecedenteMedico(2,new Afeccion(1,"gonorrea"), "Cronica Tambien");
-        AntecedenteMedico diabetes = new AntecedenteMedico(3,new Afeccion(1,"diabetes"), "nerviosa");
+    private Collection<AntecedenteMedico> factoryAntecedenteMedico() {
+        AntecedenteMedico dislexia = new AntecedenteMedico(1, new Afeccion(1, "Dislexia"), "Cronica");
+        AntecedenteMedico gonorrea = new AntecedenteMedico(2, new Afeccion(1, "gonorrea"), "Cronica Tambien");
+        AntecedenteMedico diabetes = new AntecedenteMedico(3, new Afeccion(1, "diabetes"), "nerviosa");
 
-        Collection<AntecedenteMedico> listaAntecedentes = Arrays.asList(dislexia,gonorrea,diabetes);
+        Collection<AntecedenteMedico> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
 
-        return  listaAntecedentes;
+        return listaAntecedentes;
     }
 
     private Persona factoryPersona() throws PersonaIncompletaException {
-        return Persona.instancia(1,"Torres","German Federico Nicolas", LocalDate.of(1982,9,12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1,"B","RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
-    }
+        try {
+            return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+            return null;
+        }
 
+    }
 
 
 }

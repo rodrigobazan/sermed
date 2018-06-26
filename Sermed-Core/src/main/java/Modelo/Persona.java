@@ -1,5 +1,6 @@
 package Modelo;
 
+import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
 
 import java.time.LocalDate;
@@ -38,11 +39,18 @@ public class Persona {
     }
 
     public static Persona instancia(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
-                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico) throws PersonaIncompletaException {
+                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
 
         if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || nroAfiliado==null || sangre==null){
             throw new PersonaIncompletaException();
         }
+
+        if(!nroAfiliado.contains("-"))
+            throw new NumeroAfiliadoIncorrectoException();
+
+        String[] array = nroAfiliado.split("-");
+        if(array[0].length() != 6 || array[1].length() != 2)
+            throw new NumeroAfiliadoIncorrectoException();
 
         return new Persona(idPersona,apellidos,nombres,fechaNacimiento,domicilio,tipoDocumento,documento,sangre,telefono,obraSocial,nroAfiliado,antecedentesMedico);
     }

@@ -1,23 +1,26 @@
 package Modelo;
 
-import Excepciones.AfiliadoSinPersonaException;
+import Excepciones.AfiliadoSinTitularException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class Afiliado {
     private Integer idAfiliado;
     private LocalDate fechaAfiliacion;
     private String numeroAfiliado;
-    private Persona persona;
+    private Collection<Persona> miembros;
+    private Persona titular;
     private boolean activo;
 
-    public Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona persona, boolean activo) {
+    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo) {
 
         this.idAfiliado = idAfiliado;
         this.fechaAfiliacion = fechaAfiliacion;
         this.numeroAfiliado = numeroAfiliado;
-        this.persona = persona;
+        this.miembros = miembros;
+        this.titular = titular;
         this.activo = activo;
     }
 
@@ -26,18 +29,14 @@ public class Afiliado {
     }
 
 
-    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona persona, boolean activo) throws AfiliadoSinPersonaException, NumeroAfiliadoIncorrectoException {
-        if (persona == null) {
-            throw new AfiliadoSinPersonaException();
+    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
+        if (titular == null) {
+            throw new AfiliadoSinTitularException();
         }
-        if(!numeroAfiliado.contains("-"))
+        if(numeroAfiliado.length() != 6)
             throw new NumeroAfiliadoIncorrectoException();
 
-        String[] array = numeroAfiliado.split("-");
-        if(array[0].length() != 6 || array[1].length() != 2)
-            throw new NumeroAfiliadoIncorrectoException();
-
-        return new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, persona, activo);
+        return new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, titular, miembros, activo);
 
     }
 
