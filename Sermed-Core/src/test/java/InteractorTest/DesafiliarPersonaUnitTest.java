@@ -48,6 +48,23 @@ public class DesafiliarPersonaUnitTest {
         Assertions.assertEquals("", persona.getNumeroAfiliado());
     }
 
+    @Test
+    public void desafiliarPersona_PersonaNoAfiliada_devuelveFalse() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PersonaIncompletaException, DniConPuntosException {
+        Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                "Sin Domicilio", new TipoDocumento(1, "DNI"), "1400005", new Sangre(1, "B", "RH+"), "3825672746",
+                new ObraSocial(1, "OSFATUN"), "000001", null, 0);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true);
+
+        DesafiliarPersonaUseCase desafiliarPersonaUseCase = new DesafiliarPersonaUseCase(repositorioAfiliado, repositorioPersona);
+
+        boolean resultado = desafiliarPersonaUseCase.desafiliarPersona(persona,afiliado);
+
+        Assertions.assertFalse(resultado);
+        Assertions.assertEquals(4, afiliado.getMiembros().size());
+
+    }
+
+
 
     private Persona factoryPersona() {
         try {
