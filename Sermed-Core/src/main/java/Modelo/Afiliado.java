@@ -2,13 +2,11 @@ package Modelo;
 
 import Excepciones.AfiliadoSinTitularException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
-import com.sun.deploy.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Afiliado {
     private Integer idAfiliado;
@@ -17,14 +15,16 @@ public class Afiliado {
     private Collection<Persona> miembros;
     private Persona titular;
     private boolean activo;
+    private LocalDate fechaDeBaja;
 
-    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo) {
+    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja) {
 
         this.idAfiliado = idAfiliado;
         this.fechaAfiliacion = fechaAfiliacion;
         this.numeroAfiliado = numeroAfiliado;
         this.miembros = miembros;
         this.activo = activo;
+        this.fechaDeBaja = fechaDeBaja;
     }
 
     public Integer getIdAfiliado() {
@@ -32,14 +32,14 @@ public class Afiliado {
     }
 
 
-    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
+    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
         if (titular == null) {
             throw new AfiliadoSinTitularException();
         }
         if(numeroAfiliado.length() != 6)
             throw new NumeroAfiliadoIncorrectoException();
 
-        Afiliado elNuevo=new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado,miembros, activo);
+        Afiliado elNuevo=new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado,miembros, activo, fechaDeBaja);
         elNuevo.asignarTitular(titular);
         return elNuevo;
 

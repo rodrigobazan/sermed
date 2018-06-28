@@ -28,7 +28,7 @@ public class CrearAfiliadoUnitTest {
 
     @Test
     public void crearAfiliado_AfiliadoNoExiste_GuardaAfiliado() throws NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
         when(repositorioAfiliado.findById(1)).thenReturn(null);
         when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
         CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
@@ -40,8 +40,8 @@ public class CrearAfiliadoUnitTest {
     @Test
     public void crearAfiliado_AfiliadoExiste_NoGuardaAfiliado(){
         try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(),factoryPersonaMiembros(), true);
-            when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(),factoryPersonaMiembros(), true));
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(),factoryPersonaMiembros(), true, null);
+            when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(),factoryPersonaMiembros(), true, null));
             when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
             CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
             boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
@@ -57,7 +57,7 @@ public class CrearAfiliadoUnitTest {
     @Test
     public void crearAfiliado_TitularConDistintoNumero_NoGuardaAfiliado(){
         try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190002", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190002", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
             when(repositorioAfiliado.findById(1)).thenReturn(null);
             when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
             CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);

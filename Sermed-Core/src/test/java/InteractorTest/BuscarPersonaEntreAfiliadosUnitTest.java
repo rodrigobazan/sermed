@@ -46,7 +46,7 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
 
     @Test
     public void buscarPersonaEntreAfiliados_PersonaSeEncuentra_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
-        when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
+        when(repositorioAfiliado.findAllActivos()).thenReturn(afiliadosList);
         Persona laPersona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001-00", null, 0);
@@ -88,8 +88,8 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
                     new ObraSocial(1, "OSFATUN"), "000002-02", null, 0));
 
 
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null));
             return afiliados;
 
         } catch (AfiliadoSinTitularException e) {

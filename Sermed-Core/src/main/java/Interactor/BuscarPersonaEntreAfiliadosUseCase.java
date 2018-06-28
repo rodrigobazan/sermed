@@ -1,6 +1,5 @@
 package Interactor;
 
-import Modelo.Afiliado;
 import Modelo.Persona;
 import Repositorio.IAfiliadoRepositorio;
 
@@ -12,6 +11,6 @@ public class BuscarPersonaEntreAfiliadosUseCase {
     }
 
     public boolean existePersona(Persona laPersona) {
-        return repositorioAfiliado.findAll().stream().anyMatch(a -> a.contienePersona(laPersona));
+        return repositorioAfiliado.findAllActivos().stream().anyMatch(a -> a.contienePersona(laPersona));
     }
 }
