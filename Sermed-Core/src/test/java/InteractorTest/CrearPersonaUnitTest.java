@@ -14,7 +14,6 @@ import sun.rmi.runtime.NewThreadAction;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -28,11 +27,11 @@ public class CrearPersonaUnitTest {
     IPersonaRepositorio repositorioPersona;
 
     @Test
-    public void crearPersona_PersonaNoExiste_GuardarPersona() throws PersonaIncompletaException {
+    public void crearPersona_PersonaNoExiste_GuardarPersona() {
         try {
             Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
 
             when(repositorioPersona.findById(1)).thenReturn(null);
             when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(null);
@@ -55,7 +54,7 @@ public class CrearPersonaUnitTest {
         try {
             Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
 
             when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
             when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
@@ -78,7 +77,7 @@ public class CrearPersonaUnitTest {
         try {
             Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
 
             when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
             when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
@@ -111,7 +110,7 @@ public class CrearPersonaUnitTest {
         try {
             return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001-00", factoryAntecedenteMedico());
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
             return null;
