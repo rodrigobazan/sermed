@@ -9,4 +9,6 @@ public interface IPersonaRepositorio {
     Persona findById(int idPersona);
 
     Persona findByDocumentoAndTipoDocumento(String documento, String tipoDocumento);
+
+    boolean update(Persona personaDatosNuevos);
 }

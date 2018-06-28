@@ -1,6 +1,7 @@
 package InteractorTest;
 
 import Excepciones.AfiliadoSinTitularException;
+import Excepciones.DniConPuntosException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
 import Interactor.CrearAfiliadoUseCase;
@@ -83,6 +84,9 @@ public class CrearAfiliadoUnitTest {
         }catch (NumeroAfiliadoIncorrectoException ex){
             ex.printStackTrace();
             return null;
+        } catch (DniConPuntosException e) {
+            e.printStackTrace();
+            return null;
         }
 
     }
@@ -108,6 +112,9 @@ public class CrearAfiliadoUnitTest {
             return new ArrayList<>();
         }catch (NumeroAfiliadoIncorrectoException ex){
             ex.printStackTrace();
+            return new ArrayList<>();
+        } catch (DniConPuntosException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }

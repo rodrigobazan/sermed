@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Afiliado {
     private Integer idAfiliado;
@@ -72,7 +73,19 @@ public class Afiliado {
         this.miembros.add(persona);
     }
 
+    public boolean quitarPersona(Persona persona) {
+        Persona personaAQuitar = this.getMiembros().stream().filter(m -> m.getDocumento().equals(persona.getDocumento())).findAny().orElse(null);
+        if(personaAQuitar != null){
+            this.getMiembros().remove(personaAQuitar);
+            return true;
+        }
+        return false;
+
+    }
+
     public List<Persona> getMiembros() {
         return (List<Persona>) this.miembros;
     }
+
+
 }

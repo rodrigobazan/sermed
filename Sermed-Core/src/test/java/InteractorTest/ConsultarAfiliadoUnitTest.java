@@ -1,9 +1,6 @@
 package InteractorTest;
 
-import Excepciones.AfiliadoNoExisteException;
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.ConsultarAfiliadoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
@@ -88,21 +85,12 @@ public class ConsultarAfiliadoUnitTest {
 
 
     @Test
-    public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() {
-        try {
-            when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true));
-            ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
-            Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorId(1);
-            Assertions.assertEquals(1, afiliado.getIdAfiliado().intValue());
-        } catch (AfiliadoSinTitularException e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-        } catch (AfiliadoNoExisteException e) {
-            e.printStackTrace();
-        }
+    public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoNoExisteException {
+        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true));
+        ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
+        Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorId(1);
+        Assertions.assertEquals(1, afiliado.getIdAfiliado().intValue());
+
     }
 
     @Test
@@ -125,30 +113,38 @@ public class ConsultarAfiliadoUnitTest {
             e.printStackTrace();
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
         } finally {
             return afiliados;
         }
 
     }
 
-    private List<Persona> factoryPersona() throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+    private List<Persona> factoryPersona() {
         List<Persona> personas = new ArrayList<>();
-        personas.add(Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0));
-        personas.add(Persona.instancia(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "34215324", new Sangre(1, "B", "RH-"), "3825532112",
-                new ObraSocial(1, "OSFATUN"), "000002", factoryAntecedenteMedico(),0));
-        personas.add(Persona.instancia(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "0", "RH+"), "3825423547",
-                new ObraSocial(1, "OSFATUN"), "000003", factoryAntecedenteMedico(),0));
-        personas.add(Persona.instancia(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "32123457", new Sangre(1, "A", "RH+"), "382584521",
-                new ObraSocial(1, "OSFATUN"), "000004", factoryAntecedenteMedico(),0));
-        return personas;
-
+        try {
+            personas.add(Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0));
+            personas.add(Persona.instancia(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "34215324", new Sangre(1, "B", "RH-"), "3825532112",
+                    new ObraSocial(1, "OSFATUN"), "000002", factoryAntecedenteMedico(), 0));
+            personas.add(Persona.instancia(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "0", "RH+"), "3825423547",
+                    new ObraSocial(1, "OSFATUN"), "000003", factoryAntecedenteMedico(), 0));
+            personas.add(Persona.instancia(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "32123457", new Sangre(1, "A", "RH+"), "382584521",
+                    new ObraSocial(1, "OSFATUN"), "000004", factoryAntecedenteMedico(), 0));
+            return personas;
+        } catch (PersonaIncompletaException e) {
+            e.printStackTrace();
+            return null;
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+            return null;
+        } catch (DniConPuntosException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private Collection<AntecedenteMedico> factoryAntecedenteMedico() {
@@ -170,8 +166,6 @@ public class ConsultarAfiliadoUnitTest {
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
         } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        } catch (PersonaIncompletaException e) {
             e.printStackTrace();
         } finally {
             return afiliados;

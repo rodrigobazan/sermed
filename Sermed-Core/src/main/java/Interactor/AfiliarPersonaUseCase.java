@@ -17,7 +17,7 @@ public class AfiliarPersonaUseCase {
             return false;
         }else {
             afiliado.agregarPersona(persona);
-            return true;
+            return repositorioAfiliado.update(afiliado);
         }
     }
 }

@@ -1,5 +1,6 @@
 package Modelo;
 
+import Excepciones.DniConPuntosException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
 import com.sun.deploy.util.StringUtils;
@@ -42,10 +43,13 @@ public class Persona {
     }
 
     public static Persona instancia(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
-                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException, DniConPuntosException {
 
-        if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || sangre==null){
+        if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || sangre==null || domicilio == null){
             throw new PersonaIncompletaException();
+        }
+        if(documento.contains(".")){
+            throw new DniConPuntosException();
         }
 
         return new Persona(idPersona,apellidos,nombres,fechaNacimiento,domicilio,tipoDocumento,documento,sangre,telefono,obraSocial,nroAfiliado,antecedentesMedico,nroOrden);
@@ -64,6 +68,9 @@ public class Persona {
     }
 
     public String getNumeroAfiliado() {
+        if(this.nroAfiliado == ""){
+            return this.nroAfiliado;
+        }
         return this.nroAfiliado + "-" + String.format("%02d", this.nroOrden);
     }
 
@@ -81,5 +88,24 @@ public class Persona {
 
     public void setNumeroAfiliado(String numeroAfiliado) {
         this.nroAfiliado=numeroAfiliado;
+    }
+
+    public void modificarDatos(Persona personaDatosNuevos) throws PersonaIncompletaException {
+        if(personaDatosNuevos.apellidos==null || personaDatosNuevos.nombres ==null || personaDatosNuevos.fechaNacimiento==null || personaDatosNuevos.domicilio == null
+                || personaDatosNuevos.tipoDocumento==null || personaDatosNuevos.documento==null || personaDatosNuevos.sangre==null){
+            throw new PersonaIncompletaException();
+        }
+        this.apellidos = personaDatosNuevos.apellidos;
+        this.nombres = personaDatosNuevos.nombres;
+        this.nroAfiliado = personaDatosNuevos.nroAfiliado;
+        this.antecedentesMedico = personaDatosNuevos.antecedentesMedico;
+        this.documento = personaDatosNuevos.documento;
+        this.domicilio = personaDatosNuevos.domicilio;
+        this.fechaNacimiento = personaDatosNuevos.fechaNacimiento;
+        this.obraSocial = personaDatosNuevos.obraSocial;
+        this.sangre= personaDatosNuevos.sangre;
+        this.telefono = personaDatosNuevos.telefono;
+        this.tipoDocumento = personaDatosNuevos.tipoDocumento;
+
     }
 }

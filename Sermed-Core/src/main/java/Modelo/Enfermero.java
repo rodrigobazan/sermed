@@ -1,5 +1,7 @@
 package Modelo;
 
+import Excepciones.EnfermeroIncompletoException;
+
 public class Enfermero {
     private Integer idEnfermero;
     private String apellido;
@@ -27,9 +29,9 @@ public class Enfermero {
         return this.apellido + ", " + this.nombre + ". Matricula " + this.matricula + ". Tel. " + this.telefono;
     }
 
-    public void modificarDatos(Enfermero nuevo) throws Exception {
+    public void modificarDatos(Enfermero nuevo) throws EnfermeroIncompletoException {
         if (nuevo.apellido == null || nuevo.nombre == null || nuevo.telefono == null) {
-            throw new Exception();
+            throw new EnfermeroIncompletoException();
         }
         this.apellido = nuevo.apellido;
         this.nombre = nuevo.nombre;

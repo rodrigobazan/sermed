@@ -1,5 +1,6 @@
 package InteractorTest;
 
+import Excepciones.DniConPuntosException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
 import Interactor.CrearPersonaUseCase;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import sun.rmi.runtime.NewThreadAction;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -27,73 +29,56 @@ public class CrearPersonaUnitTest {
     IPersonaRepositorio repositorioPersona;
 
     @Test
-    public void crearPersona_PersonaNoExiste_GuardarPersona() {
-        try {
-            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
+    public void crearPersona_PersonaNoExiste_GuardarPersona() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+        Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
 
-            when(repositorioPersona.findById(1)).thenReturn(null);
-            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(null);
-            when(repositorioPersona.persist(any(Persona.class))).thenReturn(true);
-            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
+        when(repositorioPersona.findById(1)).thenReturn(null);
+        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(null);
+        when(repositorioPersona.persist(any(Persona.class))).thenReturn(true);
+        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
 
-            boolean resultado = crearPersonaUseCase.crearPersona(persona);
+        boolean resultado = crearPersonaUseCase.crearPersona(persona);
 
-            Assertions.assertEquals(true, resultado);
-            verify(repositorioPersona).persist(any(Persona.class));
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
+        Assertions.assertEquals(true, resultado);
+        verify(repositorioPersona).persist(any(Persona.class));
+
     }
 
     @Test
-    public void crearPersona_PersonaExiste_NoGuardarPersona() {
-        try {
-            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
+    public void crearPersona_PersonaExiste_NoGuardarPersona() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+        Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
 
-            when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
-            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
+        when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
+        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
 
-            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-            boolean resultado = crearPersonaUseCase.crearPersona(persona);
+        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
+        boolean resultado = crearPersonaUseCase.crearPersona(persona);
 
-            verify(repositorioPersona, never()).persist(persona);
-            Assertions.assertEquals(false, resultado);
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
+        verify(repositorioPersona, never()).persist(persona);
+        Assertions.assertEquals(false, resultado);
+
     }
 
 
     @Test
-    public void validarPersona_existePorIDyDocumento_true() {
-        try {
-            Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
+    public void validarPersona_existePorIDyDocumento_true() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
 
-            when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
-            when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
+        when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
+        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
 
-            CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-            Method privateMethod = CrearPersonaUseCase.class.getDeclaredMethod("validarPersonaExiste", Persona.class);
-            privateMethod.setAccessible(true);
+        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
+        Method privateMethod = CrearPersonaUseCase.class.getDeclaredMethod("validarPersonaExiste", Persona.class);
+        privateMethod.setAccessible(true);
+        boolean resultado = (boolean) privateMethod.invoke(crearPersonaUseCase, persona);
+        Assertions.assertEquals(true, resultado);
 
-            boolean resultado = (boolean) privateMethod.invoke(crearPersonaUseCase, persona);
-
-            Assertions.assertEquals(true, resultado);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
     }
 
     private Collection<AntecedenteMedico> factoryAntecedenteMedico() {
@@ -110,8 +95,11 @@ public class CrearPersonaUnitTest {
         try {
             return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0);
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
         } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+            return null;
+        } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;
         }

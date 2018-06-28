@@ -1,5 +1,7 @@
 package Modelo;
 
+import Excepciones.MedicoIncompletoException;
+
 public class Medico {
     private int idMedico;
     private String apellido;
@@ -27,9 +29,9 @@ public class Medico {
         return this.apellido+", "+this.nombre+". Matricula "+this.matricula+". Tel. "+this.telefono;
     }
 
-    public void modificarDatos(Medico nuevo) throws Exception{
+    public void modificarDatos(Medico nuevo) throws MedicoIncompletoException {
         if(nuevo.apellido==null || nuevo.nombre==null || nuevo.telefono==null){
-            throw new Exception();
+            throw new MedicoIncompletoException();
         }
             this.apellido = nuevo.apellido;
             this.nombre = nuevo.nombre;

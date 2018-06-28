@@ -12,4 +12,6 @@ public interface IAfiliadoRepositorio {
     Collection<Afiliado> findAll();
 
     Collection<Afiliado> findByNumero(String numero);
+
+    boolean update(Afiliado afiliado);
 }
