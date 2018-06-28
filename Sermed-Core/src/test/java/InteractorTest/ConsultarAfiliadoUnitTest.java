@@ -137,16 +137,16 @@ public class ConsultarAfiliadoUnitTest {
         List<Persona> personas = new ArrayList<>();
         personas.add(Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001-01", factoryAntecedenteMedico()));
+                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(),0));
         personas.add(Persona.instancia(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "34215324", new Sangre(1, "B", "RH-"), "3825532112",
-                new ObraSocial(1, "OSFATUN"), "000002-00", factoryAntecedenteMedico()));
+                new ObraSocial(1, "OSFATUN"), "000002", factoryAntecedenteMedico(),0));
         personas.add(Persona.instancia(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "0", "RH+"), "3825423547",
-                new ObraSocial(1, "OSFATUN"), "000003-00", factoryAntecedenteMedico()));
+                new ObraSocial(1, "OSFATUN"), "000003", factoryAntecedenteMedico(),0));
         personas.add(Persona.instancia(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "32123457", new Sangre(1, "A", "RH+"), "382584521",
-                new ObraSocial(1, "OSFATUN"), "000004-00", factoryAntecedenteMedico()));
+                new ObraSocial(1, "OSFATUN"), "000004", factoryAntecedenteMedico(),0));
         return personas;
 
     }

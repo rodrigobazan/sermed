@@ -30,7 +30,7 @@ public class AfiliadoUnitTest {
     }
 
     @Test
-    void instanciaAfiliado_personaNoNula_afiliadoInstanciado() {
+    void instanciaAfiliado_PersonaNoNula_afiliadoInstanciado() {
         try {
             Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
             Assertions.assertNotNull(unAfiliado);
@@ -42,12 +42,12 @@ public class AfiliadoUnitTest {
     }
 
     @Test
-    void instanciaAfiliado_personaNula_afiliadoSinPersonaException() {
+    void instanciaAfiliado_PersonaNula_afiliadoSinPersonaException() {
         Assertions.assertThrows(AfiliadoSinTitularException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", null, factoryPersonaMiembros(), true));
     }
 
     @Test
-    void instanciaAfiliado_numeroAfiliadoCorrecto_afiliadoInstanciado() {
+    void instanciaAfiliado_NumeroAfiliadoCorrecto_afiliadoInstanciado() {
         try {
             Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
             Assertions.assertNotNull(unAfiliado);
@@ -60,16 +60,58 @@ public class AfiliadoUnitTest {
 
 
     @Test
-    void instanciaAfiliado_numeroAfiliadoIncorrecto_() {
+    void instanciaAfiliado_NumeroAfiliadoIncorrecto_NumeroAfiliadoIncorrectoException() {
         Assertions.assertThrows(NumeroAfiliadoIncorrectoException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "19000-02", factoryPersonaTitular(), factoryPersonaMiembros(), true));
 
+    }
+
+    @Test
+    void agregarPersona_NumeroAfiliadoCorrecto_DevuelveTrue(){
+        try {
+            Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
+                    "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(),0);
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+
+
+            afiliado.agregarPersona(persona);
+
+            Assertions.assertEquals(5, afiliado.getMiembros().size());
+            Assertions.assertEquals("190000-05", afiliado.getMiembros().get(afiliado.getMiembros().size()-1).getNumeroAfiliado());
+
+        } catch (PersonaIncompletaException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void agregarTitular_NumeroAfiliadoCorrecto_DevuelveTrue(){
+        try {
+            Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
+                    "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(),0);
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018,6,15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true);
+
+            afiliado.agregarPersona(persona);
+
+            Assertions.assertEquals("190000-00", afiliado.getTitular().getNumeroAfiliado());
+
+        } catch (PersonaIncompletaException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public Persona factoryPersonaTitular() {
         try {
             return Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
-                    "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "190000-00", factoryAntecedenteMedico());
+                    "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "190000", factoryAntecedenteMedico(),0);
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
             return null;
@@ -85,16 +127,16 @@ public class AfiliadoUnitTest {
             List<Persona> personas = new ArrayList<>();
             personas.add(Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "190000-01", factoryAntecedenteMedico()));
+                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(),1));
             personas.add(Persona.instancia(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "34215324", new Sangre(1, "B", "RH-"), "3825532112",
-                    new ObraSocial(1, "OSFATUN"), "190000-02", factoryAntecedenteMedico()));
+                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(),2));
             personas.add(Persona.instancia(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "0", "RH+"), "3825423547",
-                    new ObraSocial(1, "OSFATUN"), "190000-03", factoryAntecedenteMedico()));
+                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(),3));
             personas.add(Persona.instancia(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "32123457", new Sangre(1, "A", "RH+"), "382584521",
-                    new ObraSocial(1, "OSFATUN"), "190000-04", factoryAntecedenteMedico()));
+                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(),4));
             return personas;
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();

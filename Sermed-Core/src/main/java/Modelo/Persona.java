@@ -2,6 +2,7 @@ package Modelo;
 
 import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
+import com.sun.deploy.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -20,10 +21,11 @@ public class Persona {
     private String telefono;
     private ObraSocial obraSocial;
     private String nroAfiliado;
+    private Integer nroOrden;
     private Collection<AntecedenteMedico> antecedentesMedico;
 
     private Persona(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
-                   String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico) {
+                   String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) {
         this.idPersona = idPersona;
         this.apellidos = apellidos;
         this.nombres = nombres;
@@ -36,23 +38,17 @@ public class Persona {
         this.obraSocial = obraSocial;
         this.nroAfiliado = nroAfiliado;
         this.antecedentesMedico = antecedentesMedico;
+        this.nroOrden=nroOrden;
     }
 
     public static Persona instancia(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
-                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
 
-        if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || nroAfiliado==null || sangre==null){
+        if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || sangre==null){
             throw new PersonaIncompletaException();
         }
 
-        if(!nroAfiliado.contains("-"))
-            throw new NumeroAfiliadoIncorrectoException();
-
-        String[] array = nroAfiliado.split("-");
-        if(array[0].length() != 6 || array[1].length() != 2)
-            throw new NumeroAfiliadoIncorrectoException();
-
-        return new Persona(idPersona,apellidos,nombres,fechaNacimiento,domicilio,tipoDocumento,documento,sangre,telefono,obraSocial,nroAfiliado,antecedentesMedico);
+        return new Persona(idPersona,apellidos,nombres,fechaNacimiento,domicilio,tipoDocumento,documento,sangre,telefono,obraSocial,nroAfiliado,antecedentesMedico,nroOrden);
     }
 
     public Integer getIdPersona() {
@@ -68,10 +64,22 @@ public class Persona {
     }
 
     public String getNumeroAfiliado() {
-        return this.nroAfiliado;
+        return this.nroAfiliado + "-" + String.format("%02d", this.nroOrden);
     }
 
     public String mostrarTitular() {
-        return this.apellidos +", "+this.nombres+" ("+this.nroAfiliado+").";
+        return this.apellidos +", "+this.nombres+" ("+this.getNumeroAfiliado()+").";
+    }
+
+    public void setNroOrden(int nroDeOrden) {
+        this.nroOrden=nroDeOrden;
+    }
+
+    public int getNroOrden() {
+        return this.nroOrden;
+    }
+
+    public void setNumeroAfiliado(String numeroAfiliado) {
+        this.nroAfiliado=numeroAfiliado;
     }
 }
