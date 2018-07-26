@@ -16,8 +16,9 @@ public class Afiliado {
     private Persona titular;
     private boolean activo;
     private LocalDate fechaDeBaja;
+    private LocalDate fechaPagoAcordada;
 
-    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja) {
+    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada) {
 
         this.idAfiliado = idAfiliado;
         this.fechaAfiliacion = fechaAfiliacion;
@@ -25,6 +26,7 @@ public class Afiliado {
         this.miembros = miembros;
         this.activo = activo;
         this.fechaDeBaja = fechaDeBaja;
+        this.fechaPagoAcordada = fechaPagoAcordada;
     }
 
     public Integer getIdAfiliado() {
@@ -32,21 +34,22 @@ public class Afiliado {
     }
 
 
-    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
+    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
         if (titular == null) {
             throw new AfiliadoSinTitularException();
         }
-        if(numeroAfiliado.length() != 6)
+        if (numeroAfiliado.length() != 6)
             throw new NumeroAfiliadoIncorrectoException();
 
-        Afiliado elNuevo=new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado,miembros, activo, fechaDeBaja);
+        Afiliado elNuevo = new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, miembros, activo, fechaDeBaja, fechaPagoAcordada);
         elNuevo.asignarTitular(titular);
         return elNuevo;
 
     }
 
-    private void asignarTitular(Persona titular) {
-        this.titular=titular;
+    public void asignarTitular(Persona titular) {
+        this.titular = titular;
+        this.titular.setNumeroAfiliado(this.numeroAfiliado);
         this.titular.setNroOrden(0);
     }
 
@@ -58,24 +61,24 @@ public class Afiliado {
         return this.titular;
     }
 
-    public String mostrarAfiliado(){
-        return this.numeroAfiliado +". Titular: "+ this.titular.mostrarTitular();
+    public String mostrarAfiliado() {
+        return this.numeroAfiliado + ". Titular: " + this.titular.mostrarTitular();
     }
 
     public boolean contienePersona(Persona laPersona) {
-        return laPersona.getDocumento().equals(this.titular.getDocumento()) || this.miembros.stream().anyMatch(a -> a.getDocumento().equals(laPersona.getDocumento()));
+        return laPersona.obtenerDocumentoCompleto().equals(this.titular.obtenerDocumentoCompleto()) || this.miembros.stream().anyMatch(a -> a.obtenerDocumentoCompleto().equals(laPersona.obtenerDocumentoCompleto()));
     }
 
     public void agregarPersona(Persona persona) {
         persona.setNumeroAfiliado(this.numeroAfiliado);
-        persona.setNroOrden(this.miembros.stream().max(Comparator.comparingInt(Persona::getNroOrden)).get().getNroOrden()+1);
+        persona.setNroOrden(this.miembros.stream().max(Comparator.comparingInt(Persona::getNroOrden)).get().getNroOrden() + 1);
 
         this.miembros.add(persona);
     }
 
     public boolean quitarPersona(Persona persona) {
-        Persona personaAQuitar = this.getMiembros().stream().filter(m -> m.getDocumento().equals(persona.getDocumento())).findAny().orElse(null);
-        if(personaAQuitar != null){
+        Persona personaAQuitar = this.getMiembros().stream().filter(m -> m.obtenerDocumentoCompleto().equals(persona.obtenerDocumentoCompleto())).findAny().orElse(null);
+        if (personaAQuitar != null) {
             this.getMiembros().remove(personaAQuitar);
             return true;
         }
@@ -88,4 +91,14 @@ public class Afiliado {
     }
 
 
+    public boolean getActivo() {
+        return this.activo;
+    }
+
+    public Persona devolverPersona(Persona laPersona) {
+        if (laPersona.obtenerDocumentoCompleto().equals(this.titular.obtenerDocumentoCompleto())) {
+            return this.titular;
+        }
+        return this.miembros.stream().filter(a -> a.obtenerDocumentoCompleto().equals(laPersona.obtenerDocumentoCompleto())).findAny().orElse(null);
+    }
 }

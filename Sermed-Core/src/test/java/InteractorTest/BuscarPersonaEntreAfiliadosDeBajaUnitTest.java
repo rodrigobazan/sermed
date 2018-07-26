@@ -4,7 +4,7 @@ import Excepciones.AfiliadoSinTitularException;
 import Excepciones.DniConPuntosException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaIncompletaException;
-import Interactor.BuscarPersonaEntreAfiliadosUseCase;
+import Interactor.BuscarPersonaEntreAfiliadosDeBajaUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
 import Repositorio.IAfiliadoRepositorio;
@@ -21,7 +21,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class BuscarPersonaEntreAfiliadosUnitTest {
+public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
 
     @Mock
     IAfiliadoRepositorio repositorioAfiliado;
@@ -30,34 +30,32 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
     List<Afiliado> afiliadosList = crearAfiliadoArray();
 
     @Test
-    public void buscarPersonaEntreAfiliados_PersonaNoSeEncuentra_DevuelveFalso() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
-        when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
+    public void buscarPersonaEntreAfiliadosDeBaja_PersonaNoSeEncuentra_DevuelveFalso() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+        when(repositorioAfiliado.findAllInactivos()).thenReturn(afiliadosList);
         Persona laPersona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "99999999", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001-00", null, 0);
 
-        BuscarPersonaEntreAfiliadosUseCase buscarPersona = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
+        BuscarPersonaEntreAfiliadosDeBajaUseCase buscarPersona = new BuscarPersonaEntreAfiliadosDeBajaUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersona(laPersona);
+        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
         Assertions.assertFalse(resultado);
-
-
     }
 
     @Test
-    public void buscarPersonaEntreAfiliados_PersonaSeEncuentra_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
-        when(repositorioAfiliado.findAllActivos()).thenReturn(afiliadosList);
+    public void buscarPersonaEntreAfiliadosDeBaja_PersonaNoSeEncuentra_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+        when(repositorioAfiliado.findAllInactivos()).thenReturn(afiliadosList);
         Persona laPersona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001-00", null, 0);
 
-        BuscarPersonaEntreAfiliadosUseCase buscarPersona = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
+        BuscarPersonaEntreAfiliadosDeBajaUseCase buscarPersona = new BuscarPersonaEntreAfiliadosDeBajaUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersona(laPersona);
-
+        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
         Assertions.assertTrue(resultado);
 
     }
+
 
 
     private List<Afiliado> crearAfiliadoArray() {
@@ -103,5 +101,4 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
         }
 
     }
-
 }

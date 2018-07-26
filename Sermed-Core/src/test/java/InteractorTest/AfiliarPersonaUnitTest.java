@@ -34,7 +34,7 @@ public class AfiliarPersonaUnitTest {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
         when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
         AfiliarPersonaUseCase afiliarPersonaUseCase = new AfiliarPersonaUseCase(repositorioAfiliado);
         boolean resultado = afiliarPersonaUseCase.afiliarPersona(persona, afiliado);
@@ -48,7 +48,7 @@ public class AfiliarPersonaUnitTest {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "37415281", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
         when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
         when(repositorioAfiliado.update(afiliado)).thenReturn(true);
         AfiliarPersonaUseCase afiliarPersonaUseCase = new AfiliarPersonaUseCase(repositorioAfiliado);
@@ -129,8 +129,8 @@ public class AfiliarPersonaUnitTest {
                     new ObraSocial(1, "OSFATUN"), "000002", null, 0));
 
 
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null, null));
             return afiliados;
 
         } catch (AfiliadoSinTitularException e) {

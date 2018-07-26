@@ -19,7 +19,7 @@ public class AfiliadoUnitTest {
     @Test
     void mostrarAfiliado_AfiliadoCompleto_MuestraFormateado() {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
             String mostrarAfiliado = unAfiliado.mostrarAfiliado();
             Assertions.assertEquals("190000. Titular: Ruitti, Javiel (190000-00).", mostrarAfiliado);
 
@@ -33,7 +33,7 @@ public class AfiliadoUnitTest {
     @Test
     void instanciaAfiliado_PersonaNoNula_afiliadoInstanciado() {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
             Assertions.assertNotNull(unAfiliado);
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
@@ -44,13 +44,13 @@ public class AfiliadoUnitTest {
 
     @Test
     void instanciaAfiliado_PersonaNula_afiliadoSinPersonaException() {
-        Assertions.assertThrows(AfiliadoSinTitularException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", null, factoryPersonaMiembros(), true, null));
+        Assertions.assertThrows(AfiliadoSinTitularException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", null, factoryPersonaMiembros(), true, null, null));
     }
 
     @Test
     void instanciaAfiliado_NumeroAfiliadoCorrecto_afiliadoInstanciado() {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
             Assertions.assertNotNull(unAfiliado);
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class AfiliadoUnitTest {
 
     @Test
     void instanciaAfiliado_NumeroAfiliadoIncorrecto_NumeroAfiliadoIncorrectoException() {
-        Assertions.assertThrows(NumeroAfiliadoIncorrectoException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "19000-02", factoryPersonaTitular(), factoryPersonaMiembros(), true, null));
+        Assertions.assertThrows(NumeroAfiliadoIncorrectoException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "19000-02", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
 
     }
 
@@ -70,7 +70,7 @@ public class AfiliadoUnitTest {
     void agregarPersona_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
         Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
                 "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
         afiliado.agregarPersona(persona);
         Assertions.assertEquals(5, afiliado.getMiembros().size());
         Assertions.assertEquals("190000-05", afiliado.getMiembros().get(afiliado.getMiembros().size() - 1).getNumeroAfiliado());
@@ -82,7 +82,7 @@ public class AfiliadoUnitTest {
     void agregarTitular_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
         Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
                 "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
         afiliado.agregarPersona(persona);
         Assertions.assertEquals("190000-00", afiliado.getTitular().getNumeroAfiliado());
     }

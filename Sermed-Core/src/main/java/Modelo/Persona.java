@@ -108,4 +108,8 @@ public class Persona {
         this.tipoDocumento = personaDatosNuevos.tipoDocumento;
 
     }
+
+    public String obtenerDocumentoCompleto(){
+        return this.getTipoDocumento().getNombre() + this.getDocumento();
+    }
 }

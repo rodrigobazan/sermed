@@ -13,7 +13,11 @@ public interface IAfiliadoRepositorio {
 
     Collection<Afiliado> findByNumero(String numero);
 
+    Afiliado findUnicoByNumero(String numero);
+
     boolean update(Afiliado afiliado);
 
     Collection<Afiliado> findAllActivos();
+
+    Collection<Afiliado> findAllInactivos();
 }

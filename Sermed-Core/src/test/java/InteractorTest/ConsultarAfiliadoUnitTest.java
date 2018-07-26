@@ -86,7 +86,7 @@ public class ConsultarAfiliadoUnitTest {
 
     @Test
     public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoNoExisteException {
-        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null));
+        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
         ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
         Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorId(1);
         Assertions.assertEquals(1, afiliado.getIdAfiliado().intValue());
@@ -104,10 +104,10 @@ public class ConsultarAfiliadoUnitTest {
     private List<Afiliado> crearAfiliadoArray() {
         List<Afiliado> afiliados = new ArrayList<>();
         try {
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersona().get(1), factoryPersona(), true, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersona().get(2), factoryPersona(), true, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersona().get(3), factoryPersona(), true, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersona().get(1), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersona().get(2), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersona().get(3), factoryPersona(), true, null, null));
             return afiliados;
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
@@ -160,8 +160,8 @@ public class ConsultarAfiliadoUnitTest {
     private List<Afiliado> crearAfiliadosFiltroNumero() {
         List<Afiliado> afiliados = new ArrayList<>();
         try {
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000100", factoryPersona().get(1), factoryPersona(), true, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000100", factoryPersona().get(1), factoryPersona(), true, null, null));
             return afiliados;
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
