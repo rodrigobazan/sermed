@@ -112,4 +112,12 @@ public class Afiliado {
         this.activo = false;
         this.fechaDeBaja = fechaBaja;
     }
+
+    public Plan getPlan() {
+        return this.plan;
+    }
+
+    public LocalDate getFechaAfiliacion() {
+        return this.fechaAfiliacion;
+    }
 }

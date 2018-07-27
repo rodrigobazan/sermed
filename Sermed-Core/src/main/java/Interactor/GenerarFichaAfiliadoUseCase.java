@@ -11,6 +11,13 @@ public class GenerarFichaAfiliadoUseCase {
         this.repositorioAfiliado = repositorioAfiliado;
     }
 
-    /*public FichaAfiliadoDTO generarFichaAfiliadoParaReporte(Afiliado afiliado) {
-    }*/
+    public FichaAfiliadoDTO generarFichaAfiliadoParaReporte(String numeroAfiliado) {
+        FichaAfiliadoDTO fichaGenerada=new FichaAfiliadoDTO();
+        fichaGenerada.armarFicha(repositorioAfiliado.findUnicoByNumero(numeroAfiliado));
+        return fichaGenerada;
+
+
+    }
+
+
 }

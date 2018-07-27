@@ -1,33 +1,39 @@
 package InteractorTest;
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.GenerarFichaAfiliadoUseCase;
+import Mockito.MockitoExtension;
 import Modelo.*;
+import ModeloReporte.FichaAfiliadoDTO;
 import Repositorio.IAfiliadoRepositorio;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class GenerarFichaAfiliadoUnitTest {
 
     @Mock
     IAfiliadoRepositorio repositorioAfiliado;
 
-    /*@Test
-    public void generarFinaAfiliado_AfiliadoExiste_SeGeneraFicha() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
+    @Test
+    public void generarFichaAfiliado_AfiliadoExiste_SeGeneraFicha() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+        when(repositorioAfiliado.findUnicoByNumero("000003")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
 
         GenerarFichaAfiliadoUseCase generarFichaAfiliadoUseCase = new GenerarFichaAfiliadoUseCase(repositorioAfiliado);
+        FichaAfiliadoDTO fichaGenerada= generarFichaAfiliadoUseCase.generarFichaAfiliadoParaReporte("000003");
+        Assertions.assertNotNull(fichaGenerada);
+    }
 
-        generarFichaAfiliadoUseCase.generarFichaAfiliadoParaReporte(afiliado);
 
-    }*/
 
 
     private Persona factoryPersona() throws PersonaIncompletaException {
@@ -72,5 +78,20 @@ public class GenerarFichaAfiliadoUnitTest {
             return new ArrayList<>();
         }
 
+    }
+
+
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 }
