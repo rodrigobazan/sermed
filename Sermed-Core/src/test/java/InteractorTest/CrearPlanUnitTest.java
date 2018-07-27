@@ -23,7 +23,7 @@ public class CrearPlanUnitTest {
     @Test
     public void crearPlan_PlanYaExiste_NoSeCreaPlan() throws PlanIncompletoException {
         Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
-        when(repositorioPlan.findByNombre("plan basico")).thenReturn(Plan.instancia(1, "Plan Basico", factoryListaPrecios()));
+        when(repositorioPlan.findUnicoByNombre("plan basico")).thenReturn(Plan.instancia(1, "Plan Basico", factoryListaPrecios()));
 
         CrearPlanUseCase crearPlanUseCase = new CrearPlanUseCase(repositorioPlan);
         boolean resultado = crearPlanUseCase.crearPlan(plan);
@@ -34,7 +34,7 @@ public class CrearPlanUnitTest {
     @Test
     public void crearPlan_PlanNoExiste_SeCreaPlan() throws PlanIncompletoException {
         Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
-        when(repositorioPlan.findByNombre("plan basico")).thenReturn(null);
+        when(repositorioPlan.findUnicoByNombre("plan basico")).thenReturn(null);
         when(repositorioPlan.persist(plan)).thenReturn(true);
 
         CrearPlanUseCase crearPlanUseCase = new CrearPlanUseCase(repositorioPlan);

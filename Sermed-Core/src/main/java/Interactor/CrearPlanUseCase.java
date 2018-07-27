@@ -18,7 +18,7 @@ public class CrearPlanUseCase {
     }
 
     private boolean validarPlanExiste(Plan plan) {
-        if(repositorioPlan.findByNombre(plan.getNombre()) != null) {
+        if(repositorioPlan.findUnicoByNombre(plan.getNombre()) != null) {
             return true;
         }
         return false;
