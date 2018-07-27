@@ -1,9 +1,6 @@
 package InteractorTest;
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.CrearAfiliadoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
@@ -14,10 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.Mockito.when;
 
@@ -28,9 +22,9 @@ public class CrearAfiliadoUnitTest {
     IAfiliadoRepositorio repositorioAfiliado;
 
     @Test
-    public void crearAfiliado_AfiliadoNoExisteYTitularNoEstaAsociadoAOtroAfiliadoActivo_GuardaAfiliado() {
+    public void crearAfiliado_AfiliadoNoExisteYTitularNoEstaAsociadoAOtroAfiliadoActivo_GuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
             when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
             when(repositorioAfiliado.findAll()).thenReturn(new ArrayList<>());
             when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
@@ -45,9 +39,9 @@ public class CrearAfiliadoUnitTest {
     }
 
     @Test
-    public void crearAfiliado_AfiliadoNoExisteYTitularEstaAsociadoAOtroAfiliadoActivo_NoGuardaAfiliado() {
+    public void crearAfiliado_AfiliadoNoExisteYTitularEstaAsociadoAOtroAfiliadoActivo_NoGuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null,factoryPlan());
             when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
             when(repositorioAfiliado.findAll()).thenReturn(crearAfiliadoArray());
             when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
@@ -62,10 +56,10 @@ public class CrearAfiliadoUnitTest {
     }
 
     @Test
-    public void crearAfiliado_AfiliadoExistePorNumero_NoGuardaAfiliado() {
+    public void crearAfiliado_AfiliadoExistePorNumero_NoGuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
-            when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
+            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+            when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
             when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
             CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
             boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
@@ -155,10 +149,10 @@ public class CrearAfiliadoUnitTest {
     private List<Afiliado> crearAfiliadoArray() {
         List<Afiliado> afiliados = new ArrayList<>();
         try {
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
             return afiliados;
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
@@ -168,6 +162,20 @@ public class CrearAfiliadoUnitTest {
             return afiliados;
         }
 
+    }
+
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 
 }

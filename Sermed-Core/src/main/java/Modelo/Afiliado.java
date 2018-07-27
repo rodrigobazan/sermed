@@ -1,5 +1,6 @@
 package Modelo;
 
+import Excepciones.AfiliadoSinPlanException;
 import Excepciones.AfiliadoSinTitularException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
 
@@ -17,8 +18,9 @@ public class Afiliado {
     private boolean activo;
     private LocalDate fechaDeBaja;
     private LocalDate fechaPagoAcordada;
+    private Plan plan;
 
-    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada) {
+    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada, Plan plan) {
 
         this.idAfiliado = idAfiliado;
         this.fechaAfiliacion = fechaAfiliacion;
@@ -27,6 +29,7 @@ public class Afiliado {
         this.activo = activo;
         this.fechaDeBaja = fechaDeBaja;
         this.fechaPagoAcordada = fechaPagoAcordada;
+        this.plan = plan;
     }
 
     public Integer getIdAfiliado() {
@@ -34,14 +37,17 @@ public class Afiliado {
     }
 
 
-    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
+    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada, Plan plan) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
         if (titular == null) {
             throw new AfiliadoSinTitularException();
         }
         if (numeroAfiliado.length() != 6)
             throw new NumeroAfiliadoIncorrectoException();
 
-        Afiliado elNuevo = new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, miembros, activo, fechaDeBaja, fechaPagoAcordada);
+        if(plan == null){
+            throw new AfiliadoSinPlanException();
+        }
+        Afiliado elNuevo = new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, miembros, activo, fechaDeBaja, fechaPagoAcordada, plan);
         elNuevo.asignarTitular(titular);
         return elNuevo;
 

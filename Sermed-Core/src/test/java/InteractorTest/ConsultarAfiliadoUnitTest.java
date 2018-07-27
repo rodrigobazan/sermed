@@ -13,10 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -85,8 +82,8 @@ public class ConsultarAfiliadoUnitTest {
 
 
     @Test
-    public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoNoExisteException {
-        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
+    public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoNoExisteException, PlanIncompletoException, AfiliadoSinPlanException {
+        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null, factoryPlan()));
         ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
         Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorId(1);
         Assertions.assertEquals(1, afiliado.getIdAfiliado().intValue());
@@ -104,10 +101,10 @@ public class ConsultarAfiliadoUnitTest {
     private List<Afiliado> crearAfiliadoArray() {
         List<Afiliado> afiliados = new ArrayList<>();
         try {
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersona().get(1), factoryPersona(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersona().get(2), factoryPersona(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersona().get(3), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", factoryPersona().get(1), factoryPersona(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000004", factoryPersona().get(2), factoryPersona(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000005", factoryPersona().get(3), factoryPersona(), true, null, null, factoryPlan()));
             return afiliados;
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
@@ -160,8 +157,8 @@ public class ConsultarAfiliadoUnitTest {
     private List<Afiliado> crearAfiliadosFiltroNumero() {
         List<Afiliado> afiliados = new ArrayList<>();
         try {
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000100", factoryPersona().get(1), factoryPersona(), true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000100", factoryPersona().get(1), factoryPersona(), true, null, null, factoryPlan()));
             return afiliados;
         } catch (AfiliadoSinTitularException e) {
             e.printStackTrace();
@@ -170,6 +167,19 @@ public class ConsultarAfiliadoUnitTest {
         } finally {
             return afiliados;
         }
+    }
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 
 }

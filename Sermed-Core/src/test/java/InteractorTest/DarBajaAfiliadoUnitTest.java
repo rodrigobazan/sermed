@@ -1,10 +1,7 @@
 package InteractorTest;
 
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.DarBajaAfiliadoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
@@ -16,6 +13,7 @@ import org.mockito.Mock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -27,16 +25,16 @@ public class DarBajaAfiliadoUnitTest {
     IAfiliadoRepositorio repositorioAfiliado;
 
     @Test
-    public void darBajaAfiliado_AfiliadoYaTieneLaBaja_NoSeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), false, null, null);
+    public void darBajaAfiliado_AfiliadoYaTieneLaBaja_NoSeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), false, null, null, factoryPlan());
         DarBajaAfiliadoUseCase darBajaAfiliadoUseCase = new DarBajaAfiliadoUseCase(repositorioAfiliado);
         boolean resultado = darBajaAfiliadoUseCase.darBajaAfiliado(afiliado, LocalDate.of(2018, 6, 27));
         Assertions.assertFalse(resultado);
     }
 
     @Test
-    public void darBajaAfiliado_AfiliadoEstaActivo_SeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
+    public void darBajaAfiliado_AfiliadoEstaActivo_SeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         when(repositorioAfiliado.update(afiliado)).thenReturn(true);
 
         DarBajaAfiliadoUseCase darBajaAfiliadoUseCase = new DarBajaAfiliadoUseCase(repositorioAfiliado);
@@ -86,5 +84,18 @@ public class DarBajaAfiliadoUnitTest {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 }

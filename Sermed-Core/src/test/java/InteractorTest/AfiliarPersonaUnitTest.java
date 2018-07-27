@@ -1,9 +1,6 @@
 package InteractorTest;
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.AfiliarPersonaUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
@@ -16,6 +13,7 @@ import org.mockito.Spy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -30,11 +28,11 @@ public class AfiliarPersonaUnitTest {
     List<Afiliado> afiliadosList = crearAfiliadoArray();
 
     @Test
-    public void afiliarPersona_PersonaYaAfiliada_NoSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
+    public void afiliarPersona_PersonaYaAfiliada_NoSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
         AfiliarPersonaUseCase afiliarPersonaUseCase = new AfiliarPersonaUseCase(repositorioAfiliado);
         boolean resultado = afiliarPersonaUseCase.afiliarPersona(persona, afiliado);
@@ -44,11 +42,11 @@ public class AfiliarPersonaUnitTest {
 
 
     @Test
-    public void afiliarPersona_PersonaNoAfiliada_SiSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
+    public void afiliarPersona_PersonaNoAfiliada_SiSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "37415281", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
         when(repositorioAfiliado.update(afiliado)).thenReturn(true);
         AfiliarPersonaUseCase afiliarPersonaUseCase = new AfiliarPersonaUseCase(repositorioAfiliado);
@@ -129,8 +127,8 @@ public class AfiliarPersonaUnitTest {
                     new ObraSocial(1, "OSFATUN"), "000002", null, 0));
 
 
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null, null, factoryPlan()));
             return afiliados;
 
         } catch (AfiliadoSinTitularException e) {
@@ -143,6 +141,19 @@ public class AfiliarPersonaUnitTest {
             return afiliados;
         }
 
+    }
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 
 

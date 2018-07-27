@@ -1,25 +1,19 @@
 package ModelTest;
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Modelo.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class AfiliadoUnitTest {
 
     @Test
-    void mostrarAfiliado_AfiliadoCompleto_MuestraFormateado() {
+    void mostrarAfiliado_AfiliadoCompleto_MuestraFormateado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
             String mostrarAfiliado = unAfiliado.mostrarAfiliado();
             Assertions.assertEquals("190000. Titular: Ruitti, Javiel (190000-00).", mostrarAfiliado);
 
@@ -31,9 +25,9 @@ public class AfiliadoUnitTest {
     }
 
     @Test
-    void instanciaAfiliado_PersonaNoNula_afiliadoInstanciado() {
+    void instanciaAfiliado_PersonaNoNula_afiliadoInstanciado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
             Assertions.assertNotNull(unAfiliado);
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
@@ -44,13 +38,13 @@ public class AfiliadoUnitTest {
 
     @Test
     void instanciaAfiliado_PersonaNula_afiliadoSinPersonaException() {
-        Assertions.assertThrows(AfiliadoSinTitularException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", null, factoryPersonaMiembros(), true, null, null));
+        Assertions.assertThrows(AfiliadoSinTitularException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", null, factoryPersonaMiembros(), true, null, null, factoryPlan()));
     }
 
     @Test
-    void instanciaAfiliado_NumeroAfiliadoCorrecto_afiliadoInstanciado() {
+    void instanciaAfiliado_NumeroAfiliadoCorrecto_afiliadoInstanciado() throws PlanIncompletoException, AfiliadoSinPlanException {
         try {
-            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+            Afiliado unAfiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
             Assertions.assertNotNull(unAfiliado);
         } catch (NumeroAfiliadoIncorrectoException e) {
             e.printStackTrace();
@@ -62,15 +56,15 @@ public class AfiliadoUnitTest {
 
     @Test
     void instanciaAfiliado_NumeroAfiliadoIncorrecto_NumeroAfiliadoIncorrectoException() {
-        Assertions.assertThrows(NumeroAfiliadoIncorrectoException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "19000-02", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null));
+        Assertions.assertThrows(NumeroAfiliadoIncorrectoException.class, () -> Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "19000-02", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
 
     }
 
     @Test
-    void agregarPersona_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
+    void agregarPersona_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
                 "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         afiliado.agregarPersona(persona);
         Assertions.assertEquals(5, afiliado.getMiembros().size());
         Assertions.assertEquals("190000-05", afiliado.getMiembros().get(afiliado.getMiembros().size() - 1).getNumeroAfiliado());
@@ -79,10 +73,10 @@ public class AfiliadoUnitTest {
     }
 
     @Test
-    void agregarTitular_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException {
+    void agregarTitular_NumeroAfiliadoCorrecto_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
                 "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
-        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null);
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         afiliado.agregarPersona(persona);
         Assertions.assertEquals("190000-00", afiliado.getTitular().getNumeroAfiliado());
     }
@@ -140,6 +134,19 @@ public class AfiliadoUnitTest {
         Collection<AntecedenteMedico> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
 
         return listaAntecedentes;
+    }
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 
 }

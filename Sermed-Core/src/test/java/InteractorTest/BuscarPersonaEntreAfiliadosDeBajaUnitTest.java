@@ -1,9 +1,6 @@
 package InteractorTest;
 
-import Excepciones.AfiliadoSinTitularException;
-import Excepciones.DniConPuntosException;
-import Excepciones.NumeroAfiliadoIncorrectoException;
-import Excepciones.PersonaIncompletaException;
+import Excepciones.*;
 import Interactor.BuscarPersonaEntreAfiliadosDeBajaUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
@@ -16,6 +13,7 @@ import org.mockito.Spy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -86,8 +84,8 @@ public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
                     new ObraSocial(1, "OSFATUN"), "000002-02", null, 0));
 
 
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null, null));
-            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null, null));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", titular1, personasAfiliado1, true, null, null, factoryPlan()));
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000003", titular2, personasAfiliado2, true, null, null, factoryPlan()));
             return afiliados;
 
         } catch (AfiliadoSinTitularException e) {
@@ -100,5 +98,18 @@ public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
             return afiliados;
         }
 
+    }
+
+    private Plan factoryPlan() throws PlanIncompletoException {
+        HashMap<String, Double> listaPrecios = new HashMap<>();
+        listaPrecios.put("1", (double) 380);
+        listaPrecios.put("2", (double) 480);
+        listaPrecios.put("3", (double) 550);
+        listaPrecios.put("4", (double) 600);
+        listaPrecios.put("5", (double) 650);
+        listaPrecios.put("6", (double) 700);
+        listaPrecios.put("7", (double) 750);
+
+        return Plan.instancia(1,"Plan Basico",listaPrecios);
     }
 }
