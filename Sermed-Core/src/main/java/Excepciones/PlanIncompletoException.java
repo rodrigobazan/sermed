@@ -1,4 +1,4 @@
 package Excepciones;
 
-public class PlanIncompletoException extends Throwable {
+public class PlanIncompletoException extends Exception {
 }

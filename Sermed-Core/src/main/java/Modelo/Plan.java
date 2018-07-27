@@ -27,4 +27,20 @@ public class Plan {
     public String getNombre() {
         return this.nombrePlan;
     }
+
+    public String mostrarPlan() {
+        return this.nombrePlan;
+    }
+
+    public Integer getIdPlan() {
+        return idPlan;
+    }
+
+    public void modificarDatos(Plan nuevosDatos) throws PlanIncompletoException {
+        if(nuevosDatos.nombrePlan == null || nuevosDatos.listaPrecios.isEmpty()){
+            throw new PlanIncompletoException();
+        }
+        this.nombrePlan = nuevosDatos.nombrePlan;
+        this.listaPrecios = nuevosDatos.listaPrecios;
+    }
 }

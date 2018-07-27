@@ -11,4 +11,8 @@ public interface IPlanRepositorio {
     boolean persist(Plan plan);
 
     Collection<Plan> findAll();
+
+    Plan findById(Integer idPlan);
+
+    boolean update(Plan plan);
 }

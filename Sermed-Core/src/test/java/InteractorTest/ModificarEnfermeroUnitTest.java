@@ -40,7 +40,7 @@ public class ModificarEnfermeroUnitTest {
     }
 
     @Test
-    void modificarEnfermero__MatriculaExiste_NoActualiza(){
+    public void modificarEnfermero__MatriculaExiste_NoActualiza(){
 
         ModificarEnfermeroUseCase modificarEnfermeroUseCase = new ModificarEnfermeroUseCase(repositorioEnfermero);
 
