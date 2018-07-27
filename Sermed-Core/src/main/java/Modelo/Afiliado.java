@@ -101,4 +101,9 @@ public class Afiliado {
         }
         return this.miembros.stream().filter(a -> a.obtenerDocumentoCompleto().equals(laPersona.obtenerDocumentoCompleto())).findAny().orElse(null);
     }
+
+    public void darDeBaja(LocalDate fechaBaja) {
+        this.activo = false;
+        this.fechaDeBaja = fechaBaja;
+    }
 }
