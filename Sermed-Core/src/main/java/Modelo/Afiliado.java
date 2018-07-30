@@ -120,4 +120,12 @@ public class Afiliado {
     public LocalDate getFechaAfiliacion() {
         return this.fechaAfiliacion;
     }
+
+    public String mostrarPlanAfiliado() {
+        return plan.mostrarPlan();
+    }
+
+    public void cambiarPlan(Plan planNuevo) {
+        this.plan = planNuevo;
+    }
 }

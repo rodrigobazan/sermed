@@ -13,9 +13,8 @@ public class AfiliarPersonaUseCase {
 
     public boolean afiliarPersona(Persona persona, Afiliado afiliado) {
         BuscarPersonaEntreAfiliadosUseCase buscarPersonaEntreAfiliadosUseCase = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
-        if(buscarPersonaEntreAfiliadosUseCase.existePersona(persona)){
-            return false;
-        }else {
+        if(buscarPersonaEntreAfiliadosUseCase.existePersona(persona)) return false;
+        else {
             afiliado.agregarPersona(persona);
             return repositorioAfiliado.update(afiliado);
         }
