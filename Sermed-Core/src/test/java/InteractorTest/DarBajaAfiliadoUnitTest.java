@@ -25,15 +25,14 @@ public class DarBajaAfiliadoUnitTest {
     IAfiliadoRepositorio repositorioAfiliado;
 
     @Test
-    public void darBajaAfiliado_AfiliadoYaTieneLaBaja_NoSeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void darBajaAfiliado_AfiliadoYaTieneLaBaja_AfiliadoDeBajaException() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
         Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), false, null, null, factoryPlan());
         DarBajaAfiliadoUseCase darBajaAfiliadoUseCase = new DarBajaAfiliadoUseCase(repositorioAfiliado);
-        boolean resultado = darBajaAfiliadoUseCase.darBajaAfiliado(afiliado, LocalDate.of(2018, 6, 27));
-        Assertions.assertFalse(resultado);
+        Assertions.assertThrows(AfiliadoDeBajaException.class,()->darBajaAfiliadoUseCase.darBajaAfiliado(afiliado, LocalDate.of(2018, 6, 27)));
     }
 
     @Test
-    public void darBajaAfiliado_AfiliadoEstaActivo_SeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void darBajaAfiliado_AfiliadoEstaActivo_SeDaDeBaja() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException, AfiliadoDeBajaException {
         Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         when(repositorioAfiliado.update(afiliado)).thenReturn(true);
 

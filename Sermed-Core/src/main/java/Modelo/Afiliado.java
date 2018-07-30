@@ -68,7 +68,7 @@ public class Afiliado {
     }
 
     public String mostrarAfiliado() {
-        return this.numeroAfiliado + ". Titular: " + this.titular.mostrarTitular();
+        return this.numeroAfiliado + ". Titular: " + this.titular.mostrarPersona();
     }
 
     public boolean contienePersona(Persona laPersona) {

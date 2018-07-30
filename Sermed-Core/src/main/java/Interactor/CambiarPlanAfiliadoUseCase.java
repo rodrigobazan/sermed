@@ -18,7 +18,7 @@ public class CambiarPlanAfiliadoUseCase {
         if (!afiliado.getPlan().mostrarPlan().equalsIgnoreCase(planNuevo.mostrarPlan())) {
             afiliadoAModificar.cambiarPlan(planNuevo);
             if (repositorioAfiliado.update(afiliadoAModificar)) return afiliadoAModificar;
-            else throw  new UpdateAfiliadoException();
+            throw  new UpdateAfiliadoException();
         }
         throw new PlanesIgualesException();
     }

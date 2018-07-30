@@ -1,5 +1,6 @@
 package InteractorTest;
 
+import Excepciones.PlanExisteException;
 import Excepciones.PlanIncompletoException;
 import Interactor.CrearPlanUseCase;
 import Mockito.MockitoExtension;
@@ -23,18 +24,16 @@ public class CrearPlanUnitTest {
     @Test
     public void crearPlan_PlanYaExiste_NoSeCreaPlan() throws PlanIncompletoException {
         Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
-        when(repositorioPlan.findUnicoByNombre("plan basico")).thenReturn(Plan.instancia(1, "Plan Basico", factoryListaPrecios()));
-
+        when(repositorioPlan.findUnicoByNombre("Plan Basico")).thenReturn(Plan.instancia(1, "Plan Basico", factoryListaPrecios()));
         CrearPlanUseCase crearPlanUseCase = new CrearPlanUseCase(repositorioPlan);
-        boolean resultado = crearPlanUseCase.crearPlan(plan);
-        Assertions.assertFalse(resultado);
+        Assertions.assertThrows(PlanExisteException.class, ()->crearPlanUseCase.crearPlan(plan));
 
     }
 
     @Test
-    public void crearPlan_PlanNoExiste_SeCreaPlan() throws PlanIncompletoException {
+    public void crearPlan_PlanNoExiste_SeCreaPlan() throws PlanIncompletoException, PlanExisteException {
         Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
-        when(repositorioPlan.findUnicoByNombre("plan basico")).thenReturn(null);
+        when(repositorioPlan.findUnicoByNombre("Plan Basico")).thenReturn(null);
         when(repositorioPlan.persist(plan)).thenReturn(true);
 
         CrearPlanUseCase crearPlanUseCase = new CrearPlanUseCase(repositorioPlan);

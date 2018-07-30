@@ -47,17 +47,6 @@ public class ModificarPlanAfiliadoUnitTest {
 
     }
 
-    @Test
-    public void cambiarPlan_ErrorPersistencia_UpdateAfiliadoException() throws PersonaIncompletaException, PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, PlanesIgualesException {
-        Plan planNuevo= Plan.instancia(2, "Plan Nuevo", listaPrecios());
-        Afiliado afiliadoAModificar = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
-        when(repositorioAfiliado.findUnicoByNumero(afiliadoAModificar.getNumeroAfiliado())).thenReturn(afiliadoAModificar);
-        when(repositorioAfiliado.update(afiliadoAModificar)).thenReturn(false);
-        CambiarPlanAfiliadoUseCase cambiarPlanUseCase = new CambiarPlanAfiliadoUseCase(repositorioAfiliado);
-
-        Assertions.assertThrows(UpdateAfiliadoException.class,() ->cambiarPlanUseCase.modificarPlanAfiliado(afiliadoAModificar, planNuevo));
-    }
-
     private Persona factoryPersona() throws PersonaIncompletaException {
         try {
             return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),

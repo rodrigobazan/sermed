@@ -28,7 +28,7 @@ public class DesafiliarPersonaUnitTest {
     IPersonaRepositorio repositorioPersona;
 
     @Test
-    public void desafiliarPersona_personaAfiliada_devuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void desafiliarPersona_personaAfiliada_devuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException, PersonaNoAfiliadaException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
@@ -47,7 +47,7 @@ public class DesafiliarPersonaUnitTest {
     }
 
     @Test
-    public void desafiliarPersona_PersonaNoAfiliada_devuelveFalse() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PersonaIncompletaException, DniConPuntosException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void desafiliarPersona_PersonaNoAfiliada_PersonaNoAfiliadaException() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PersonaIncompletaException, DniConPuntosException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "1400005", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
@@ -55,13 +55,10 @@ public class DesafiliarPersonaUnitTest {
 
         DesafiliarPersonaUseCase desafiliarPersonaUseCase = new DesafiliarPersonaUseCase(repositorioAfiliado, repositorioPersona);
 
-        boolean resultado = desafiliarPersonaUseCase.desafiliarPersona(persona,afiliado);
+        Assertions.assertThrows(PersonaNoAfiliadaException.class, () -> desafiliarPersonaUseCase.desafiliarPersona(persona, afiliado));
 
-        Assertions.assertFalse(resultado);
-        Assertions.assertEquals(4, afiliado.getMiembros().size());
 
     }
-
 
 
     private Persona factoryPersona() {
@@ -119,6 +116,6 @@ public class DesafiliarPersonaUnitTest {
         listaPrecios.put("6", (double) 700);
         listaPrecios.put("7", (double) 750);
 
-        return Plan.instancia(1,"Plan Basico",listaPrecios);
+        return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
 }

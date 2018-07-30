@@ -1,5 +1,6 @@
 package InteractorTest;
 
+import Excepciones.MedicoExisteException;
 import Interactor.CrearMedicoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Medico;
@@ -20,7 +21,7 @@ public class CrearMedicoUnitTest {
     IMedicoRepositorio repositorioMedico;
 
     @Test
-    public void crearMedico_MedicoNoExiste_GuardarMedico() {
+    public void crearMedico_MedicoNoExiste_GuardarMedico() throws MedicoExisteException {
         Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
         CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
         when(repositorioMedico.findByMatricula(12015)).thenReturn(null);
@@ -34,67 +35,13 @@ public class CrearMedicoUnitTest {
 
     @Test
     public void crearMedico_MedicoSiExiste_NoGuardaMedico() {
-        when(repositorioMedico.findById(1)).thenReturn(new Medico(1,"torres","geerman",12015,"as212321"));
+        when(repositorioMedico.findByMatricula(190202)).thenReturn(new Medico(1,"torres","geerman",12015,"as212321"));
         CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
         Medico medico = new Medico(1, "vega", "romina", 190202, "674678");
 
-        boolean resultado = crearMedicoUseCase.crearMedico(medico);
+        Assertions.assertThrows(MedicoExisteException.class, () -> crearMedicoUseCase.crearMedico(medico));
 
-        Assertions.assertEquals(false, resultado);
-        verify(repositorioMedico, never()).persist(any(Medico.class));
     }
-
-    @Test
-    public void crearMedico_MatriculaSiExiste_NoGuardaMedico() {
-        //arrange
-
-        when(repositorioMedico.findByMatricula(190202)).thenReturn(new Medico(1, "vega", "romina", 190202, "674678"));
-        CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
-        Medico medico = new Medico(45, "Torres", "German", 190202, "674678");
-
-        //Act
-        boolean resultado = crearMedicoUseCase.crearMedico(medico);
-
-        //Assert
-        Assertions.assertEquals(false, resultado);
-        verify(repositorioMedico,never()).persist(any(Medico.class));
-    }
-
-    @Test
-    void validarMedicoExiste_MedicoExisteID_ReturnTrue() {
-
-        CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
-        when(repositorioMedico.findById(1)).thenReturn(new Medico(1, "vega", "romina", 190202, "674678"));
-        Medico medico = new Medico(1, "Torres", "German", 190202, "674678");
-
-        boolean respuestaValidar = crearMedicoUseCase.validarMedicoExiste(medico);
-
-        Assertions.assertEquals(true, respuestaValidar);
-    }
-
-    @Test
-    void validarMedicoExiste_MedicoExisteMatricula_ReturnTrue() {
-        CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
-        when(repositorioMedico.findByMatricula(190202)).thenReturn(new Medico(1, "vega", "romina", 190202, "674678"));
-        Medico medico = new Medico(1, "Torres", "German", 190202, "674678");
-
-        boolean respuestaValidar = crearMedicoUseCase.validarMedicoExiste(medico);
-
-        Assertions.assertEquals(true, respuestaValidar);
-    }
-
-    @Test
-    void validarMedicoExiste_MedicoNoExiste_ReturnFalse() {
-        CrearMedicoUseCase crearMedicoUseCase = new CrearMedicoUseCase(repositorioMedico);
-        when(repositorioMedico.findByMatricula(190202)).thenReturn(null);
-        when(repositorioMedico.findById(1)).thenReturn(null);
-        Medico medico = new Medico(1, "Torres", "German", 190202, "674678");
-
-        boolean respuestaValidar = crearMedicoUseCase.validarMedicoExiste(medico);
-
-        Assertions.assertEquals(false, respuestaValidar);
-    }
-
 
 }
 

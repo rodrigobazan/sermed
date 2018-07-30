@@ -22,53 +22,46 @@ public class CrearAfiliadoUnitTest {
     IAfiliadoRepositorio repositorioAfiliado;
 
     @Test
-    public void crearAfiliado_AfiliadoNoExisteYTitularNoEstaAsociadoAOtroAfiliadoActivo_GuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
-        try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
-            when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
-            when(repositorioAfiliado.findAll()).thenReturn(new ArrayList<>());
-            when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
-            CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
-            boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
-            Assertions.assertEquals(true, resultado);
-        } catch (AfiliadoSinTitularException e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
+    public void crearAfiliado_AfiliadoNoExisteYTitularNoEstaAsociadoAOtroAfiliadoActivo_GuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, TitularEnAfiliadoActivoException, AfiliadoExisteException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
+        when(repositorioAfiliado.findAll()).thenReturn(new ArrayList<>());
+        when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
+        CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
+        boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
+        Assertions.assertEquals(true, resultado);
     }
 
     @Test
-    public void crearAfiliado_AfiliadoNoExisteYTitularEstaAsociadoAOtroAfiliadoActivo_NoGuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
-        try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null,factoryPlan());
-            when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
-            when(repositorioAfiliado.findAll()).thenReturn(crearAfiliadoArray());
-            when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
-            CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
-            boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
-            Assertions.assertEquals(false, resultado);
-        } catch (AfiliadoSinTitularException e) {
-            e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
+    public void crearAfiliado_AfiliadoNoExisteYTitularEstaAsociadoAOtroAfiliadoActivo_TitularEnAfiliadoActivoException() throws PlanIncompletoException, AfiliadoSinPlanException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
+        when(repositorioAfiliado.findAll()).thenReturn(crearAfiliadoArray());
+
+        CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
+        Assertions.assertThrows(TitularEnAfiliadoActivoException.class, () -> crearAfiliadoUseCase.crearAfiliado(afiliado));
     }
 
     @Test
-    public void crearAfiliado_AfiliadoExistePorNumero_NoGuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException {
-        try {
-            Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
-            when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
-            when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
-            CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
-            boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
-            Assertions.assertEquals(false, resultado);
-        } catch (AfiliadoSinTitularException ex) {
-            ex.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        }
+    public void crearAfiliado_AfiliadoNoExisteYTitularEstaAsociadoAOtroAfiliadoInactivo_GuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, TitularEnAfiliadoActivoException, AfiliadoExisteException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(null);
+        when(repositorioAfiliado.findAll()).thenReturn(crearAfiliadoBajaArray());
+        when(repositorioAfiliado.persist(afiliado)).thenReturn(true);
+
+        CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
+        boolean resultado = crearAfiliadoUseCase.crearAfiliado(afiliado);
+        Assertions.assertEquals(true, resultado);
+
+    }
+
+    @Test
+    public void crearAfiliado_AfiliadoExistePorNumero_NoGuardaAfiliado() throws PlanIncompletoException, AfiliadoSinPlanException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, TitularEnAfiliadoActivoException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioAfiliado.findUnicoByNumero("190000")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
+        when(repositorioAfiliado.persist(afiliado)).thenReturn(false);
+        CrearAfiliadoUseCase crearAfiliadoUseCase = new CrearAfiliadoUseCase(repositorioAfiliado);
+        Assertions.assertThrows(AfiliadoExisteException.class, () -> crearAfiliadoUseCase.crearAfiliado(afiliado));
     }
 
 
@@ -164,6 +157,21 @@ public class CrearAfiliadoUnitTest {
 
     }
 
+    private List<Afiliado> crearAfiliadoBajaArray() {
+        List<Afiliado> afiliados = new ArrayList<>();
+        try {
+            afiliados.add(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersonaTitular(), factoryPersonaMiembros(), false, LocalDate.of(2018, 8, 20), null, factoryPlan()));
+            return afiliados;
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        } finally {
+            return afiliados;
+        }
+
+    }
+
 
     private Plan factoryPlan() throws PlanIncompletoException {
         HashMap<String, Double> listaPrecios = new HashMap<>();
@@ -175,7 +183,7 @@ public class CrearAfiliadoUnitTest {
         listaPrecios.put("6", (double) 700);
         listaPrecios.put("7", (double) 750);
 
-        return Plan.instancia(1,"Plan Basico",listaPrecios);
+        return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
 
 }

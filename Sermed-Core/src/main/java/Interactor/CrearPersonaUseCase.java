@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.PersonaExisteException;
 import Modelo.Persona;
 import Repositorio.IPersonaRepositorio;
 
@@ -11,20 +12,14 @@ public class CrearPersonaUseCase {
         this.repositorioPersona = repositorioPersona;
     }
 
-    public boolean crearPersona(Persona persona) {
-        if(!validarPersonaExiste(persona)){
+    public boolean crearPersona(Persona persona) throws PersonaExisteException {
+        if (!validarPersonaExiste(persona)) {
             return repositorioPersona.persist(persona);
         }
-        return false;
+        throw new PersonaExisteException();
     }
 
     private boolean validarPersonaExiste(Persona persona) {
-        if(repositorioPersona.findById(persona.getIdPersona())!= null){
-            return true;
-        }
-        if(repositorioPersona.findByDocumentoAndTipoDocumento(persona.getDocumento(),persona.getTipoDocumento().getNombre())!=null){
-            return true;
-        }
-        return false;
+        return repositorioPersona.findByDocumentoAndTipoDocumento(persona.getDocumento(), persona.getTipoDocumento().getNombre()) != null;
     }
 }

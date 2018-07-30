@@ -22,8 +22,8 @@ public class ConsultarAfiliadoUseCase {
         return (List<Afiliado>) repositorioAfiliado.findByNumero(numero);
     }
 
-    public Afiliado consultarAfiliadoPorId(int id) throws AfiliadoNoExisteException {
-        Afiliado buscado = repositorioAfiliado.findById(id);
+    public Afiliado consultarAfiliadoPorNumero(String numeroAfiliado) throws AfiliadoNoExisteException {
+        Afiliado buscado = repositorioAfiliado.findUnicoByNumero(numeroAfiliado);
         if(buscado == null)
             throw new AfiliadoNoExisteException();
         else

@@ -28,21 +28,20 @@ public class AfiliarPersonaUnitTest {
     List<Afiliado> afiliadosList = crearAfiliadoArray();
 
     @Test
-    public void afiliarPersona_PersonaYaAfiliada_NoSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void afiliarPersona_PersonaYaAfiliada_PersonaAfiliadaException() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);
         Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan());
-        when(repositorioAfiliado.findAll()).thenReturn(afiliadosList);
+        when(repositorioAfiliado.findAllActivos()).thenReturn(afiliadosList);
         AfiliarPersonaUseCase afiliarPersonaUseCase = new AfiliarPersonaUseCase(repositorioAfiliado);
-        boolean resultado = afiliarPersonaUseCase.afiliarPersona(persona, afiliado);
-        Assertions.assertEquals(false, resultado);
+        Assertions.assertThrows(PersonaAfiliadaException.class, ()->afiliarPersonaUseCase.afiliarPersona(persona, afiliado));
 
     }
 
 
     @Test
-    public void afiliarPersona_PersonaNoAfiliada_SiSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void afiliarPersona_PersonaNoAfiliada_SiSeAfilia() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, PlanIncompletoException, AfiliadoSinPlanException, PersonaAfiliadaException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "37415281", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", null, 0);

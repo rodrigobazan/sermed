@@ -1,5 +1,6 @@
 package InteractorTest;
 
+import Excepciones.MedicoNoExisteException;
 import Interactor.ConsultarMedicoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Medico;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -78,8 +80,7 @@ public class ConsultarMedicoUnitTest {
 
     }
     @Test
-    void consultarMedicoMatricula_MatriculaExiste_RetornaMedico()
-    {
+    void consultarMedicoMatricula_MatriculaExiste_RetornaMedico() throws MedicoNoExisteException {
         when(repositorioMedico.findByMatricula(190252)).thenReturn(new Medico(2,"Torres", "German", 190252, "674678"));
 
         ConsultarMedicoUseCase consultarMedicoUseCase=new ConsultarMedicoUseCase(repositorioMedico);
@@ -91,17 +92,11 @@ public class ConsultarMedicoUnitTest {
     }
 
     @Test
-    void consultarMedicoMatricula_MatriculaNoExiste_RetornaMedicoVacio()
+    void consultarMedicoMatricula_MatriculaNoExiste_MedicoNoExisteException()
     {
-        when(repositorioMedico.findByMatricula(190123)).thenReturn(new Medico(0,"","",0,""));
-
+        when(repositorioMedico.findByMatricula(190123)).thenReturn(null);
         ConsultarMedicoUseCase consultarMedicoUseCase=new ConsultarMedicoUseCase(repositorioMedico);
-
-        Medico medicoBuscado=consultarMedicoUseCase.consultarMedicoPorMatricula(190123);
-
-        assertEquals(0,medicoBuscado.getIdMedico());
-        verify(repositorioMedico).findByMatricula(190123);
-
+        Assertions.assertThrows(MedicoNoExisteException.class,()->consultarMedicoUseCase.consultarMedicoPorMatricula(190123));
     }
 
 

@@ -2,6 +2,7 @@ package InteractorTest;
 
 import Excepciones.DniConPuntosException;
 import Excepciones.NumeroAfiliadoIncorrectoException;
+import Excepciones.PersonaExisteException;
 import Excepciones.PersonaIncompletaException;
 import Interactor.CrearPersonaUseCase;
 import Mockito.MockitoExtension;
@@ -29,7 +30,7 @@ public class CrearPersonaUnitTest {
     IPersonaRepositorio repositorioPersona;
 
     @Test
-    public void crearPersona_PersonaNoExiste_GuardarPersona() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+    public void crearPersona_PersonaNoExiste_GuardarPersona() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, PersonaExisteException {
         Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                 new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
@@ -56,30 +57,11 @@ public class CrearPersonaUnitTest {
         when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
 
         CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-        boolean resultado = crearPersonaUseCase.crearPersona(persona);
 
-        verify(repositorioPersona, never()).persist(persona);
-        Assertions.assertEquals(false, resultado);
+        Assertions.assertThrows(PersonaExisteException.class, () -> crearPersonaUseCase.crearPersona(persona));
 
     }
 
-
-    @Test
-    public void validarPersona_existePorIDyDocumento_true() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Persona persona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
-
-        when(repositorioPersona.findById(1)).thenReturn(factoryPersona());
-        when(repositorioPersona.findByDocumentoAndTipoDocumento("14000001", "DNI")).thenReturn(factoryPersona());
-
-        CrearPersonaUseCase crearPersonaUseCase = new CrearPersonaUseCase(repositorioPersona);
-        Method privateMethod = CrearPersonaUseCase.class.getDeclaredMethod("validarPersonaExiste", Persona.class);
-        privateMethod.setAccessible(true);
-        boolean resultado = (boolean) privateMethod.invoke(crearPersonaUseCase, persona);
-        Assertions.assertEquals(true, resultado);
-
-    }
 
     private Collection<AntecedenteMedico> factoryAntecedenteMedico() {
         AntecedenteMedico dislexia = new AntecedenteMedico(1, new Afeccion(1, "Dislexia"), "Cronica");

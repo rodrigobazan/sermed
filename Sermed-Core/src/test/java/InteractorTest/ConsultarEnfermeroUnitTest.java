@@ -1,23 +1,21 @@
 package InteractorTest;
 
+import Excepciones.EnfermeroNoExisteException;
 import Interactor.ConsultarEnfermeroUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
-import javafx.beans.binding.When;
 import org.hamcrest.collection.IsEmptyCollection;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class ConsultarEnfermeroUnitTest {
         List<Enfermero> Enfermeros = consultarEnfermeroUseCase.consultarEnfermeros();
 
         assertThat(Enfermeros, not(IsEmptyCollection.empty()));
-        assertEquals(Enfermeros.size(), list.size());
+        Assertions.assertEquals(Enfermeros.size(), list.size());
         verify(repositorioEnfermero).findAll();
 
     }
@@ -64,7 +62,7 @@ public class ConsultarEnfermeroUnitTest {
 
         List<Enfermero> Enfermeros = consultarEnfermeroUseCase.consultarEnfermerosPorApellido("");
 
-        assertEquals(list, Enfermeros);
+        Assertions.assertEquals(list, Enfermeros);
         assertThat(Enfermeros, not(IsEmptyCollection.empty()));
         verify(repositorioEnfermero).findByApellido("");
     }
@@ -81,29 +79,26 @@ public class ConsultarEnfermeroUnitTest {
 
     }
     @Test
-    void consultarEnfermeroMatricula_MatriculaExiste_RetornaEnfermero()
-    {
+    void consultarEnfermeroMatricula_MatriculaExiste_RetornaEnfermero() throws EnfermeroNoExisteException {
         when(repositorioEnfermero.findByMatricula(190252)).thenReturn(new Enfermero(2,"Torres", "German", 190252, "674678"));
 
         ConsultarEnfermeroUseCase consultarEnfermeroUseCase=new ConsultarEnfermeroUseCase(repositorioEnfermero);
         Enfermero EnfermeroBuscado=consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190252);
 
-        assertEquals(2,EnfermeroBuscado.getIdEnfermero().intValue());
+        Assertions.assertEquals(2,EnfermeroBuscado.getIdEnfermero().intValue());
         verify(repositorioEnfermero).findByMatricula(190252);
 
     }
 
     @Test
-    void consultarEnfermeroMatricula_MatriculaNoExiste_RetornaEnfermeroVacio()
+    void consultarEnfermeroMatricula_MatriculaNoExiste_EnfermeroNoExisteException()
     {
-        when(repositorioEnfermero.findByMatricula(190123)).thenReturn(new Enfermero(0,"","",0,""));
+        when(repositorioEnfermero.findByMatricula(190123)).thenReturn(null);
 
         ConsultarEnfermeroUseCase consultarEnfermeroUseCase=new ConsultarEnfermeroUseCase(repositorioEnfermero);
 
-        Enfermero EnfermeroBuscado=consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190123);
 
-        assertEquals(0,EnfermeroBuscado.getIdEnfermero().intValue());
-        verify(repositorioEnfermero).findByMatricula(190123);
+        Assertions.assertThrows(EnfermeroNoExisteException.class, () -> consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190123));
 
     }
 

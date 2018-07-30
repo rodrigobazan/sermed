@@ -1,5 +1,8 @@
 package InteractorTest;
 
+import Excepciones.MatriculasIgualesException;
+import Excepciones.MedicoIncompletoException;
+import Excepciones.UpdateMedicoException;
 import Interactor.ModificarMedicoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Medico;
@@ -18,24 +21,20 @@ public class ModificarMedicoUnitTest {
     IMedicoRepositorio repositorioMedico;
 
     @Test
-    public void modificarMedico_DatosMedico_AssertTrue() {
+    public void modificarMedico_DatosMedico_AssertTrue() throws UpdateMedicoException, MatriculasIgualesException, MedicoIncompletoException {
 
         ModificarMedicoUseCase modificarMedicoUseCase = new ModificarMedicoUseCase(repositorioMedico);
 
         when(repositorioMedico.findById(1)).thenReturn(new Medico(1,"Vega", "Romina", 190106, "4813148"));
         when(repositorioMedico.findByMatricula(123)).thenReturn(null);
-        when(repositorioMedico.update(any(Medico.class))).thenReturn(true);
-
-
         Medico medicoAModificar = repositorioMedico.findById(1);
         Medico nuevosDatos = new Medico(1, "Vega", "Romina", 123, "123123");
+        when(repositorioMedico.update(medicoAModificar)).thenReturn(true);
 
-        boolean resultado = modificarMedicoUseCase.modificarMedico(nuevosDatos);
+        Medico medicoModificado = modificarMedicoUseCase.modificarMedico(nuevosDatos);
 
-        verify(repositorioMedico).update(medicoAModificar);
-        Assertions.assertTrue(resultado);
-        Assertions.assertEquals(nuevosDatos.mostrarMedico(),medicoAModificar.mostrarMedico());
-        Assertions.assertEquals(1,medicoAModificar.getIdMedico());
+        Assertions.assertEquals(nuevosDatos.mostrarMedico(),medicoModificado.mostrarMedico());
+        Assertions.assertEquals(1,medicoModificado.getIdMedico());
 
     }
 
@@ -49,10 +48,8 @@ public class ModificarMedicoUnitTest {
 
         Medico romiNueva = new Medico(1,"Vega", "Romina", 192256, "4813148");
 
-        boolean resultado = modificarMedicoUseCase.modificarMedico(romiNueva);
+        Assertions.assertThrows(MatriculasIgualesException.class, () -> modificarMedicoUseCase.modificarMedico(romiNueva));
 
-        Assertions.assertFalse(resultado);
-        verify(repositorioMedico, never()).update(romiNueva);
 
     }
 

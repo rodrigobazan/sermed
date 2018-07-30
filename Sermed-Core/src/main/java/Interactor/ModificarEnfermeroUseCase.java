@@ -1,5 +1,8 @@
 package Interactor;
 
+import Excepciones.EnfermeroIncompletoException;
+import Excepciones.MatriculasIgualesException;
+import Excepciones.UpdateEnfermeroException;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
@@ -12,19 +15,15 @@ public class ModificarEnfermeroUseCase {
         this.repositorioEnfermero = repositorioEnfermero;
     }
 
-    public boolean modificarEnfermero(Enfermero nuevosDatos) {
-        try {
-            Enfermero elEnfermeroOriginal = repositorioEnfermero.findById(nuevosDatos.getIdEnfermero());
-            if (elEnfermeroOriginal.getMatricula() == nuevosDatos.getMatricula() || repositorioEnfermero.findByMatricula(nuevosDatos.getMatricula()) == null) {
-                elEnfermeroOriginal.modificarDatos(nuevosDatos);
-                return this.repositorioEnfermero.update(elEnfermeroOriginal);
-            } else
-                return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Enfermero modificarEnfermero(Enfermero nuevosDatos) throws MatriculasIgualesException, EnfermeroIncompletoException, UpdateEnfermeroException {
+        Enfermero elEnfermeroAmodificar = repositorioEnfermero.findById(nuevosDatos.getIdEnfermero());
+        if (elEnfermeroAmodificar.getMatricula() == nuevosDatos.getMatricula() || repositorioEnfermero.findByMatricula(nuevosDatos.getMatricula()) == null) {
+            elEnfermeroAmodificar.modificarDatos(nuevosDatos);
+            if (repositorioEnfermero.update(elEnfermeroAmodificar))
+                return elEnfermeroAmodificar;
+            throw new UpdateEnfermeroException();
+        } else
+            throw new MatriculasIgualesException();
     }
-
 
 }

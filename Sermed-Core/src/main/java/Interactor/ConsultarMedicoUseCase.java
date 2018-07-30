@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.MedicoNoExisteException;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 import java.util.List;
@@ -19,7 +20,10 @@ public class ConsultarMedicoUseCase {
         return this.repositorioMedico.findByApellido(apellido);
     }
 
-    public Medico consultarMedicoPorMatricula(int matricula) {
-        return this.repositorioMedico.findByMatricula(matricula);
+    public Medico consultarMedicoPorMatricula(int matricula) throws MedicoNoExisteException {
+        Medico buscado = this.repositorioMedico.findByMatricula(matricula);
+        if(buscado != null)
+            return buscado;
+        throw new MedicoNoExisteException();
     }
 }

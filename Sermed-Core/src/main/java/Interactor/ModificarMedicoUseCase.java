@@ -1,5 +1,8 @@
 package Interactor;
 
+import Excepciones.MatriculasIgualesException;
+import Excepciones.MedicoIncompletoException;
+import Excepciones.UpdateMedicoException;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 
@@ -12,17 +15,16 @@ public class ModificarMedicoUseCase {
         this.repositorioMedico = repositorioMedico;
     }
 
-    public boolean modificarMedico(Medico nuevosDatos) {
-        try {
-            Medico elMedicoOriginal = repositorioMedico.findById(nuevosDatos.getIdMedico());
-            if (elMedicoOriginal.getMatricula() == nuevosDatos.getMatricula() || repositorioMedico.findByMatricula(nuevosDatos.getMatricula()) == null) {
-                elMedicoOriginal.modificarDatos(nuevosDatos);
-                return this.repositorioMedico.update(elMedicoOriginal);
-            } else
-                return false;
-        } catch (Exception e) {
-            return false;
-        }
+    public Medico modificarMedico(Medico nuevosDatos) throws MatriculasIgualesException, MedicoIncompletoException, UpdateMedicoException {
+        Medico elMedicoAModificar = repositorioMedico.findById(nuevosDatos.getIdMedico());
+        if (elMedicoAModificar.getMatricula() == nuevosDatos.getMatricula() || repositorioMedico.findByMatricula(nuevosDatos.getMatricula()) == null) {
+            elMedicoAModificar.modificarDatos(nuevosDatos);
+            if (this.repositorioMedico.update(elMedicoAModificar))
+                return elMedicoAModificar;
+            throw new UpdateMedicoException();
+        } else
+            throw new MatriculasIgualesException();
+
     }
 
 

@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.EnfermeroExisteException;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
@@ -12,20 +13,14 @@ public class CrearEnfermeroUseCase {
         this.repositorioEnfermero = repositorioEnfermero;
     }
 
-    public boolean crearEnfermero(Enfermero Enfermero) {
-        if(!validarEnfermeroExiste(Enfermero)) {
+    public boolean crearEnfermero(Enfermero Enfermero) throws EnfermeroExisteException {
+        if (!validarEnfermeroExiste(Enfermero)) {
             return repositorioEnfermero.persist(Enfermero);
         }
-        return false;
+        throw new EnfermeroExisteException();
     }
 
     public boolean validarEnfermeroExiste(Enfermero Enfermero) {
-        if(repositorioEnfermero.findById(Enfermero.getIdEnfermero()) != null){
-            return  true;
-        }
-        if(repositorioEnfermero.findByMatricula(Enfermero.getMatricula())!=null){
-            return  true;
-        }
-        return  false;
+        return repositorioEnfermero.findByMatricula(Enfermero.getMatricula()) != null;
     }
 }

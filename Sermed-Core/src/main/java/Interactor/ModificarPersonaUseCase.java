@@ -1,6 +1,8 @@
 package Interactor;
 
+import Excepciones.PersonaExisteException;
 import Excepciones.PersonaIncompletaException;
+import Excepciones.UpdatePersonaException;
 import Modelo.Persona;
 import Repositorio.IPersonaRepositorio;
 
@@ -11,18 +13,15 @@ public class ModificarPersonaUseCase {
         this.repositorioPersona = repositorioPersona;
     }
 
-    public boolean modificarPersona(Persona personaDatosNuevos) {
-        try {
-            Persona persona = repositorioPersona.findById(personaDatosNuevos.getIdPersona());
-            if ((persona.getDocumento() == personaDatosNuevos.getDocumento() && persona.getTipoDocumento() == personaDatosNuevos.getTipoDocumento())
-                    || repositorioPersona.findByDocumentoAndTipoDocumento(personaDatosNuevos.getDocumento(), personaDatosNuevos.getTipoDocumento().getNombre()) == null) {
-                persona.modificarDatos(personaDatosNuevos);
-                return repositorioPersona.update(persona);
+    public Persona modificarPersona(Persona personaDatosNuevos) throws PersonaIncompletaException, PersonaExisteException, UpdatePersonaException {
+            Persona personaAModificar = repositorioPersona.findById(personaDatosNuevos.getIdPersona());
+            if (personaAModificar.obtenerDocumentoCompleto().equals(personaDatosNuevos.obtenerDocumentoCompleto()) || repositorioPersona.findByDocumentoAndTipoDocumento(personaDatosNuevos.getDocumento(), personaDatosNuevos.getTipoDocumento().getNombre()) == null) {
+                personaAModificar.modificarDatos(personaDatosNuevos);
+                if(repositorioPersona.update(personaAModificar))
+                    return personaAModificar;
+                throw new UpdatePersonaException();
             }
-            return false;
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-            return false;
-        }
+            throw new PersonaExisteException();
+
     }
 }

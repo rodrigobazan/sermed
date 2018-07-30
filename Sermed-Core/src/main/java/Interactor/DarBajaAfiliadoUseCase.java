@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.AfiliadoDeBajaException;
 import Modelo.Afiliado;
 import Repositorio.IAfiliadoRepositorio;
 
@@ -12,12 +13,12 @@ public class DarBajaAfiliadoUseCase {
         this.repositorioAfiliado = repositorioAfiliado;
     }
 
-    public boolean darBajaAfiliado(Afiliado afiliado, LocalDate fechaBaja) {
+    public boolean darBajaAfiliado(Afiliado afiliado, LocalDate fechaBaja) throws AfiliadoDeBajaException {
         if (afiliado.getActivo()) {
             afiliado.darDeBaja(fechaBaja);
             return repositorioAfiliado.update(afiliado);
         }
-        return false;
+        throw new AfiliadoDeBajaException();
 
     }
 }

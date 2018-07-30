@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.PersonaNoAfiliadaException;
 import Modelo.Afiliado;
 import Modelo.Persona;
 import Repositorio.IAfiliadoRepositorio;
@@ -14,13 +15,13 @@ public class DesafiliarPersonaUseCase {
         this.repositorioPersona = repositorioPersona;
     }
 
-    public boolean desafiliarPersona(Persona persona, Afiliado afiliado) {
+    public boolean desafiliarPersona(Persona persona, Afiliado afiliado) throws PersonaNoAfiliadaException {
         if(afiliado.quitarPersona(persona)){
             persona.setNroOrden(0);
             persona.setNumeroAfiliado("");
             return this.repositorioAfiliado.update(afiliado) && this.repositorioPersona.update(persona);
 
         }
-        return false;
+        throw new PersonaNoAfiliadaException();
     }
 }

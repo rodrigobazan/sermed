@@ -74,7 +74,7 @@ public class Persona {
         return this.nroAfiliado + "-" + String.format("%02d", this.nroOrden);
     }
 
-    public String mostrarTitular() {
+    public String mostrarPersona() {
         return this.apellidos +", "+this.nombres+" ("+this.getNumeroAfiliado()+").";
     }
 

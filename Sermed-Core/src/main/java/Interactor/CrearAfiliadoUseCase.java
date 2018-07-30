@@ -1,5 +1,7 @@
 package Interactor;
 
+import Excepciones.AfiliadoExisteException;
+import Excepciones.TitularEnAfiliadoActivoException;
 import Modelo.Afiliado;
 import Modelo.Persona;
 import Repositorio.IAfiliadoRepositorio;
@@ -11,17 +13,17 @@ public class CrearAfiliadoUseCase {
         this.repositorioAfiliado = repositorioAfiliado;
     }
 
-    public boolean crearAfiliado(Afiliado afiliadoNuevo) {
+    public boolean crearAfiliado(Afiliado afiliadoNuevo) throws TitularEnAfiliadoActivoException, AfiliadoExisteException {
         if (!validarAfiliadoExiste(afiliadoNuevo)) {
             Afiliado afiliadoQueContieneAlTitularNuevo = buscarAfiliadoQueContienePersona(afiliadoNuevo.getTitular());
             if (afiliadoQueContieneAlTitularNuevo == null) return repositorioAfiliado.persist(afiliadoNuevo);
-            if (afiliadoQueContieneAlTitularNuevo.getActivo()) return false;
+            if (afiliadoQueContieneAlTitularNuevo.getActivo()) throw new TitularEnAfiliadoActivoException();
             else {
                 afiliadoNuevo.asignarTitular(afiliadoQueContieneAlTitularNuevo.devolverPersona(afiliadoNuevo.getTitular()));
                 return repositorioAfiliado.persist(afiliadoNuevo);
             }
         }
-        return false;
+        throw new AfiliadoExisteException();
     }
 
     private Afiliado buscarAfiliadoQueContienePersona(Persona titular) {

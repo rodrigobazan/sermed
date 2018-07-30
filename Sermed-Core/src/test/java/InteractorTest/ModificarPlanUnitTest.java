@@ -1,6 +1,8 @@
 package InteractorTest;
 
+import Excepciones.PlanExisteException;
 import Excepciones.PlanIncompletoException;
+import Excepciones.UpdatePlanException;
 import Interactor.ModificarPlanUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Plan;
@@ -22,19 +24,20 @@ public class ModificarPlanUnitTest {
     IPlanRepositorio repositorioPlan;
 
     @Test
-    public void modificarPlan_DatosPlan_DevuelveTrue() throws PlanIncompletoException {
+    public void modificarPlan_DatosPlan_DevuelveTrue() throws PlanIncompletoException, PlanExisteException, UpdatePlanException {
         ModificarPlanUseCase modificarPlanUseCase = new ModificarPlanUseCase(repositorioPlan);
 
         when(repositorioPlan.findById(1)).thenReturn(Plan.instancia(1, "Plan Basico",factoryListaPreciosOriginal()));
-        when(repositorioPlan.findUnicoByNombre("Plan Nuevo Basico")).thenReturn(null);
-        when(repositorioPlan.update(any(Plan.class))).thenReturn(true);
-
         Plan planAModificar = repositorioPlan.findById(1);
+        when(repositorioPlan.findUnicoByNombre("Plan Nuevo Basico")).thenReturn(null);
+        when(repositorioPlan.update(planAModificar)).thenReturn(true);
+
+
         Plan nuevosDatos = Plan.instancia(1, "Plan Nuevo Basico",factoryListaPreciosModificada());
-        boolean resultado = modificarPlanUseCase.modificarPlan(nuevosDatos);
-        Assertions.assertTrue(resultado);
-        Assertions.assertEquals(nuevosDatos.mostrarPlan(), planAModificar.mostrarPlan());
-        Assertions.assertEquals(1, planAModificar.getIdPlan().intValue());
+        Plan planModificado = modificarPlanUseCase.modificarPlan(nuevosDatos);
+
+        Assertions.assertEquals(nuevosDatos.mostrarPlan(), planModificado.mostrarPlan());
+        Assertions.assertEquals(1, planModificado.getIdPlan().intValue());
     }
 
     @Test
@@ -44,21 +47,21 @@ public class ModificarPlanUnitTest {
         when(repositorioPlan.findUnicoByNombre("Plan Especial")).thenReturn(Plan.instancia(2, "Plan Especial", factoryListaPreciosOriginal()));
 
         Plan planNuevo = Plan.instancia(1, "Plan Especial", factoryListaPreciosModificada());
-        boolean resultado = modificarPlanUseCase.modificarPlan(planNuevo);
-        Assertions.assertFalse(resultado);
-
+        Assertions.assertThrows(PlanExisteException.class, () -> modificarPlanUseCase.modificarPlan(planNuevo));
     }
 
 
     @Test
-    public void modificarPlan_NoModificaNombre_ActualizaPlan() throws PlanIncompletoException {
+    public void modificarPlan_NoModificaNombre_ActualizaPlan() throws PlanIncompletoException, PlanExisteException, UpdatePlanException {
         ModificarPlanUseCase modificarPlanUseCase = new ModificarPlanUseCase(repositorioPlan);
         when(repositorioPlan.findById(1)).thenReturn(Plan.instancia(1, "Plan Basico",factoryListaPreciosOriginal()));
         when(repositorioPlan.findUnicoByNombre("Plan Basico")).thenReturn(Plan.instancia(1, "Plan Basico", factoryListaPreciosOriginal()));
         when(repositorioPlan.update(any(Plan.class))).thenReturn(true);
-        Plan planNuevo = Plan.instancia(1, "Plan Basico", factoryListaPreciosModificada());
-        boolean resultado = modificarPlanUseCase.modificarPlan(planNuevo);
-        Assertions.assertTrue(resultado);
+        Plan planNuevo = Plan.instancia(1, "Plan Nuevo", factoryListaPreciosModificada());
+        Plan planModificado = modificarPlanUseCase.modificarPlan(planNuevo);
+
+        Assertions.assertEquals(planNuevo.mostrarPlan(), planModificado.mostrarPlan());
+
     }
 
 

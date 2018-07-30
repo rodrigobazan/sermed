@@ -83,18 +83,18 @@ public class ConsultarAfiliadoUnitTest {
 
     @Test
     public void consultarAfiliadoNumero_NumeroExiste_RetornaAfiliado() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoNoExisteException, PlanIncompletoException, AfiliadoSinPlanException {
-        when(repositorioAfiliado.findById(1)).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null, factoryPlan()));
+        when(repositorioAfiliado.findUnicoByNumero("000001")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 06, 20), "000001", factoryPersona().get(0), factoryPersona(), true, null, null, factoryPlan()));
         ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
-        Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorId(1);
+        Afiliado afiliado = consultarAfiliadoUseCase.consultarAfiliadoPorNumero("000001");
         Assertions.assertEquals(1, afiliado.getIdAfiliado().intValue());
 
     }
 
     @Test
     public void consultarAfiliadoNumero_NumeroNoExiste_RetornaAfiliadoNoExisteException() {
-        when(repositorioAfiliado.findById(1)).thenReturn(null);
+        when(repositorioAfiliado.findUnicoByNumero("000001")).thenReturn(null);
         ConsultarAfiliadoUseCase consultarAfiliadoUseCase = new ConsultarAfiliadoUseCase(repositorioAfiliado);
-        assertThrows(AfiliadoNoExisteException.class, () -> consultarAfiliadoUseCase.consultarAfiliadoPorId(1));
+        assertThrows(AfiliadoNoExisteException.class, () -> consultarAfiliadoUseCase.consultarAfiliadoPorNumero("000001"));
     }
 
 

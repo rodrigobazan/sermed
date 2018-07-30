@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.PlanExisteException;
 import Modelo.Plan;
 import Repositorio.IPlanRepositorio;
 
@@ -10,17 +11,14 @@ public class CrearPlanUseCase {
         this.repositorioPlan = repositorioPlan;
     }
 
-    public boolean crearPlan(Plan plan) {
+    public boolean crearPlan(Plan plan) throws PlanExisteException {
         if(!validarPlanExiste(plan)){
             return repositorioPlan.persist(plan);
         }
-        return false;
+        throw new PlanExisteException();
     }
 
     private boolean validarPlanExiste(Plan plan) {
-        if(repositorioPlan.findUnicoByNombre(plan.getNombre()) != null) {
-            return true;
-        }
-        return false;
+        return repositorioPlan.findUnicoByNombre(plan.getNombre()) != null;
     }
 }

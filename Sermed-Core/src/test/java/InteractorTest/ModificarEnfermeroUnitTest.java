@@ -1,5 +1,8 @@
 package InteractorTest;
 
+import Excepciones.EnfermeroIncompletoException;
+import Excepciones.MatriculasIgualesException;
+import Excepciones.UpdateEnfermeroException;
 import Interactor.ModificarEnfermeroUseCase;
 import Mockito.MockitoExtension;
 import Modelo.Enfermero;
@@ -18,7 +21,7 @@ public class ModificarEnfermeroUnitTest {
     IEnfermeroRepositorio repositorioEnfermero;
 
     @Test
-    public void modificarEnfermero_DatosEnfermero_AssertTrue() {
+    public void modificarEnfermero_DatosEnfermero_AssertTrue() throws MatriculasIgualesException, EnfermeroIncompletoException, UpdateEnfermeroException {
 
         ModificarEnfermeroUseCase modificarEnfermeroUseCase = new ModificarEnfermeroUseCase(repositorioEnfermero);
 
@@ -26,21 +29,16 @@ public class ModificarEnfermeroUnitTest {
         when(repositorioEnfermero.findByMatricula(123)).thenReturn(null);
         when(repositorioEnfermero.update(any(Enfermero.class))).thenReturn(true);
 
-
-        Enfermero EnfermeroAModificar = repositorioEnfermero.findById(1);
         Enfermero nuevosDatos = new Enfermero(1, "Vega", "Romina", 123, "123123");
 
-        boolean resultado = modificarEnfermeroUseCase.modificarEnfermero(nuevosDatos);
+        Enfermero enfermeroModificado = modificarEnfermeroUseCase.modificarEnfermero(nuevosDatos);
 
-        verify(repositorioEnfermero).update(EnfermeroAModificar);
-        Assertions.assertTrue(resultado);
-        Assertions.assertEquals(nuevosDatos.mostrarEnfermero(),EnfermeroAModificar.mostrarEnfermero());
-        Assertions.assertEquals(1,EnfermeroAModificar.getIdEnfermero().intValue());
-
+        Assertions.assertEquals(nuevosDatos.mostrarEnfermero(),enfermeroModificado.mostrarEnfermero());
+        Assertions.assertEquals(1,enfermeroModificado.getIdEnfermero().intValue());
     }
 
     @Test
-    public void modificarEnfermero__MatriculaExiste_NoActualiza(){
+    public void modificarEnfermero__MatriculaExiste_NoActualiza() throws MatriculasIgualesException, EnfermeroIncompletoException, UpdateEnfermeroException {
 
         ModificarEnfermeroUseCase modificarEnfermeroUseCase = new ModificarEnfermeroUseCase(repositorioEnfermero);
 
@@ -49,10 +47,7 @@ public class ModificarEnfermeroUnitTest {
 
         Enfermero romiNueva = new Enfermero(1,"Vega", "Romina", 192256, "4813148");
 
-        boolean resultado = modificarEnfermeroUseCase.modificarEnfermero(romiNueva);
-
-        Assertions.assertFalse(resultado);
-        verify(repositorioEnfermero, never()).update(romiNueva);
+        Assertions.assertThrows(MatriculasIgualesException.class, () -> modificarEnfermeroUseCase.modificarEnfermero(romiNueva));
 
     }
 

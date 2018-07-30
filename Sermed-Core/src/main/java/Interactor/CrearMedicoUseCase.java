@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.MedicoExisteException;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 
@@ -12,20 +13,14 @@ public class CrearMedicoUseCase {
         this.repositorioMedico = repositorioMedico;
     }
 
-    public boolean crearMedico(Medico medico) {
-        if(!validarMedicoExiste(medico)) {
+    public boolean crearMedico(Medico medico) throws MedicoExisteException {
+        if (!validarMedicoExiste(medico)) {
             return repositorioMedico.persist(medico);
         }
-        return false;
+        throw new MedicoExisteException();
     }
 
     public boolean validarMedicoExiste(Medico medico) {
-        if(repositorioMedico.findById(medico.getIdMedico()) != null){
-            return  true;
-        }
-        if(repositorioMedico.findByMatricula(medico.getMatricula())!=null){
-            return  true;
-        }
-        return  false;
+        return repositorioMedico.findByMatricula(medico.getMatricula()) != null;
     }
 }

@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.EnfermeroNoExisteException;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
@@ -21,7 +22,10 @@ public class ConsultarEnfermeroUseCase {
         return this.repositorioEnfermero.findByApellido(apellido);
     }
 
-    public Enfermero consultarEnfermeroPorMatricula(int matricula) {
-        return this.repositorioEnfermero.findByMatricula(matricula);
+    public Enfermero consultarEnfermeroPorMatricula(int matricula) throws EnfermeroNoExisteException {
+        Enfermero buscado = this.repositorioEnfermero.findByMatricula(matricula);
+        if(buscado != null)
+            return buscado;
+        throw new EnfermeroNoExisteException();
     }
 }
