@@ -128,4 +128,8 @@ public class Afiliado {
     public void cambiarPlan(Plan planNuevo) {
         this.plan = planNuevo;
     }
+
+    public boolean afiliadoEstaActivo() {
+        return this.activo;
+    }
 }
