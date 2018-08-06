@@ -1,7 +1,7 @@
 package InteractorTest;
 
 import Excepciones.*;
-import Interactor.CrearComprobantePagoUseCase;
+import Interactor.AnularComprobantesUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
 import Repositorio.IComprobanteRepositorio;
@@ -16,29 +16,27 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CrearComprobantePagoUnitTest {
+public class AnularComprobanteDePagoUnitTest {
 
     @Mock
     IComprobanteRepositorio repositorioComprobante;
 
     @Test
-    public void crearComprobante_ComprobanteExiste_NoSeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException {
-        Comprobante comprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
-        CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
-        when(repositorioComprobante.findByNumero("123456789")).thenReturn(Comprobante.instancia(2, "123456789", factoryAfiliado(), 500.45, LocalDate.of(2018, 3, 25), "Efectivo", true));
-
-        Assertions.assertThrows(ComprobanteExisteException.class, () -> crearComprobantePagoUseCase.crearComprobante(comprobante));
+    public void anularComprobante_ComprobanteActivo_SeAnulaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException {
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
+        AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
+        when(repositorioComprobante.update(comprobanteAnular)).thenReturn(true);
+        boolean resultado = anularComprobantesUseCase.anularComprobante(comprobanteAnular );
+        Assertions.assertTrue(resultado);
     }
 
     @Test
-    public void crearComprobante_ComprobanteNoExiste_SeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException {
-        Comprobante comprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
-        CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
-        when(repositorioComprobante.findByNumero("123456789")).thenReturn(null);
-        when(repositorioComprobante.persist(comprobante)).thenReturn(true);
-        boolean resultado = crearComprobantePagoUseCase.crearComprobante(comprobante);
-        Assertions.assertEquals(true, resultado);
+    public void anularComprobante_ComprobanteDeBaja_ComprobanteAnuladoException() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException {
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", false);
+        AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
+        Assertions.assertThrows(ComprobanteAnuladoException.class,()->anularComprobantesUseCase.anularComprobante(comprobanteAnular ));
     }
+
 
     public Afiliado factoryAfiliado() {
         try {
@@ -122,5 +120,4 @@ public class CrearComprobantePagoUnitTest {
 
         return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
-
 }

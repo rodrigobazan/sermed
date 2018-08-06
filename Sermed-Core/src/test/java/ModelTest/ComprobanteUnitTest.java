@@ -12,36 +12,36 @@ public class ComprobanteUnitTest {
 
     @Test
     void instanciarComprobante_ComprobanteConDatosObligatorios_InstanciaComprobante() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException {
-        Comprobante unComprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo");
+        Comprobante unComprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true);
         Assertions.assertNotNull(unComprobante);
     }
 
     @Test
     void instanciarComprobante_ComprobanteSinDatosObligatorios_ComprobanteIncompletoException() {
-        Assertions.assertThrows(ComprobanteIncompletoException.class, ()-> Comprobante.instancia(1, "", null, 0, null, ""));
+        Assertions.assertThrows(ComprobanteIncompletoException.class, ()-> Comprobante.instancia(1, "", null, 0, null, "", true));
     }
 
     @Test
     void instanciaComprobante_AfiliadoDeBaja_AfiliadoDeBajaException() {
-        Assertions.assertThrows(AfiliadoDeBajaException.class, ()-> Comprobante.instancia(1, "123456789", factoryAfiliadoInactivo(), 500.56, LocalDate.now(), "Efectivo"));
+        Assertions.assertThrows(AfiliadoDeBajaException.class, ()-> Comprobante.instancia(1, "123456789", factoryAfiliadoInactivo(), 500.56, LocalDate.now(), "Efectivo", true));
     }
 
     @Test
     void instanciarComprobante_AfiliadoActivo_InstanciaComprobante() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException {
-        Comprobante unComprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo");
+        Comprobante unComprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true);
         Assertions.assertNotNull(unComprobante);
     }
 
     @Test
     void instanciaComprobante_FechaMayorActual_FechaIncorrectaException(){
         LocalDate fecha = LocalDate.now().plusDays(2);
-        Assertions.assertThrows(FechaIncorrectaException.class, () -> Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, fecha,"Efectivo"));
+        Assertions.assertThrows(FechaIncorrectaException.class, () -> Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, fecha,"Efectivo", true));
     }
 
     @Test
     void instanciaComprobante_FechaMenorActual_InstanciaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException {
         LocalDate fecha = LocalDate.of(2018,1,1);
-        Comprobante comprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, fecha,"Efectivo");
+        Comprobante comprobante = Comprobante.instancia(1, "123456789", factoryAfiliado(), 500.56, fecha,"Efectivo", true);
         Assertions.assertNotNull(comprobante);
     }
 

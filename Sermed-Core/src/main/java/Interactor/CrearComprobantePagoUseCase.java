@@ -11,14 +11,14 @@ public class CrearComprobantePagoUseCase {
         this.repositorioComprobante = repositorioComprobante;
     }
 
-    public boolean crearComprobante(Comprobante recibo) throws ComprobanteExisteException {
-        if(!validarReciboExiste(recibo)){
-            return repositorioComprobante.persist(recibo);
+    public boolean crearComprobante(Comprobante comprobante) throws ComprobanteExisteException {
+        if(!validarComprobanteExiste(comprobante)){
+            return repositorioComprobante.persist(comprobante);
         }
         throw new ComprobanteExisteException();
     }
 
-    private boolean validarReciboExiste(Comprobante recibo) {
-        return repositorioComprobante.findByNumero(recibo.getNumero()) != null;
+    private boolean validarComprobanteExiste(Comprobante comprobante) {
+        return repositorioComprobante.findByNumero(comprobante.getNumero()) != null;
     }
 }
