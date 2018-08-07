@@ -1,5 +1,6 @@
 package Repositorio;
 
+import Modelo.Afiliado;
 import Modelo.Visita;
 
 import java.util.Collection;
@@ -10,4 +11,6 @@ public interface IVisitaRepositorio {
     Collection<Visita> findAll();
 
     Visita findbyNumero(int numeroVisita);
+
+    Collection<Visita> findByAfiliado(Afiliado afiliado);
 }
