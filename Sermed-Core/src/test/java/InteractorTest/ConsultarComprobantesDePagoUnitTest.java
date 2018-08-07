@@ -55,10 +55,10 @@ public class ConsultarComprobantesDePagoUnitTest {
     }
 
     @Test
-    public void consultarComprobantePorNumero_CriterioCadenaConDatos_DevolverAlgunos() throws ComprobanteNoExisteException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException {
-        when(repositorioComprobante.findByNumero("123")).thenReturn(Comprobante.instancia(4, "123", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
+    public void consultarComprobantePorNumero_CriterioCadenaConDatos_DevolverAlgunos() throws ComprobanteNoExisteException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException {
+        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(4, "1234-567891", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
         ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        Comprobante comprobante = consultarComprobantesUseCase.consultarComprobantePorNumero("123");
+        Comprobante comprobante = consultarComprobantesUseCase.consultarComprobantePorNumero("1234-567891");
         Assertions.assertNotNull(comprobante);
     }
 
@@ -94,8 +94,8 @@ public class ConsultarComprobantesDePagoUnitTest {
     private List<Comprobante> crearComprobantesFiltroArray() {
         try {
             List<Comprobante> comprobantes = new ArrayList<>();
-            comprobantes.add(Comprobante.instancia(1, "987", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(2, "654", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
+            comprobantes.add(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(2, "1234-567892", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
             return comprobantes;
         }catch (Exception e){
             e.printStackTrace();
@@ -106,11 +106,11 @@ public class ConsultarComprobantesDePagoUnitTest {
     private List<Comprobante> crearComprobantesArray() {
         try {
             List<Comprobante> comprobantes = new ArrayList<>();
-            comprobantes.add(Comprobante.instancia(1, "987", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(2, "654", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
-            comprobantes.add(Comprobante.instancia(3, "321", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(4, "123", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(5, "456", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(2, "1234-567892", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
+            comprobantes.add(Comprobante.instancia(3, "1234-567893", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(4, "1234-567894", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(5, "1234-567895", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true));
             return comprobantes;
         }catch (Exception e){
             e.printStackTrace();

@@ -132,4 +132,12 @@ public class Afiliado {
     public boolean afiliadoEstaActivo() {
         return this.activo;
     }
+
+    public String nombreApellidoTitular() {
+        return this.titular.nombreApellido();
+    }
+
+    public String domicilioTitular() {
+        return this.titular.mostrarDomicilio();
+    }
 }

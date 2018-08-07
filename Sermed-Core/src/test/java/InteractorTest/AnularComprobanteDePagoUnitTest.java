@@ -22,8 +22,8 @@ public class AnularComprobanteDePagoUnitTest {
     IComprobanteRepositorio repositorioComprobante;
 
     @Test
-    public void anularComprobante_ComprobanteActivo_SeAnulaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException {
-        Comprobante comprobanteAnular = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
+    public void anularComprobante_ComprobanteActivo_SeAnulaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException, NumeroComprobanteIncorrectoException {
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
         AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
         when(repositorioComprobante.update(comprobanteAnular)).thenReturn(true);
         boolean resultado = anularComprobantesUseCase.anularComprobante(comprobanteAnular );
@@ -31,8 +31,8 @@ public class AnularComprobanteDePagoUnitTest {
     }
 
     @Test
-    public void anularComprobante_ComprobanteDeBaja_ComprobanteAnuladoException() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException {
-        Comprobante comprobanteAnular = Comprobante.instancia(1, "123456789", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", false);
+    public void anularComprobante_ComprobanteDeBaja_ComprobanteAnuladoException() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException, NumeroComprobanteIncorrectoException {
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", false);
         AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
         Assertions.assertThrows(ComprobanteAnuladoException.class,()->anularComprobantesUseCase.anularComprobante(comprobanteAnular ));
     }

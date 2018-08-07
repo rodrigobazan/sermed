@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.AfiliadoNoExisteException;
 import Modelo.Afiliado;
 import ModeloReporte.FichaAfiliadoDTO;
 import Repositorio.IAfiliadoRepositorio;
@@ -11,11 +12,14 @@ public class GenerarFichaAfiliadoUseCase {
         this.repositorioAfiliado = repositorioAfiliado;
     }
 
-    public FichaAfiliadoDTO generarFichaAfiliadoParaReporte(String numeroAfiliado) {
-        FichaAfiliadoDTO fichaGenerada=new FichaAfiliadoDTO();
-        fichaGenerada.armarFicha(repositorioAfiliado.findUnicoByNumero(numeroAfiliado));
-        return fichaGenerada;
-
+    public FichaAfiliadoDTO generarFichaAfiliadoParaReporte(String numeroAfiliado) throws AfiliadoNoExisteException {
+        Afiliado afiliado = repositorioAfiliado.findUnicoByNumero(numeroAfiliado);
+        if(afiliado != null){
+            FichaAfiliadoDTO fichaGenerada=new FichaAfiliadoDTO();
+            fichaGenerada.armarFicha(afiliado);
+            return fichaGenerada;
+        }
+        throw new AfiliadoNoExisteException();
 
     }
 

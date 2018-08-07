@@ -85,11 +85,11 @@ public class ConsultarComprobanteDeAfiliadoUnitTest {
     private List<Comprobante> crearComprobantesArray() {
         try {
             List<Comprobante> comprobantes = new ArrayList<>();
-            comprobantes.add(Comprobante.instancia(1, "987", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(2, "654", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
-            comprobantes.add(Comprobante.instancia(3, "321", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(4, "123", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(5, "456", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(2, "1234-567892", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
+            comprobantes.add(Comprobante.instancia(3, "1234-567893", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(4, "1234-567894", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(5, "1234-567895", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true));
             return comprobantes;
         }catch (Exception e){
             e.printStackTrace();

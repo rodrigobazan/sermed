@@ -1,9 +1,11 @@
 package InteractorTest;
 
 import Excepciones.*;
-import Interactor.CrearComprobantePagoUseCase;
+import Interactor.GenerarComprobanteAfiliadoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
+import ModeloReporte.ComprobanteAfiliadoDTO;
+import Repositorio.IAfiliadoRepositorio;
 import Repositorio.IComprobanteRepositorio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,28 +18,24 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CrearComprobantePagoUnitTest {
+public class GenerarComprobanteAfiliadoUnitTest {
 
     @Mock
     IComprobanteRepositorio repositorioComprobante;
 
     @Test
-    public void crearComprobante_ComprobanteExiste_NoSeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
-        CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
-        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(2, "1234-567891", factoryAfiliado(), 500.45, LocalDate.of(2018, 3, 25), "Efectivo", true));
-
-        Assertions.assertThrows(ComprobanteExisteException.class, () -> crearComprobantePagoUseCase.crearComprobante(comprobante));
+    public void generarComprobanteAfiliado_ComprobanteExiste_SeGeneraComprobante() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException, ComprobanteNoExisteException {
+        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true));
+        GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
+        ComprobanteAfiliadoDTO comprobanteAfiliado = generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891");
+        Assertions.assertNotNull(comprobanteAfiliado);
     }
 
     @Test
-    public void crearComprobante_ComprobanteNoExiste_SeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
-        CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
+    public void generarComprobanteAfiliado_ComprobanteNoExiste_ComprobanteNoExisteException() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException, ComprobanteNoExisteException {
         when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(null);
-        when(repositorioComprobante.persist(comprobante)).thenReturn(true);
-        boolean resultado = crearComprobantePagoUseCase.crearComprobante(comprobante);
-        Assertions.assertEquals(true, resultado);
+        GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
+        Assertions.assertThrows(ComprobanteNoExisteException.class, () -> generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891"));
     }
 
     public Afiliado factoryAfiliado() {
@@ -122,5 +120,6 @@ public class CrearComprobantePagoUnitTest {
 
         return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
+
 
 }

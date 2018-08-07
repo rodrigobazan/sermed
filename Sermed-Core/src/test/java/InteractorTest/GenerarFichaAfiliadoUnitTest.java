@@ -25,12 +25,19 @@ public class GenerarFichaAfiliadoUnitTest {
     IAfiliadoRepositorio repositorioAfiliado;
 
     @Test
-    public void generarFichaAfiliado_AfiliadoExiste_SeGeneraFicha() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+    public void generarFichaAfiliado_AfiliadoExiste_SeGeneraFicha() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException, AfiliadoNoExisteException {
         when(repositorioAfiliado.findUnicoByNumero("000003")).thenReturn(Afiliado.instancia(1, LocalDate.of(2018, 6, 27), "000003", factoryPersona(), factoryPersonaMiembros(), true, null, null, factoryPlan()));
 
         GenerarFichaAfiliadoUseCase generarFichaAfiliadoUseCase = new GenerarFichaAfiliadoUseCase(repositorioAfiliado);
         FichaAfiliadoDTO fichaGenerada= generarFichaAfiliadoUseCase.generarFichaAfiliadoParaReporte("000003");
         Assertions.assertNotNull(fichaGenerada);
+    }
+
+    @Test
+    public void generarFichaAfiliado_AfiliadoNoExiste_AfiliadoNoExisteException() throws PersonaIncompletaException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinPlanException {
+        when(repositorioAfiliado.findUnicoByNumero("000003")).thenReturn(null);
+        GenerarFichaAfiliadoUseCase generarFichaAfiliadoUseCase = new GenerarFichaAfiliadoUseCase(repositorioAfiliado);
+        Assertions.assertThrows(AfiliadoNoExisteException.class, () -> generarFichaAfiliadoUseCase.generarFichaAfiliadoParaReporte("000003"));
     }
 
 

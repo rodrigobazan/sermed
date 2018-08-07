@@ -112,4 +112,12 @@ public class Persona {
     public String obtenerDocumentoCompleto(){
         return this.getTipoDocumento().getNombre() + this.getDocumento();
     }
+
+    public String nombreApellido() {
+        return this.nombres +", "+this.apellidos;
+    }
+
+    public String mostrarDomicilio() {
+        return this.domicilio;
+    }
 }
