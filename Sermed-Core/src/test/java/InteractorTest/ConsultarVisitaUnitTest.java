@@ -57,7 +57,7 @@ public class ConsultarVisitaUnitTest {
 
 
     @Test
-    public void consultarVisitas_CriterioEntreFechas_ExistenDatos() {
+    public void consultarVisitas_CriterioEntreFechas_ColeccionConDatos() {
         when(repositorioVisita.findAll()).thenReturn(visitasArray);
         LocalDate fechaDesde = LocalDate.of(2018, 8, 9);
         LocalDate fechaHasta = LocalDate.of(2018, 8, 12);
@@ -66,6 +66,19 @@ public class ConsultarVisitaUnitTest {
         List<Visita> visitas = consultarVisitaUseCase.consultarVisitasEntreFechas(fechaDesde,fechaHasta);
 
         Assertions.assertEquals(3,visitas.size());
+
+    }
+
+    @Test
+    public void consultarVisitas_CriterioEntreFechasNoExistenDatos_ColeccionSinDatos() {
+        when(repositorioVisita.findAll()).thenReturn(visitasArray);
+        LocalDate fechaDesde = LocalDate.of(2018, 8, 15);
+        LocalDate fechaHasta = LocalDate.of(2018, 8, 20);
+
+        ConsultarVisitaUseCase consultarVisitaUseCase = new ConsultarVisitaUseCase(repositorioVisita);
+        List<Visita> visitas = consultarVisitaUseCase.consultarVisitasEntreFechas(fechaDesde,fechaHasta);
+
+        Assertions.assertEquals(0,visitas.size());
 
     }
 
