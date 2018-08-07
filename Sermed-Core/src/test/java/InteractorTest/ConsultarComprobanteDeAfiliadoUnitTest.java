@@ -1,7 +1,7 @@
 package InteractorTest;
 
 import Excepciones.*;
-import Interactor.ConsultarComprobantesUseCase;
+import Interactor.ConsultarComprobanteDeAfiliadoUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
 import Repositorio.IComprobanteRepositorio;
@@ -10,98 +10,77 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ConsultarComprobantesDePagoUnitTest {
+public class ConsultarComprobanteDeAfiliadoUnitTest {
 
     @Mock
     IComprobanteRepositorio repositorioComprobante;
 
-    @Spy
-    List<Comprobante> listaComprobantes = crearComprobantesArray();
-
     @Test
-    public void consultarComprobrantes_ExistenComprobantes_ColeccionConDatos() {
-        when(repositorioComprobante.findAll()).thenReturn(listaComprobantes);
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        List<Comprobante> comprobantes = consultarComprobantesUseCase.consultarComprobantes();
-        Assertions.assertEquals(5,comprobantes.size());
-        assertThat(comprobantes, not(IsEmptyCollection.empty()));
-    }
-
-    @Test
-    public void consultarComprobrantes_NoExistenComprobantes_ColeccionVacia() {
-        when(repositorioComprobante.findAll()).thenReturn(new ArrayList<>());
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        List<Comprobante> comprobantes = consultarComprobantesUseCase.consultarComprobantes();
-        Assertions.assertEquals(0,comprobantes.size());
-        assertThat(comprobantes, IsEmptyCollection.empty());
-    }
-
-    @Test
-    public void consultarComprobantePorNumero_ComprobanteNoExiste_ComprobanteNoExisteException(){
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-
-        Assertions.assertThrows(ComprobanteNoExisteException.class, () -> consultarComprobantesUseCase.consultarComprobantePorNumero("123"));
+    public void consultarComprobantesDeAfiliado_TieneComprobantes_DevuelveColeccionConDatos() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioComprobante.findByAfiliado(afiliado)).thenReturn(crearComprobantesArray());
+        ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
+        List<Comprobante> comprobantesDelAfiliado = consultarComprobanteDeAfiliadoUseCase.consultarTodosLosComprobantes(afiliado);
+        Assertions.assertEquals(5,comprobantesDelAfiliado.size());
+        assertThat(comprobantesDelAfiliado, not(IsEmptyCollection.empty()));
 
     }
 
     @Test
-    public void consultarComprobantePorNumero_CriterioCadenaConDatos_DevolverAlgunos() throws ComprobanteNoExisteException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException {
-        when(repositorioComprobante.findByNumero("123")).thenReturn(Comprobante.instancia(4, "123", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        Comprobante comprobante = consultarComprobantesUseCase.consultarComprobantePorNumero("123");
-        Assertions.assertNotNull(comprobante);
+    public void consultarComprobantesDeAfiliado_NoTieneComprobantes_DevuelveColeccionVacia() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioComprobante.findByAfiliado(afiliado)).thenReturn(new ArrayList<>());
+        ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
+        List<Comprobante> comprobantesDelAfiliado = consultarComprobanteDeAfiliadoUseCase.consultarTodosLosComprobantes(afiliado);
+        Assertions.assertEquals(0,comprobantesDelAfiliado.size());
+        assertThat(comprobantesDelAfiliado, IsEmptyCollection.empty());
+
     }
 
     @Test
-    public  void consultarComprobantesPorFechas_ExistenComprobantes_DevolverComprobantes() throws FechaIncorrectaException {
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        LocalDate fechaDesde = LocalDate.of(2018,8,1);
-        LocalDate fechaHasta = LocalDate.of(2018,8,6);
-        when(repositorioComprobante.findByFechas(fechaDesde,fechaHasta)).thenReturn(crearComprobantesFiltroArray());
-        List<Comprobante> comprobantes = consultarComprobantesUseCase.consultarComprobantesPorFechas(fechaDesde, fechaHasta);
-        Assertions.assertEquals(2, comprobantes.size());
+    public void consultarComprobantesDeAfiliadoPorFechas_TieneComprobantes_DevuelveColeccionConDatos() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, FechaIncorrectaException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioComprobante.findByAfiliado(afiliado)).thenReturn(crearComprobantesArray());
+        LocalDate fechaDesde = LocalDate.now().minusDays(2);
+        LocalDate fechaHasta = LocalDate.now();
+        ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
+        List<Comprobante> comprobantesDelAfiliado = consultarComprobanteDeAfiliadoUseCase.consultarComprobantesAfiliadoPorFechas(afiliado, fechaDesde, fechaHasta);
+        Assertions.assertEquals(5,comprobantesDelAfiliado.size());
+        assertThat(comprobantesDelAfiliado, not(IsEmptyCollection.empty()));
     }
 
     @Test
-    public  void consultarComprobantesPorFechas_NoExistenComprobantes_DevolverListaVacia() throws FechaIncorrectaException {
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
-        LocalDate fechaDesde = LocalDate.of(2018,6,1);
-        LocalDate fechaHasta = LocalDate.of(2018,6,6);
-        when(repositorioComprobante.findByFechas(fechaDesde,fechaHasta)).thenReturn(new ArrayList<>());
-        List<Comprobante> comprobantes = consultarComprobantesUseCase.consultarComprobantesPorFechas(fechaDesde, fechaHasta);
-        Assertions.assertEquals(0, comprobantes.size());
-        assertThat(comprobantes, IsEmptyCollection.empty());
+    public void consultarComprobantesDeAfiliadoPorFechas_NoTieneComprobantes_DevuelveColeccionVacia() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, FechaIncorrectaException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        when(repositorioComprobante.findByAfiliado(afiliado)).thenReturn(crearComprobantesArray());
+        LocalDate fechaDesde = LocalDate.now().minusDays(4);
+        LocalDate fechaHasta = LocalDate.now().minusDays(2);
+        ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
+        List<Comprobante> comprobantesDelAfiliado = consultarComprobanteDeAfiliadoUseCase.consultarComprobantesAfiliadoPorFechas(afiliado, fechaDesde, fechaHasta);
+        Assertions.assertEquals(0,comprobantesDelAfiliado.size());
+        assertThat(comprobantesDelAfiliado, IsEmptyCollection.empty());
     }
 
     @Test
-    public  void consultarComprobantesPorFechas_FechaHastaMenorFechaDesde_FechaIncorrectaException(){
-        ConsultarComprobantesUseCase consultarComprobantesUseCase = new ConsultarComprobantesUseCase(repositorioComprobante);
+    public void consultarComprobantesDeAfiliadoPorFechas_FechaHastaMenorQueFechaDesde_FechaIncorrectasException() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
+        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
         LocalDate fechaDesde = LocalDate.now();
         LocalDate fechaHasta = LocalDate.now().minusDays(2);
-        Assertions.assertThrows(FechaIncorrectaException.class, ()-> consultarComprobantesUseCase.consultarComprobantesPorFechas(fechaDesde, fechaHasta));
+        ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
+        Assertions.assertThrows(FechaIncorrectaException.class, () -> consultarComprobanteDeAfiliadoUseCase.consultarComprobantesAfiliadoPorFechas(afiliado,fechaDesde,fechaHasta));
+
     }
 
-    private List<Comprobante> crearComprobantesFiltroArray() {
-        try {
-            List<Comprobante> comprobantes = new ArrayList<>();
-            comprobantes.add(Comprobante.instancia(1, "987", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(2, "654", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
-            return comprobantes;
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
 
     private List<Comprobante> crearComprobantesArray() {
         try {
@@ -200,7 +179,4 @@ public class ConsultarComprobantesDePagoUnitTest {
 
         return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
-
-
-
 }

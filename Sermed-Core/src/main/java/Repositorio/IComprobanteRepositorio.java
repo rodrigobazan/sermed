@@ -1,8 +1,10 @@
 package Repositorio;
 
+import Modelo.Afiliado;
 import Modelo.Comprobante;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 public interface IComprobanteRepositorio {
@@ -11,11 +13,13 @@ public interface IComprobanteRepositorio {
 
     boolean persist(Comprobante comprobante);
 
-    List<Comprobante> findAll();
+    Collection<Comprobante> findAll();
 
     boolean update(Comprobante comprobanteAAnular);
 
-    List<Comprobante> findByFechas(LocalDate fechaDesde, LocalDate fechaHasta);
+    Collection<Comprobante> findByFechas(LocalDate fechaDesde, LocalDate fechaHasta);
+
+    Collection<Comprobante> findByAfiliado(Afiliado afiliado);
 
     /*List<Comprobante> findByNumero(String numeroComprobante);*/
 }

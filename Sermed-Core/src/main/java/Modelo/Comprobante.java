@@ -46,4 +46,8 @@ public class Comprobante {
     public void anularComprobante() {
         this.activo = false;
     }
+
+    public LocalDate getFechaCreacion() {
+        return this.fechaCreacion;
+    }
 }

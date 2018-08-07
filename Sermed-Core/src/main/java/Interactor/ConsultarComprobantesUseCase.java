@@ -1,6 +1,7 @@
 package Interactor;
 
 import Excepciones.ComprobanteNoExisteException;
+import Excepciones.FechaIncorrectaException;
 import Modelo.Comprobante;
 import Repositorio.IComprobanteRepositorio;
 
@@ -16,7 +17,7 @@ public class ConsultarComprobantesUseCase {
     }
 
     public List<Comprobante> consultarComprobantes() {
-        return this.repositorioComprobante.findAll();
+        return (List<Comprobante>) this.repositorioComprobante.findAll();
     }
 
     public Comprobante consultarComprobantePorNumero(String numeroComprobante) throws ComprobanteNoExisteException {
@@ -25,8 +26,9 @@ public class ConsultarComprobantesUseCase {
         throw new ComprobanteNoExisteException();
     }
 
-    public List<Comprobante> consultarComprobantesPorFechas(LocalDate fechaDesde, LocalDate fechaHasta) {
+    public List<Comprobante> consultarComprobantesPorFechas(LocalDate fechaDesde, LocalDate fechaHasta) throws FechaIncorrectaException {
+        if(fechaHasta.isBefore(fechaDesde)) throw new FechaIncorrectaException();
 
-        return this.repositorioComprobante.findByFechas(fechaDesde, fechaHasta);
+        return (List<Comprobante>) this.repositorioComprobante.findByFechas(fechaDesde, fechaHasta);
     }
 }
