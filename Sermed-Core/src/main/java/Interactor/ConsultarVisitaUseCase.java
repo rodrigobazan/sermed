@@ -1,5 +1,6 @@
 package Interactor;
 
+import Excepciones.VisitaNoExisteException;
 import Modelo.Visita;
 import Repositorio.IVisitaRepositorio;
 
@@ -25,7 +26,12 @@ public class ConsultarVisitaUseCase {
         return this.repositorioVisita.findAll().stream().filter(visita -> (visita.getFecha().isAfter(desde) || visita.getFecha().isEqual(desde)) && (visita.getFecha().isBefore(hasta) || visita.getFecha().isEqual(hasta))).collect(Collectors.toList());
     }
 
-    public Visita consultarVisitaNumero(int numeroVisita) {
-        return this.repositorioVisita.findbyNumero(numeroVisita);
+    public Visita consultarVisitaPorNumero(int numeroVisita) throws VisitaNoExisteException {
+        Visita visitaBuscada=this.repositorioVisita.findbyNumero(numeroVisita);
+        if(visitaBuscada!=null){
+            return visitaBuscada;
+        }
+        else
+            throw new VisitaNoExisteException();
     }
 }

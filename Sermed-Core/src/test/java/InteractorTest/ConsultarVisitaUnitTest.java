@@ -1,7 +1,6 @@
 package InteractorTest;
 
 import Excepciones.*;
-import Interactor.ConsultarMedicoUseCase;
 import Interactor.ConsultarVisitaUseCase;
 import Mockito.MockitoExtension;
 
@@ -57,7 +56,7 @@ public class ConsultarVisitaUnitTest {
 
 
     @Test
-    public void consultarVisitas_CriterioEntreFechas_ColeccionConDatos() {
+    public void consultarVisitasEntreFechas_ExistenVisitas_ColeccionConDatos() {
         when(repositorioVisita.findAll()).thenReturn(visitasArray);
         LocalDate fechaDesde = LocalDate.of(2018, 8, 9);
         LocalDate fechaHasta = LocalDate.of(2018, 8, 12);
@@ -70,7 +69,7 @@ public class ConsultarVisitaUnitTest {
     }
 
     @Test
-    public void consultarVisitas_CriterioEntreFechasNoExistenDatos_ColeccionSinDatos() {
+    public void consultarVisitasEntreFechas_NoExistenVisitas_ColeccionSinDatos() {
         when(repositorioVisita.findAll()).thenReturn(visitasArray);
         LocalDate fechaDesde = LocalDate.of(2018, 8, 15);
         LocalDate fechaHasta = LocalDate.of(2018, 8, 20);
@@ -83,13 +82,20 @@ public class ConsultarVisitaUnitTest {
     }
 
     @Test
-    public void consultarVisita_CriterioNumero_ExistenDatos() throws NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinTitularException, AfiliadoSinPlanException, VisitaIncompletaException {
+    public void consultarVisitaPorNumero_VisitaExiste_DevolverVisita() throws NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinTitularException, AfiliadoSinPlanException, VisitaIncompletaException, VisitaNoExisteException {
         when(repositorioVisita.findbyNumero(1452)).thenReturn(factoryVisita());
 
         ConsultarVisitaUseCase consultarVisitaUseCase = new ConsultarVisitaUseCase(repositorioVisita);
-        Visita visita = consultarVisitaUseCase.consultarVisitaNumero(1452);
+        Visita visita = consultarVisitaUseCase.consultarVisitaPorNumero(1452);
 
         Assertions.assertNotNull(visita);
+    }
+
+    @Test
+    public void consultarVisitaPorNumero_VisitaNoExiste_VisitaNoExisteException() throws NumeroAfiliadoIncorrectoException, PlanIncompletoException, AfiliadoSinTitularException, AfiliadoSinPlanException, VisitaIncompletaException {
+        ConsultarVisitaUseCase consultarVisitaUseCase = new ConsultarVisitaUseCase(repositorioVisita);
+
+        Assertions.assertThrows(VisitaNoExisteException.class,()->consultarVisitaUseCase.consultarVisitaPorNumero(1499));
     }
 
 
