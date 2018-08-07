@@ -23,13 +23,13 @@ public class CrearEnfermeroUnitTest {
 
     @Test
     public void crearEnfermero_EnfermeroNoExiste_GuardarEnfermero() throws EnfermeroExisteException {
-        Enfermero Enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
+        Enfermero enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
         CrearEnfermeroUseCase crearEnfermeroUseCase = new CrearEnfermeroUseCase(repositorioEnfermero);
         when(repositorioEnfermero.findByMatricula(12015)).thenReturn(null);
         when(repositorioEnfermero.findById(1)).thenReturn(null);
         when(repositorioEnfermero.persist(any(Enfermero.class))).thenReturn(true);
 
-        boolean resultado = crearEnfermeroUseCase.crearEnfermero(Enfermero);
+        boolean resultado = crearEnfermeroUseCase.crearEnfermero(enfermero);
 
         Assertions.assertEquals(true, resultado);
     }
@@ -38,9 +38,9 @@ public class CrearEnfermeroUnitTest {
     public void crearEnfermero_EnfermeroExiste_EnfermeroExisteException() throws EnfermeroExisteException {
         when(repositorioEnfermero.findByMatricula(190202)).thenReturn(new Enfermero(1, "vega", "romina", 190202, "674678"));
         CrearEnfermeroUseCase crearEnfermeroUseCase = new CrearEnfermeroUseCase(repositorioEnfermero);
-        Enfermero Enfermero = new Enfermero(1, "vega", "romina", 190202, "674678");
+        Enfermero enfermero = new Enfermero(1, "vega", "romina", 190202, "674678");
 
-        Assertions.assertThrows(EnfermeroExisteException.class, ()->crearEnfermeroUseCase.crearEnfermero(Enfermero));
+        Assertions.assertThrows(EnfermeroExisteException.class, ()->crearEnfermeroUseCase.crearEnfermero(enfermero));
     }
 
 
