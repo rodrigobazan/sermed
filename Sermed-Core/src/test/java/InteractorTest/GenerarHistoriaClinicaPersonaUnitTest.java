@@ -1,70 +1,60 @@
 package InteractorTest;
 
 import Excepciones.*;
-import Interactor.CrearVisitaUseCase;
+import Interactor.GenerarHistoriaClinicaPersonaUseCase;
 import Mockito.MockitoExtension;
 import Modelo.*;
+import ModeloReporte.HistoriaClinicaPersonaDTO;
+import Repositorio.IPersonaRepositorio;
 import Repositorio.IVisitaRepositorio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
-import java.security.PublicKey;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
-public class CrearVisitaUnitTest {
+public class GenerarHistoriaClinicaPersonaUnitTest {
 
     @Mock
     IVisitaRepositorio repositorioVisita;
+    @Mock
+    IPersonaRepositorio repositorioPersona;
+
 
     @Test
-    public void CrearVisita_visitaNoExiste_GuardarVisita() throws VisitaIncompletaException {
-        Persona elPaciente = factoryPersona();
-        Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
-        Enfermero enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
-        Visita visita = Visita.instancia(1, 1452, elPaciente, LocalDateTime.of(2018,8,7,10,1),"Dolores columna", "Espina bifida", "110/80",36.5f,45,82,"Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero  );
+    public void generarHistoriaClinicaPersona_PersonaExiste_GeneraHistoriaClinica() throws PersonaIncompletaException {
 
-        when(repositorioVisita.persist(visita)).thenReturn(true);
+        when(repositorioPersona.findByNumeroAfiliado("000001",0)).thenReturn(factoryPersona());
 
-        CrearVisitaUseCase crearVisitaUseCase =new CrearVisitaUseCase(repositorioVisita);
-        boolean resultado= crearVisitaUseCase.crearVisita(visita);
+        GenerarHistoriaClinicaPersonaUseCase generarHistoriaClinicaAfiliadoUseCase = new GenerarHistoriaClinicaPersonaUseCase(repositorioPersona, repositorioVisita);
+        HistoriaClinicaPersonaDTO historiaClinicaPersona = generarHistoriaClinicaAfiliadoUseCase.generarHistoriaClinicaPersona("000001",0);
+        Assertions.assertNotNull(historiaClinicaPersona);
 
-
-        Assertions.assertTrue(resultado);
     }
 
-    @Test
-    public void InstanciarVisita_visitaIncompleta_visitaIncompletaExceptions(){
-        Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
 
-        Assertions.assertThrows(VisitaIncompletaException.class,()-> Visita.instancia(1, 1452, null , null ,"Dolores columna", "Espina bifida", "110/80",36.5f,45,82,"Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, null));
+    public Afiliado factoryAfiliado() {
+        try {
+            return Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
+        } catch (AfiliadoSinTitularException e) {
+            e.printStackTrace();
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+        } catch (AfiliadoSinPlanException e) {
+            e.printStackTrace();
+        } catch (PlanIncompletoException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-//    @Test
-//    public void CrearVisita_afiliadoDeBaja_NoCreaVisita() throws VisitaIncompletaException, PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
-//        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), false, LocalDate.of(2018,5,15), null, factoryPlan());
-//        Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
-//        Enfermero enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
-//        Visita visita = Visita.instancia(1, 1452, afiliado, LocalDateTime.of(2018,8,7,10,1),"Dolores columna", "Espina bifida", "110/80",36.5f,45,82,"Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero  );
-//
-//        CrearVisitaUseCase crearVisitaUseCase = new CrearVisitaUseCase(repositorioVisita);
-//        boolean resultado = crearVisitaUseCase.crearVisita(visita);
-//
-//        Assertions.assertFalse(resultado);
-//    }
-
-
-
-
-
-    public Persona factoryPersona() {
+    public Persona factoryPersonaTitular() {
         try {
             return Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
                     "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
@@ -118,6 +108,7 @@ public class CrearVisitaUnitTest {
 
         return listaAntecedentes;
     }
+
     private Plan factoryPlan() throws PlanIncompletoException {
         HashMap<String, Double> listaPrecios = new HashMap<>();
         listaPrecios.put("1", (double) 380);
@@ -130,4 +121,44 @@ public class CrearVisitaUnitTest {
 
         return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
+
+    private List<Visita> crearVisitasArray() {
+        List<Visita> lasVisitas = new ArrayList<Visita>();
+        try {
+            Persona elPaciente= factoryPersona();
+            Medico medico = new Medico(1, "torres", "geerman", 12015, "as212321");
+            Enfermero enfermero = new Enfermero(1, "torres", "geerman", 12015, "as212321");
+            Visita visita1 = Visita.instancia(1, 1452, elPaciente, LocalDateTime.of(2018, 8, 7, 10, 1), "Dolores columna", "Espina bifida", "110/80", 36.5f, 45, 82, "Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero);
+            Visita visita2 = Visita.instancia(2, 1453, elPaciente, LocalDateTime.of(2018, 8, 9, 10, 1), "Dolores columna", "Espina bifida", "110/80", 36.5f, 45, 82, "Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero);
+            Visita visita3 = Visita.instancia(3, 1454, elPaciente, LocalDateTime.of(2018, 8, 10, 10, 1), "Dolores columna", "Espina bifida", "110/80", 36.5f, 45, 82, "Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero);
+            Visita visita4 = Visita.instancia(4, 1455, elPaciente, LocalDateTime.of(2018, 8, 12, 10, 1), "Dolores columna", "Espina bifida", "110/80", 36.5f, 45, 82, "Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero);
+
+
+            lasVisitas.add(visita1);
+            lasVisitas.add(visita2);
+            lasVisitas.add(visita3);
+            lasVisitas.add(visita4);
+            return lasVisitas;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return lasVisitas;
+        }
+    }
+
+    private Persona factoryPersona() throws PersonaIncompletaException {
+        try {
+            return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
+                    new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
+        } catch (NumeroAfiliadoIncorrectoException e) {
+            e.printStackTrace();
+            return null;
+        } catch (DniConPuntosException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

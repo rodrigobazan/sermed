@@ -11,9 +11,6 @@ public class CrearVisitaUseCase {
     }
 
     public boolean crearVisita(Visita visita) {
-        if(visita.getAfiliado().getActivo())
-            return repositorioVisita.persist(visita);
-        else
-            return false;
+        return repositorioVisita.persist(visita);
     }
 }
