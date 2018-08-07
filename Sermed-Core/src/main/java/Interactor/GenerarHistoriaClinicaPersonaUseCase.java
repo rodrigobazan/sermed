@@ -1,8 +1,13 @@
 package Interactor;
 
+import Excepciones.PersonaNoExisteException;
+import Modelo.Persona;
+import Modelo.Visita;
 import ModeloReporte.HistoriaClinicaPersonaDTO;
 import Repositorio.IPersonaRepositorio;
 import Repositorio.IVisitaRepositorio;
+
+import java.util.List;
 
 public class GenerarHistoriaClinicaPersonaUseCase {
     private IPersonaRepositorio repositorioPersona;
@@ -13,11 +18,14 @@ public class GenerarHistoriaClinicaPersonaUseCase {
         this.repositorioVisita = repositorioVisita;
     }
 
-    public HistoriaClinicaPersonaDTO generarHistoriaClinicaPersona(String numeroAfiliado, Integer orden){
-//        ConsultarPersonaUseCase consultarPersona=
-//        ConsultarVisitaUseCase consultarVisitas= new ConsultarVisitaUseCase(repositorioVisita);
-//
-//        HistoriaClinicaPersonaDTO historiaClinica=new HistoriaClinicaPersonaDTO(consultarAfiliado.consultarAfiliadoPorNumero(numeroAfiliado).mostrarAntecedentes());
-        return null;
+    public HistoriaClinicaPersonaDTO generarHistoriaClinicaPersona(String numeroAfiliado, Integer orden) throws PersonaNoExisteException {
+
+        ConsultarPersonaUseCase consultarPersonaUseCase=new ConsultarPersonaUseCase(repositorioPersona);
+        Persona personaBuscada=consultarPersonaUseCase.consultarPersonaPorNumeroAfiliado(numeroAfiliado,orden);
+        ConsultarVisitasDePersonaUseCase consultarVisitaUseCase=new ConsultarVisitasDePersonaUseCase(repositorioVisita);
+        List<Visita> visitasDeLaPersona= consultarVisitaUseCase.consultarVisitasPersona(personaBuscada);
+
+        HistoriaClinicaPersonaDTO historiaClinica=new HistoriaClinicaPersonaDTO(personaBuscada, personaBuscada.devolverAntecedentes(), visitasDeLaPersona);
+        return historiaClinica;
     }
 }

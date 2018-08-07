@@ -28,7 +28,7 @@ public class GenerarHistoriaClinicaPersonaUnitTest {
 
 
     @Test
-    public void generarHistoriaClinicaPersona_PersonaExiste_GeneraHistoriaClinica() throws PersonaIncompletaException {
+    public void generarHistoriaClinicaPersona_PersonaExiste_GeneraHistoriaClinica() throws PersonaIncompletaException, PersonaNoExisteException {
 
         when(repositorioPersona.findByNumeroAfiliado("000001",0)).thenReturn(factoryPersona());
 

@@ -7,6 +7,7 @@ import com.sun.deploy.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 public class Persona {
 
@@ -119,5 +120,9 @@ public class Persona {
 
     public String mostrarDomicilio() {
         return this.domicilio;
+    }
+
+    public List<AntecedenteMedico> devolverAntecedentes() {
+        return (List<AntecedenteMedico>) this.antecedentesMedico;
     }
 }

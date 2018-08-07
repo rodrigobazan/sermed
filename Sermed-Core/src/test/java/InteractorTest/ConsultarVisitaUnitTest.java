@@ -98,7 +98,6 @@ public class ConsultarVisitaUnitTest {
         Assertions.assertThrows(VisitaNoExisteException.class,()->consultarVisitaUseCase.consultarVisitaPorNumero(1499));
     }
 
-
     private List<Visita> crearVisitasArray() {
         List<Visita> lasVisitas = new ArrayList<Visita>();
         try {
