@@ -2,6 +2,7 @@ package Modelo;
 
 import Excepciones.VisitaIncompletaException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Visita {
@@ -56,5 +57,9 @@ public class Visita {
 
     public Afiliado getAfiliado() {
         return this.elAfiliado;
+    }
+
+    public LocalDate getFecha() {
+        return this.fechaHoraVisita.toLocalDate();
     }
 }
