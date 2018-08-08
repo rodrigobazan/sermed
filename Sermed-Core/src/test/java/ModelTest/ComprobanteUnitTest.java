@@ -10,51 +10,60 @@ import java.util.*;
 
 public class ComprobanteUnitTest {
 
+
     @Test
     void instanciarComprobante_NumeroComprobanteCorrecto_InstanciaComprobante() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true);
+        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago());
         Assertions.assertNotNull(unComprobante);
     }
 
     @Test
     void instanciarComprobante_NumeroComprobanteIncorrecto_NumeroComprobanteIncorrectoException() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException {
-        Assertions.assertThrows(NumeroComprobanteIncorrectoException.class, () -> Comprobante.instancia(1, "1234567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true));
+        Assertions.assertThrows(NumeroComprobanteIncorrectoException.class, () -> Comprobante.instancia(1, "1234567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
 
     }
 
     @Test
     void instanciarComprobante_ComprobanteConDatosObligatorios_InstanciaComprobante() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true);
+        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago());
         Assertions.assertNotNull(unComprobante);
     }
 
     @Test
     void instanciarComprobante_ComprobanteSinDatosObligatorios_ComprobanteIncompletoException() {
-        Assertions.assertThrows(ComprobanteIncompletoException.class, ()-> Comprobante.instancia(1, "", null, 0, null, "", true));
+        Assertions.assertThrows(ComprobanteIncompletoException.class, ()-> Comprobante.instancia(1, "", null, 0, null, "", true, new ArrayList<>()));
     }
 
     @Test
     void instanciaComprobante_AfiliadoDeBaja_AfiliadoDeBajaException() {
-        Assertions.assertThrows(AfiliadoDeBajaException.class, ()-> Comprobante.instancia(1, "1234-567891", factoryAfiliadoInactivo(), 500.56, LocalDate.now(), "Efectivo", true));
+        Assertions.assertThrows(AfiliadoDeBajaException.class, ()-> Comprobante.instancia(1, "1234-567891", factoryAfiliadoInactivo(), 500.56, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
     }
 
     @Test
     void instanciarComprobante_AfiliadoActivo_InstanciaComprobante() throws ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true);
+        Comprobante unComprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago());
         Assertions.assertNotNull(unComprobante);
     }
 
     @Test
     void instanciaComprobante_FechaMayorActual_FechaIncorrectaException(){
         LocalDate fecha = LocalDate.now().plusDays(2);
-        Assertions.assertThrows(FechaIncorrectaException.class, () -> Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, fecha,"Efectivo", true));
+        Assertions.assertThrows(FechaIncorrectaException.class, () -> Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, fecha,"Efectivo", true, listaDePeriodosDePago()));
     }
 
     @Test
     void instanciaComprobante_FechaMenorActual_InstanciaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException {
         LocalDate fecha = LocalDate.of(2018,1,1);
-        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, fecha,"Efectivo", true);
+        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 500.56, fecha,"Efectivo", true, listaDePeriodosDePago());
         Assertions.assertNotNull(comprobante);
+    }
+
+    private List<PeriodoPago> listaDePeriodosDePago(){
+        List<PeriodoPago> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPago(2,2018));
+        periodosPago.add(new PeriodoPago(3,2018));
+        periodosPago.add(new PeriodoPago(4,2018));
+        return periodosPago;
     }
 
     private Afiliado factoryAfiliadoInactivo() {

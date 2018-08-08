@@ -25,7 +25,7 @@ public class GenerarComprobanteAfiliadoUnitTest {
 
     @Test
     public void generarComprobanteAfiliado_ComprobanteExiste_SeGeneraComprobante() throws PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException, ComprobanteNoExisteException {
-        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true));
+        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago()));
         GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
         ComprobanteAfiliadoDTO comprobanteAfiliado = generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891");
         Assertions.assertNotNull(comprobanteAfiliado);
@@ -36,6 +36,14 @@ public class GenerarComprobanteAfiliadoUnitTest {
         when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(null);
         GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
         Assertions.assertThrows(ComprobanteNoExisteException.class, () -> generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891"));
+    }
+
+    private List<PeriodoPago> listaDePeriodosDePago(){
+        List<PeriodoPago> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPago(2,2018));
+        periodosPago.add(new PeriodoPago(3,2018));
+        periodosPago.add(new PeriodoPago(4,2018));
+        return periodosPago;
     }
 
     public Afiliado factoryAfiliado() {

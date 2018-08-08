@@ -17,10 +17,10 @@ public class Afiliado {
     private Persona titular;
     private boolean activo;
     private LocalDate fechaDeBaja;
-    private LocalDate fechaPagoAcordada;
+    private Integer diaDelMesPagoAcordado;
     private Plan plan;
 
-    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada, Plan plan) {
+    private Afiliado(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, Integer fechaPagoAcordada, Plan plan) {
 
         this.idAfiliado = idAfiliado;
         this.fechaAfiliacion = fechaAfiliacion;
@@ -28,7 +28,7 @@ public class Afiliado {
         this.miembros = miembros;
         this.activo = activo;
         this.fechaDeBaja = fechaDeBaja;
-        this.fechaPagoAcordada = fechaPagoAcordada;
+        this.diaDelMesPagoAcordado = fechaPagoAcordada;
         this.plan = plan;
     }
 
@@ -37,7 +37,7 @@ public class Afiliado {
     }
 
 
-    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, LocalDate fechaPagoAcordada, Plan plan) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
+    public static Afiliado instancia(Integer idAfiliado, LocalDate fechaAfiliacion, String numeroAfiliado, Persona titular, Collection<Persona> miembros, boolean activo, LocalDate fechaDeBaja, Integer diaDelMesPagoAcordado, Plan plan) throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
         if (titular == null) {
             throw new AfiliadoSinTitularException();
         }
@@ -47,7 +47,7 @@ public class Afiliado {
         if(plan == null){
             throw new AfiliadoSinPlanException();
         }
-        Afiliado elNuevo = new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, miembros, activo, fechaDeBaja, fechaPagoAcordada, plan);
+        Afiliado elNuevo = new Afiliado(idAfiliado, fechaAfiliacion, numeroAfiliado, miembros, activo, fechaDeBaja, diaDelMesPagoAcordado, plan);
         elNuevo.asignarTitular(titular);
         return elNuevo;
 
@@ -141,4 +141,7 @@ public class Afiliado {
         return this.titular.mostrarDomicilio();
     }
 
+    public boolean vencioPlazoPago(int diaDelMes) {
+        return (this.diaDelMesPagoAcordado + 7) < diaDelMes;
+    }
 }

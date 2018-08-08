@@ -23,21 +23,29 @@ public class CrearComprobantePagoUnitTest {
 
     @Test
     public void crearComprobante_ComprobanteExiste_NoSeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
+        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago());
         CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
-        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(2, "1234-567891", factoryAfiliado(), 500.45, LocalDate.of(2018, 3, 25), "Efectivo", true));
+        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(2, "1234-567891", factoryAfiliado(), 500.45, LocalDate.of(2018, 3, 25), "Efectivo", true, listaDePeriodosDePago()));
 
         Assertions.assertThrows(ComprobanteExisteException.class, () -> crearComprobantePagoUseCase.crearComprobante(comprobante));
     }
 
     @Test
     public void crearComprobante_ComprobanteNoExiste_SeCreaComprobante() throws ComprobanteExisteException, ComprobanteIncompletoException, AfiliadoDeBajaException, FechaIncorrectaException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
+        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago());
         CrearComprobantePagoUseCase crearComprobantePagoUseCase = new CrearComprobantePagoUseCase(repositorioComprobante);
         when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(null);
         when(repositorioComprobante.persist(comprobante)).thenReturn(true);
         boolean resultado = crearComprobantePagoUseCase.crearComprobante(comprobante);
         Assertions.assertEquals(true, resultado);
+    }
+
+    private List<PeriodoPago> listaDePeriodosDePago(){
+        List<PeriodoPago> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPago(2,2018));
+        periodosPago.add(new PeriodoPago(3,2018));
+        periodosPago.add(new PeriodoPago(4,2018));
+        return periodosPago;
     }
 
     public Afiliado factoryAfiliado() {

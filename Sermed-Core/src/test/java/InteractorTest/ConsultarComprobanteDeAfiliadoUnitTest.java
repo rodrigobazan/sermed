@@ -81,15 +81,22 @@ public class ConsultarComprobanteDeAfiliadoUnitTest {
 
     }
 
+    private List<PeriodoPago> listaDePeriodosDePago(){
+        List<PeriodoPago> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPago(2,2018));
+        periodosPago.add(new PeriodoPago(3,2018));
+        periodosPago.add(new PeriodoPago(4,2018));
+        return periodosPago;
+    }
 
     private List<Comprobante> crearComprobantesArray() {
         try {
             List<Comprobante> comprobantes = new ArrayList<>();
-            comprobantes.add(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(2, "1234-567892", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true));
-            comprobantes.add(Comprobante.instancia(3, "1234-567893", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(4, "1234-567894", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true));
-            comprobantes.add(Comprobante.instancia(5, "1234-567895", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true));
+            comprobantes.add(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 400.50, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
+            comprobantes.add(Comprobante.instancia(2, "1234-567892", factoryAfiliado(), 500.50, LocalDate.now(), "Tarjeta", true, listaDePeriodosDePago()));
+            comprobantes.add(Comprobante.instancia(3, "1234-567893", factoryAfiliado(), 600.50, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
+            comprobantes.add(Comprobante.instancia(4, "1234-567894", factoryAfiliado(), 700.50, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
+            comprobantes.add(Comprobante.instancia(5, "1234-567895", factoryAfiliado(), 800.50, LocalDate.now(), "Efectivo", true, listaDePeriodosDePago()));
             return comprobantes;
         }catch (Exception e){
             e.printStackTrace();

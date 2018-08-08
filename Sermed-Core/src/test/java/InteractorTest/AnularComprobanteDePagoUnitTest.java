@@ -23,7 +23,7 @@ public class AnularComprobanteDePagoUnitTest {
 
     @Test
     public void anularComprobante_ComprobanteActivo_SeAnulaComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true);
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago());
         AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
         when(repositorioComprobante.update(comprobanteAnular)).thenReturn(true);
         boolean resultado = anularComprobantesUseCase.anularComprobante(comprobanteAnular );
@@ -32,9 +32,17 @@ public class AnularComprobanteDePagoUnitTest {
 
     @Test
     public void anularComprobante_ComprobanteDeBaja_ComprobanteAnuladoException() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, ComprobanteAnuladoException, NumeroComprobanteIncorrectoException {
-        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", false);
+        Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", false, listaDePeriodosDePago());
         AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
         Assertions.assertThrows(ComprobanteAnuladoException.class,()->anularComprobantesUseCase.anularComprobante(comprobanteAnular ));
+    }
+
+    private List<PeriodoPago> listaDePeriodosDePago(){
+        List<PeriodoPago> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPago(2,2018));
+        periodosPago.add(new PeriodoPago(3,2018));
+        periodosPago.add(new PeriodoPago(4,2018));
+        return periodosPago;
     }
 
 
