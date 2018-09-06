@@ -9,9 +9,6 @@
     <packaging>jar</packaging>
 
     <name>Sermed-Data</name>
-    <modules>
-        <module>../Sermed-Core</module>
-    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
