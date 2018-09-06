@@ -40,4 +40,16 @@ public class Enfermero {
 
 
     }
+
+    public String getApellido() {
+        return this.apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
 }
