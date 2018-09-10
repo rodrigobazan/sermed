@@ -49,7 +49,7 @@ public class EnfermeroRepositorioImplementacion implements IEnfermeroRepositorio
     @Transactional(readOnly = true)
     public List<Enfermero> findByApellido(String apellido) {
         List<Enfermero> enfermeros = new ArrayList<>();
-        this.iEnfermeroRepositorioCRUD.findByApellidoContains(apellido).forEach(e -> enfermeros.add(mapeoDataCore(e)));
+        this.iEnfermeroRepositorioCRUD.findByApellidoContainingIgnoreCase(apellido).forEach(enfermeroIterando -> enfermeros.add(mapeoDataCore(enfermeroIterando)));
         return enfermeros;
     }
 

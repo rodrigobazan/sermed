@@ -17,6 +17,6 @@ public interface IEnfermeroRepositorioCRUD extends CrudRepository<EnfermeroEntit
 
     Collection<EnfermeroEntity> findAll();
 
-    Collection<EnfermeroEntity> findByApellidoContains(String apellido);
+    Collection<EnfermeroEntity> findByApellidoContainingIgnoreCase(String apellido);
 
 }

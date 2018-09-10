@@ -3,6 +3,7 @@ package Modelo;
 import Excepciones.PlanIncompletoException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Plan {
 
@@ -42,5 +43,9 @@ public class Plan {
         }
         this.nombrePlan = nuevosDatos.nombrePlan;
         this.listaPrecios = nuevosDatos.listaPrecios;
+    }
+
+    public HashMap<String, Double> getListaPrecios() {
+        return listaPrecios;
     }
 }
