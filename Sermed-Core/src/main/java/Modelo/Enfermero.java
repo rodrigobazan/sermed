@@ -17,6 +17,8 @@ public class Enfermero {
         this.telefono = telefono;
     }
 
+
+
     public Integer getIdEnfermero() {
         return idEnfermero;
     }
