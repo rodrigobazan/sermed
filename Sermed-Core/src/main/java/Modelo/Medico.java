@@ -25,7 +25,19 @@ public class Medico {
         return matricula;
     }
 
-    public String mostrarMedico() {
+    public String getApellido() {
+		return apellido;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public String mostrarMedico() {
         return this.apellido+", "+this.nombre+". Matricula "+this.matricula+". Tel. "+this.telefono;
     }
 
