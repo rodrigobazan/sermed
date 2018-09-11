@@ -144,4 +144,14 @@ public class Afiliado {
     public boolean vencioPlazoPago(int diaDelMes) {
         return (this.diaDelMesPagoAcordado + 7) < diaDelMes;
     }
+
+	public LocalDate getFechaDeBaja() {
+		return fechaDeBaja;
+	}
+
+	public Integer getDiaDelMesPagoAcordado() {
+		return diaDelMesPagoAcordado;
+	}
+    
+    
 }
