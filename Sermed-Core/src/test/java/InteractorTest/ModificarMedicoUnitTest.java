@@ -34,7 +34,7 @@ public class ModificarMedicoUnitTest {
         Medico medicoModificado = modificarMedicoUseCase.modificarMedico(nuevosDatos);
 
         Assertions.assertEquals(nuevosDatos.mostrarMedico(),medicoModificado.mostrarMedico());
-        Assertions.assertEquals(1,medicoModificado.getIdMedico());
+        Assertions.assertEquals(1,medicoModificado.getIdMedico().intValue());
 
     }
 
