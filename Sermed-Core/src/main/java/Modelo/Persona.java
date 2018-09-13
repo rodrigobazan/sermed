@@ -26,7 +26,7 @@ public class Persona {
     private Integer nroOrden;
     private Collection<AntecedenteMedico> antecedentesMedico;
 
-    private Persona(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
+    public Persona(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) {
         this.idPersona = idPersona;
         this.apellidos = apellidos;
@@ -124,5 +124,41 @@ public class Persona {
 
     public List<AntecedenteMedico> devolverAntecedentes() {
         return (List<AntecedenteMedico>) this.antecedentesMedico;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public Sangre getSangre() {
+        return sangre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public ObraSocial getObraSocial() {
+        return obraSocial;
+    }
+
+    public String getNroAfiliado() {
+        return nroAfiliado;
+    }
+
+    public Collection<AntecedenteMedico> getAntecedentesMedico() {
+        return antecedentesMedico;
     }
 }

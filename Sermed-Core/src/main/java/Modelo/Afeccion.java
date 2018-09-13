@@ -8,4 +8,20 @@ public class Afeccion {
         this.idAfeccion = idAfeccion;
         this.nombreAfeccion = nombreAfeccion;
     }
+
+    public int getIdAfeccion() {
+        return idAfeccion;
+    }
+
+    public void setIdAfeccion(int idAfeccion) {
+        this.idAfeccion = idAfeccion;
+    }
+
+    public String getNombreAfeccion() {
+        return nombreAfeccion;
+    }
+
+    public void setNombreAfeccion(String nombreAfeccion) {
+        this.nombreAfeccion = nombreAfeccion;
+    }
 }
