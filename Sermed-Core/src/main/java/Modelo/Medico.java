@@ -3,13 +3,13 @@ package Modelo;
 import Excepciones.MedicoIncompletoException;
 
 public class Medico {
-    private int idMedico;
+    private Integer idMedico;
     private String apellido;
     private String nombre;
     private int matricula;
     private String telefono;
 
-    public Medico(int idMedico, String apellido, String nombre, int matricula, String telefono) {
+    public Medico(Integer idMedico, String apellido, String nombre, int matricula, String telefono) {
         this.idMedico = idMedico;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -17,7 +17,7 @@ public class Medico {
         this.telefono = telefono;
     }
 
-    public int getIdMedico() {
+    public Integer getIdMedico() {
         return idMedico;
     }
 
@@ -25,7 +25,19 @@ public class Medico {
         return matricula;
     }
 
-    public String mostrarMedico() {
+    public String getApellido() {
+		return apellido;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public String mostrarMedico() {
         return this.apellido+", "+this.nombre+". Matricula "+this.matricula+". Tel. "+this.telefono;
     }
 

@@ -26,7 +26,7 @@ public class EnfermeroRepositorioIntegrationTest {
     EnfermeroRepositorioImplementacion enfermeroRepositorioImplementacion;
 
     @Test
-    public void enfermeroPersist_SeGuardaCorrectamente_DevuelveTrue(){
+    public void enfermeroPersist_AlmacenaCorrectamente_DevuelveTrue(){
         Enfermero enfermero = new Enfermero(1, "torres","geerman",12015,"as212321");
         boolean resultado = enfermeroRepositorioImplementacion.persist(enfermero);
         Assert.assertTrue(resultado);
@@ -81,7 +81,7 @@ public class EnfermeroRepositorioIntegrationTest {
     }
 
     @Test
-    public void update_ActualizaCorrectamente_DevuelveTrue() throws EnfermeroIncompletoException {
+    public void update_ActualizaCorrectamente_DevuelveTrue() {
         Enfermero enfermero = new Enfermero(1, "Ruitti","Javier",123456,"38256789132");
         Enfermero enfermeroModificado = new Enfermero(1, "itti","Alberto",123456,"38256789132");
         enfermeroRepositorioImplementacion.persist(enfermero);

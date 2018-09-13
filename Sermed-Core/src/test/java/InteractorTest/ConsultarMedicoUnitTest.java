@@ -86,7 +86,7 @@ public class ConsultarMedicoUnitTest {
         ConsultarMedicoUseCase consultarMedicoUseCase=new ConsultarMedicoUseCase(repositorioMedico);
         Medico medicoBuscado=consultarMedicoUseCase.consultarMedicoPorMatricula(190252);
 
-        assertEquals(2,medicoBuscado.getIdMedico());
+        assertEquals(2,medicoBuscado.getIdMedico().intValue());
         verify(repositorioMedico).findByMatricula(190252);
 
     }
