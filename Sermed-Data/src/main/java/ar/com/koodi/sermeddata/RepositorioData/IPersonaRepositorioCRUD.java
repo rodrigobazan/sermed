@@ -14,7 +14,7 @@ public interface IPersonaRepositorioCRUD extends CrudRepository<PersonaEntity, I
 
     PersonaEntity findByIdPersona(Integer idPersona);
 
-    PersonaEntity findByDocumentoandAndTipoDocumento(String documento, String tipoDocumento);
+    //PersonaEntity findByDocumentoandAndTipoDocumento(String documento, String tipoDocumento);
 
     Collection<PersonaEntity> findAll();
 

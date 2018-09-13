@@ -7,12 +7,12 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity(name = "Persona")
-@SequenceGenerator(name ="persona_idenfermero_seq", sequenceName = "persona_idpersona_seq", allocationSize = 1)
+@SequenceGenerator(name ="persona_idpersona_seq", sequenceName = "persona_idpersona_seq", allocationSize = 1)
 public class PersonaEntity {
 
     @Id
     @Column(name = "idPersona", nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_idenfermero_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_idpersona_seq")
     private Integer idPersona;
 
     @Column(name = "apellidos")
@@ -30,6 +30,10 @@ public class PersonaEntity {
     @JoinColumn(name = "tipodocumento", referencedColumnName = "idtipodocumento")
     @ManyToOne
     private TipoDocumentoEntity tipoDocumento;
+    
+    @ManyToOne
+    @JoinColumn(name = "idafiliado", referencedColumnName="idAfiliado")
+    private AfiliadoEntity afiliado; 
 
     @Column(name = "documento")
     private String documento;
@@ -48,13 +52,14 @@ public class PersonaEntity {
     @Column(name = "nroafiliado")
     private String nroAfiliado;
 
-    @JoinColumn(name = "antecedentesmedico", referencedColumnName = "idantecedentesmedico")
-    @OneToMany
+    
+    @OneToMany(mappedBy="persona")
     private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     @Column(name = "nroOrden")
     private Integer nroOrden;
-
+    
+    
 
     public PersonaEntity() {
     }
@@ -177,4 +182,14 @@ public class PersonaEntity {
     public void setNroAfiliado(String nroAfiliado) {
         this.nroAfiliado = nroAfiliado;
     }
+
+	public AfiliadoEntity getAfiliado() {
+		return afiliado;
+	}
+
+	public void setAfiliado(AfiliadoEntity afiliado) {
+		this.afiliado = afiliado;
+	}
+    
+    
 }

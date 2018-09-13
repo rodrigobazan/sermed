@@ -1,9 +1,11 @@
 package ar.com.koodi.sermeddata.ModeloData;
 
 
+import java.util.Collection;
+
 import javax.persistence.*;
 
-@Entity(name = "Afeccion")
+@Entity(name = "afeccion")
 @SequenceGenerator(name="afeccion_idafeccion_seq", initialValue = 1, sequenceName = "afeccion_idafeccion_seq", allocationSize = 1)
 public class AfeccionEntity {
 
@@ -13,7 +15,10 @@ public class AfeccionEntity {
     private Integer idAfeccion;
 
     @Column(name = "nombreafeccion")
-    private String nombreAfeccion;
+    private String nombreAfeccion;    
+    
+    @OneToMany(mappedBy="afeccion")
+    private Collection<AntecedenteMedicoEntity> antecedentes;
 
     public AfeccionEntity() {
     }
@@ -37,4 +42,14 @@ public class AfeccionEntity {
     public void setNombreAfeccion(String nombreAfeccion) {
         this.nombreAfeccion = nombreAfeccion;
     }
+
+	public Collection<AntecedenteMedicoEntity> getAntecedentes() {
+		return antecedentes;
+	}
+
+	public void setAntecedentes(Collection<AntecedenteMedicoEntity> antecedentes) {
+		this.antecedentes = antecedentes;
+	}
+    
+    
 }

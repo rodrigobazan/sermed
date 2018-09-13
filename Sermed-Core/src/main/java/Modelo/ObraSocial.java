@@ -16,4 +16,10 @@ public class ObraSocial {
     public void setObraSocial(String obraSocial) {
         this.obraSocial = obraSocial;
     }
+
+	public Integer getIdObraSocial() {
+		return idObraSocial;
+	}
+    
+    
 }

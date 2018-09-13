@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Modelo.Afiliado;
+import Modelo.Plan;
 import Repositorio.IAfiliadoRepositorio;
 import ar.com.koodi.sermeddata.ModeloData.AfiliadoEntity;
 import ar.com.koodi.sermeddata.ModeloData.PlanEntity;
@@ -69,11 +70,17 @@ public class AfiliadoRepositorioImplementacion implements IAfiliadoRepositorio {
 	}
 	
 	public AfiliadoEntity mapeoCoreData(Afiliado afiliado) {
+		PlanEntity plan = planModeloAPlanEntity(afiliado);
+//		return new AfiliadoEntity(afiliado.getFechaAfiliacion(),afiliado.getNumeroAfiliado(),afiliado.getMiembros(),
+//				afiliado.getTitular(),afiliado.getActivo(),afiliado.getFechaDeBaja(),afiliado.getDiaDelMesPagoAcordado(),
+//				plan);
+		return null;
+	}
+	
+	public PlanEntity planModeloAPlanEntity(Afiliado afiliado) {
 		PlanEntity plan = planRepositorioImplementacion.mapeoCoreData(afiliado.getPlan());
 		plan.setIdPlan(afiliado.getPlan().getIdPlan());
-		return new AfiliadoEntity(afiliado.getFechaAfiliacion(),afiliado.getNumeroAfiliado(),afiliado.getMiembros(),
-				afiliado.getTitular(),afiliado.getActivo(),afiliado.getFechaDeBaja(),afiliado.getDiaDelMesPagoAcordado(),
-				plan);
+		return plan;
 	}
 
 }
