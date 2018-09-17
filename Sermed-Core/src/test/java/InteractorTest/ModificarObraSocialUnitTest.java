@@ -41,7 +41,7 @@ public class ModificarObraSocialUnitTest {
         ModificarObraSocialUseCase modificarObraSocialUseCase = new ModificarObraSocialUseCase(repositorioObraSocial);
         when(repositorioObraSocial.findById(1)).thenReturn(new ObraSocial(1,"OSFATUN"));
         when(repositorioObraSocial.findByNombreUnico("OSDE")).thenReturn(new ObraSocial(2,"OSDE"));
-        
+
         ObraSocial obraSocialNueva=new ObraSocial(1,"OSDE");
 
         Assertions.assertThrows(NombreObraSocialExisteException.class, () -> modificarObraSocialUseCase.modificarObraSocial(obraSocialNueva));
