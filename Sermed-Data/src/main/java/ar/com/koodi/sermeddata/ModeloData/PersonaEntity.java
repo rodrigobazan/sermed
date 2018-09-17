@@ -27,8 +27,8 @@ public class PersonaEntity {
     @Column(name = "domicilio")
     private String domicilio;
 
-    @JoinColumn(name = "tipodocumento", referencedColumnName = "idtipodocumento")
     @ManyToOne
+    @JoinColumn(name = "tipodocumento", referencedColumnName = "idtipodocumento")
     private TipoDocumentoEntity tipoDocumento;
     
     @ManyToOne
