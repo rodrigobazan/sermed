@@ -1,4 +1,4 @@
 package Excepciones;
 
-public class NombresIgualesException extends Exception {
+public class NombreObraSocialExisteException extends Exception {
 }

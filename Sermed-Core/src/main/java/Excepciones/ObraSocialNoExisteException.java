@@ -1,4 +1,4 @@
 package Excepciones;
 
-public class ObraSocialNoExisteException {
+public class ObraSocialNoExisteException extends Exception{
 }

@@ -38,7 +38,7 @@ public class ModificarEnfermeroUnitTest {
     }
 
     @Test
-    public void modificarEnfermero__MatriculaExiste_NoActualiza() throws MatriculasIgualesException, EnfermeroIncompletoException, UpdateEnfermeroException {
+    public void modificarEnfermero__MatriculaExiste_NoActualiza() {
 
         ModificarEnfermeroUseCase modificarEnfermeroUseCase = new ModificarEnfermeroUseCase(repositorioEnfermero);
 

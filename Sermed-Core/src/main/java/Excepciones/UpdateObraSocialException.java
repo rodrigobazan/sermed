@@ -1,4 +1,4 @@
 package Excepciones;
 
-public class UpdateObraSocialException {
+public class UpdateObraSocialException extends Exception {
 }

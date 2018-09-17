@@ -20,6 +20,12 @@ public class ObraSocial {
 	public Integer getIdObraSocial() {
 		return idObraSocial;
 	}
-    
-    
+
+    public String getNombre() {
+        return this.obraSocial;
+    }
+
+    public void modificarDatos(ObraSocial nuevosDatos) {
+        this.obraSocial=nuevosDatos.obraSocial;
+    }
 }
