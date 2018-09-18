@@ -1,7 +1,5 @@
 package Interactor;
 
-import static org.mockito.Mockito.after;
-
 import java.util.List;
 
 import Excepciones.AfeccionNoExisteException;
