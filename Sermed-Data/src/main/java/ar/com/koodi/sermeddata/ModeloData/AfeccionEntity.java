@@ -26,6 +26,11 @@ public class AfeccionEntity {
     public AfeccionEntity(String nombreAfeccion) {
         this.nombreAfeccion = nombreAfeccion;
     }
+    
+    public AfeccionEntity(Integer idAfeccion, String nombreAfeccion) {
+        this.nombreAfeccion = nombreAfeccion;
+        this.idAfeccion = idAfeccion;
+    }
 
     public Integer getIdAfeccion() {
         return idAfeccion;

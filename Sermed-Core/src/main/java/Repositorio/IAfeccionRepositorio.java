@@ -1,14 +1,15 @@
 package Repositorio;
 
+import java.util.Collection;
 import java.util.List;
 
 import Modelo.Afeccion;
 
 public interface IAfeccionRepositorio {
 
-	List<Afeccion> findAll();
+	Collection<Afeccion> findAll();
 
-	List<Afeccion> findByNombre(String afeccion);
+	Collection<Afeccion> findByNombre(String afeccion);
 
 	Afeccion findByNombreUnico(String afeccion);
 
