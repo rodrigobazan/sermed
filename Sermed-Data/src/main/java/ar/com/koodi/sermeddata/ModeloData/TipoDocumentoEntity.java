@@ -18,6 +18,11 @@ public class TipoDocumentoEntity {
         this.nombre = nombre;
     }
 
+    public TipoDocumentoEntity(Integer idTipoDocumento, String nombre) {
+        this.nombre = nombre;
+        this.idTipoDocumento = idTipoDocumento;
+    }
+
     public TipoDocumentoEntity() {
     }
 

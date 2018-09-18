@@ -1,7 +1,5 @@
 package ar.com.koodi.sermeddata.RepositorioImplementacion;
 
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,60 +14,61 @@ import ar.com.koodi.sermeddata.ModeloData.MedicoEntity;
 import ar.com.koodi.sermeddata.RepositorioData.IMedicoRepositorioCRUD;
 
 @Service
-public class MedicoRepositorioImplementacion implements IMedicoRepositorio{
-	
-	@Autowired
-	IMedicoRepositorioCRUD iMedicoRepositorioCRUD; 
+public class MedicoRepositorioImplementacion implements IMedicoRepositorio {
 
-	@Override
-	@Transactional
-	public boolean persist(Medico unMedico) {
-		return this.iMedicoRepositorioCRUD.save(mapeoCoreData(unMedico)) !=null;
-	}
+    @Autowired
+    IMedicoRepositorioCRUD iMedicoRepositorioCRUD;
 
-	@Override
-	@Transactional(readOnly=true)
-	public Medico findById(Integer id) {
-		return mapeoDataCore(this.iMedicoRepositorioCRUD.findByIdMedico(id));
-	}
+    @Override
+    @Transactional
+    public boolean persist(Medico unMedico) {
+        return this.iMedicoRepositorioCRUD.save(mapeoCoreData(unMedico)) != null;
+    }
 
-	
-@Override
-	@Transactional(readOnly=true)
-	public Medico findByMatricula(Integer matricula) {
-		MedicoEntity medicoEntity = this.iMedicoRepositorioCRUD.findByMatricula(matricula);
-		if(medicoEntity != null)return mapeoDataCore(medicoEntity);
-		return null;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Medico findById(Integer id) {
+        return mapeoDataCore(this.iMedicoRepositorioCRUD.findByIdMedico(id));
+    }
 
-	@Override
-	public List<Medico> findAll() {
-		List<Medico> medicos = new ArrayList<>();
-		this.iMedicoRepositorioCRUD.findAll().forEach(medico->medicos.add(mapeoDataCore(medico)));
-		return medicos;
-	}
 
-	@Override
-	public List<Medico> findByApellido(String apellido) {
-		List<Medico> medicos = new ArrayList<>();
-		this.iMedicoRepositorioCRUD.findByApellidoContainingIgnoreCase(apellido).forEach(medico -> medicos.add(mapeoDataCore(medico)));;
-		return medicos;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Medico findByMatricula(Integer matricula) {
+        MedicoEntity medicoEntity = this.iMedicoRepositorioCRUD.findByMatricula(matricula);
+        if (medicoEntity != null) return mapeoDataCore(medicoEntity);
+        return null;
+    }
 
-	@Override
-	public boolean update(Medico medico) {
-		MedicoEntity medicoEntity = mapeoCoreData(medico);
-		medicoEntity.setIdMedico(medico.getIdMedico());
-		return iMedicoRepositorioCRUD.save(medicoEntity)!= null;
-	}
-	
-	public MedicoEntity mapeoCoreData(Medico medico) {
-		return new MedicoEntity(medico.getApellido(),medico.getNombre(),medico.getMatricula(),medico.getTelefono());
-	}
-	
-	public Medico mapeoDataCore(MedicoEntity medicoEntity) {
-		return new Medico(medicoEntity.getIdMedico(), medicoEntity.getApellido(),medicoEntity.getNombre(), medicoEntity.getMatricula(), medicoEntity.getTelefono());
-	}
-	
+    @Override
+    public List<Medico> findAll() {
+        List<Medico> medicos = new ArrayList<>();
+        this.iMedicoRepositorioCRUD.findAll().forEach(medico -> medicos.add(mapeoDataCore(medico)));
+        return medicos;
+    }
+
+    @Override
+    public List<Medico> findByApellido(String apellido) {
+        List<Medico> medicos = new ArrayList<>();
+        this.iMedicoRepositorioCRUD.findByApellidoContainingIgnoreCase(apellido).forEach(medico -> medicos.add(mapeoDataCore(medico)));
+        ;
+        return medicos;
+    }
+
+    @Override
+    public boolean update(Medico medico) {
+        MedicoEntity medicoEntity = mapeoCoreData(medico);
+        medicoEntity.setIdMedico(medico.getIdMedico());
+        return iMedicoRepositorioCRUD.save(medicoEntity) != null;
+    }
+
+    public MedicoEntity mapeoCoreData(Medico medico) {
+        return new MedicoEntity(medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
+    }
+
+    public Medico mapeoDataCore(MedicoEntity medicoEntity) {
+        return new Medico(medicoEntity.getIdMedico(), medicoEntity.getApellido(), medicoEntity.getNombre(), medicoEntity.getMatricula(), medicoEntity.getTelefono());
+    }
+
 
 }
