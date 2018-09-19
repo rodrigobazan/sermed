@@ -1,9 +1,7 @@
 package InteractorTest;
 
-import Excepciones.ObraSocialExisteException;
 import Excepciones.ObraSocialNoExisteException;
 import Interactor.ConsultarObrasSocialesUseCase;
-import Interactor.CrearObraSocialUseCase;
 import Mockito.MockitoExtension;
 import Modelo.ObraSocial;
 import Repositorio.IObraSocialRepositorio;
@@ -15,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
