@@ -1,13 +1,10 @@
 package ar.com.koodi.sermeddata.IntegrationTest;
 
-import Excepciones.EnfermeroIncompletoException;
 import Modelo.Enfermero;
 
 import ar.com.koodi.sermeddata.ModeloData.EnfermeroEntity;
 import ar.com.koodi.sermeddata.RepositorioImplementacion.EnfermeroRepositorioImplementacion;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

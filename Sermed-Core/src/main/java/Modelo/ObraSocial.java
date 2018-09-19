@@ -9,9 +9,9 @@ public class ObraSocial {
         this.obraSocial = obraSocial;
     }
 
-    public String getObraSocial() {
-        return obraSocial;
-    }
+//    public String getObraSocial() {
+//        return obraSocial;
+//    }
 
     public void setObraSocial(String obraSocial) {
         this.obraSocial = obraSocial;

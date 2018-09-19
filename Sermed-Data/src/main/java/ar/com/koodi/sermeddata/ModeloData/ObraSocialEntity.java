@@ -13,10 +13,16 @@ public class ObraSocialEntity {
 
     @Column(name = "obrasocial")
     private String obraSocial;
+    
+    public ObraSocialEntity() {}
 
     public ObraSocialEntity(String obraSocial) {
         this.obraSocial = obraSocial;
     }
+//    public ObraSocialEntity(Integer idObraSocial, String obraSocial) {
+//    	this.idObraSocial = idObraSocial;
+//        this.obraSocial = obraSocial;
+//    }
 
     public Integer getIdObraSocial() {
         return idObraSocial;
