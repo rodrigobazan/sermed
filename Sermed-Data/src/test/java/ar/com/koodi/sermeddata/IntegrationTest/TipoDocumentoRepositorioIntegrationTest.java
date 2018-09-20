@@ -11,8 +11,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -24,60 +27,47 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@SqlGroup({
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:inicializar.sql")
+})
 public class TipoDocumentoRepositorioIntegrationTest {
 
-    @Mock
-    ITipoDocumentoRepositorioCRUD iTipoDocumentoRepositorioCRUD;
-
-    @InjectMocks
+    @Autowired
     TipoDocumentoRepositorioImplementacion tipoDocumentoRepositorioImplementacion;
-
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
-
 
     @Test
     public void findAll_HayDatos_DevuelveListaConDatos() {
-        when(iTipoDocumentoRepositorioCRUD.findAll()).thenReturn(factoryTiposDocumentoEntity());
         List<TipoDocumento> tipoDocumentoList = (List<TipoDocumento>) tipoDocumentoRepositorioImplementacion.findAll();
         Assert.assertEquals(4, tipoDocumentoList.size());
     }
 
     @Test
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:limpiarbase.sql")
     public void findAll_NoExistenDatos_DevuelveListaVacia() {
-        when(iTipoDocumentoRepositorioCRUD.findAll()).thenReturn(new ArrayList<>());
         List<TipoDocumento> tipoDocumentoList = (List<TipoDocumento>) tipoDocumentoRepositorioImplementacion.findAll();
         Assert.assertEquals(0, tipoDocumentoList.size());
     }
 
     @Test
     public void findByNombre_ExistenCoincidencia_DevuelveListaConDatos() {
-        when(iTipoDocumentoRepositorioCRUD.findByNombreContainingIgnoreCase("libreta")).thenReturn(factoryTiposDocumentoEntityFiltro());
         List<TipoDocumento> tipoDocumentoList = (List<TipoDocumento>) tipoDocumentoRepositorioImplementacion.findByNombre("libreta");
         Assert.assertEquals(2, tipoDocumentoList.size());
     }
 
     @Test
     public void findByNombre_NoExistenCoincidencia_DevuelveListaVacia() {
-        when(iTipoDocumentoRepositorioCRUD.findByNombreContainingIgnoreCase("cedula")).thenReturn(new ArrayList<>());
         List<TipoDocumento> tipoDocumentoList = (List<TipoDocumento>) tipoDocumentoRepositorioImplementacion.findByNombre("cedula");
         Assert.assertEquals(0, tipoDocumentoList.size());
     }
 
     @Test
     public void findByNombreUnico_ExisteCoincidencia_DevuelveTipoDocumento() {
-        TipoDocumentoEntity tipoDocumentoEntity = new TipoDocumentoEntity("Libreta Civica");
-        tipoDocumentoEntity.setIdTipoDocumento(2);
-        when(iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase("libreta civica")).thenReturn(tipoDocumentoEntity);
         TipoDocumento tipoDocumento = tipoDocumentoRepositorioImplementacion.findByNombreUnico("libreta civica");
         Assert.assertEquals("Libreta Civica", tipoDocumento.getNombre());
     }
 
     @Test
     public void findByNombreUnico_NoExisteCoincidencia_DevuelveNull() {
-        when(iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase("cedula")).thenReturn(null);
         TipoDocumento tipoDocumento = tipoDocumentoRepositorioImplementacion.findByNombreUnico("cedula");
         Assert.assertNull(tipoDocumento);
     }

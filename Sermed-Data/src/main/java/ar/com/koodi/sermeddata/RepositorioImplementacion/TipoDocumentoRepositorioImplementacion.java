@@ -5,11 +5,13 @@ import Repositorio.ITipoDocumentoRepositorio;
 import ar.com.koodi.sermeddata.ModeloData.TipoDocumentoEntity;
 import ar.com.koodi.sermeddata.RepositorioData.ITipoDocumentoRepositorioCRUD;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Service
 public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRepositorio {
 
     @Autowired
@@ -39,5 +41,11 @@ public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRep
             return new TipoDocumento(tipoDocumento.getIdTipoDocumento(), tipoDocumento.getNombre());
         }
         return null;
+    }
+
+    public TipoDocumentoEntity mapeoCoreData(TipoDocumento tipoDocumento){
+        TipoDocumentoEntity tipoDocumentoEntity = new TipoDocumentoEntity(tipoDocumento.getNombre());
+        tipoDocumentoEntity.setIdTipoDocumento(tipoDocumento.getIdTipoDocumento());
+        return tipoDocumentoEntity;
     }
 }

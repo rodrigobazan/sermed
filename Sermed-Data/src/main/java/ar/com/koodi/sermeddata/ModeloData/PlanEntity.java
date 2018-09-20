@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity(name = "Plan")
+@Entity(name = "plan")
 @SequenceGenerator(name="plan_idplan_seq", initialValue = 1, sequenceName = "plan_idplan_seq", allocationSize = 1)
 public class PlanEntity {
 
     @Id
-    @Column(name = "idPlan", nullable = false)
+    @Column(name = "idplan", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plan_idplan_seq")
     private Integer idPlan;
 
-    @Column(name = "nombrePlan")
+    @Column(name = "nombreplan")
     private String nombrePlan;
 
-    @Column(name = "listaPrecios")
+    @Column(name = "listaprecios")
     @ElementCollection
     private Map<String, Double> listaPrecios = new HashMap<>();
 

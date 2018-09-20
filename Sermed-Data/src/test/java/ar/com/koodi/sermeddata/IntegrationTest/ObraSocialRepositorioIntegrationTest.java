@@ -21,7 +21,6 @@ public class ObraSocialRepositorioIntegrationTest {
 	@Autowired
 	ObraSocialRepositorioImplementacion obraSocialRepositorioImplementacion;
 	
-	
 	@Test
 	public void persistObraSocial_SeGuardaCorrectamente_DevuelveTrue() {
 		ObraSocial obraSocial = new ObraSocial(1,"OSFATUN"); 

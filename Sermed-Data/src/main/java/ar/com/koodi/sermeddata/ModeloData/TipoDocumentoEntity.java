@@ -2,13 +2,13 @@ package ar.com.koodi.sermeddata.ModeloData;
 
 import javax.persistence.*;
 
-@Entity(name = "TipoDocumento")
-@SequenceGenerator(name="enfermero_idtipodocumento_seq", initialValue = 1, sequenceName = "enfermero_idtipodocumento_seq", allocationSize = 1)
+@Entity(name = "tipodocumento")
+@SequenceGenerator(name="tipodocumento_idtipodocumento_seq", initialValue = 1, sequenceName = "tipodocumento_idtipodocumento_seq", allocationSize = 1)
 public class TipoDocumentoEntity {
 
     @Id
-    @Column(name = "idTipoDocumento")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "enfermero_idtipodocumento_seq")
+    @Column(name = "idtipodocumento")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipodocumento_idtipodocumento_seq")
     private Integer idTipoDocumento;
 
     @Column(name = "nombre")

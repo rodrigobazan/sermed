@@ -42,11 +42,22 @@ public class AfeccionRepositorioImplementacion implements IAfeccionRepositorio {
 		return mapeoDataCore(this.iAfeccionRepositorioCRUD.findByNombreAfeccionEquals(afeccion));
 	}
 
-	private Afeccion mapeoDataCore(AfeccionEntity afeccionEntity) {
+	public Afeccion mapeoDataCore(AfeccionEntity afeccionEntity) {
 		if (afeccionEntity != null) {
 			return new Afeccion(afeccionEntity.getIdAfeccion(), afeccionEntity.getNombreAfeccion());
 		}
 		return null;
+	}
+
+	public AfeccionEntity mapeoCoreData(Afeccion afeccion){
+		try {
+			AfeccionEntity afeccionEntity = new AfeccionEntity(afeccion.getNombreAfeccion());
+			afeccionEntity.setIdAfeccion(afeccion.getIdAfeccion());
+			return afeccionEntity;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

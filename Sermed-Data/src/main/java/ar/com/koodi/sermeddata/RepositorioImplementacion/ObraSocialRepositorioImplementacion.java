@@ -55,11 +55,18 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 		return mapeoDataCore(iObraSocialRepositorioCRUD.findByIdObraSocial(idObraSocial));
 	}
 	
-	private ObraSocialEntity mapeoCoreData(ObraSocial obraSocial) {
-		return new ObraSocialEntity(obraSocial.getNombre());
+	public ObraSocialEntity mapeoCoreData(ObraSocial obraSocial) {
+		try {
+			ObraSocialEntity obraSocialEntity = new ObraSocialEntity(obraSocial.getNombre());
+			obraSocialEntity.setIdObraSocial(obraSocial.getIdObraSocial());
+			return obraSocialEntity;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
-	private ObraSocial mapeoDataCore(ObraSocialEntity obraSocialEntity) {
+
+    public ObraSocial mapeoDataCore(ObraSocialEntity obraSocialEntity) {
 		return new ObraSocial(obraSocialEntity.getIdObraSocial(), obraSocialEntity.getObraSocial());
 	}
 	

@@ -7,12 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
-@Entity(name = "Medico")
+@Entity(name = "medico")
 @SequenceGenerator(name = "medico_idmedico_seq", initialValue = 1, sequenceName = "medico_idmedico_seq", allocationSize = 1)
 public class MedicoEntity {
 
 	@Id
-	@Column(name = "idMedico", nullable = false)
+	@Column(name = "idmedico", nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medico_idmedico_seq")
 	private Integer idMedico;
 	

@@ -18,16 +18,28 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	@Autowired
 	IPersonaRepositorioCRUD iPersonaRepositorioCRUD;
 
+	@Autowired
+	TipoDocumentoRepositorioImplementacion tipoDocumentoRepositorioImplementacion;
+
+	@Autowired
+	SangreRepositorioImplementacion sangreRepositorioImplementacion;
+
+	@Autowired
+	ObraSocialRepositorioImplementacion obraSocialRepositorioImplementacion;
+
+	@Autowired
+    AfeccionRepositorioImplementacion afeccionRepositorioImplementacion;
+
 	@Override
 	@Transactional
-	public boolean persist(Persona any) {
-		return this.iPersonaRepositorioCRUD.save(mapeoCoreData(any)) != null;
+	public boolean persist(Persona persona) {
+		return this.iPersonaRepositorioCRUD.save(mapeoCoreData(persona)) != null;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Persona findById(int idPersona) {
-		return maperoDataCore(this.iPersonaRepositorioCRUD.findByIdPersona(idPersona));
+		return mapeoDataCore(this.iPersonaRepositorioCRUD.findByIdPersona(idPersona));
 	}
 
 	@Override
@@ -50,7 +62,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	@Transactional(readOnly = true)
 	public Collection<Persona> findAll() {
 		List<Persona> personaEntities = new ArrayList<>();
-		this.iPersonaRepositorioCRUD.findAll().forEach(e -> personaEntities.add(maperoDataCore(e)));
+		this.iPersonaRepositorioCRUD.findAll().forEach(e -> personaEntities.add(mapeoDataCore(e)));
 		return personaEntities;
 	}
 
@@ -58,7 +70,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	@Transactional
 	public Collection<Persona> findByApellido(String apellido) {
 		List<Persona> personas = new ArrayList<>();
-		this.iPersonaRepositorioCRUD.findByApellidosContains(apellido).forEach(e -> personas.add(maperoDataCore(e)));
+		this.iPersonaRepositorioCRUD.findByApellidosContains(apellido).forEach(e -> personas.add(mapeoDataCore(e)));
 		return personas;
 	}
 
@@ -68,16 +80,16 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	}
 
 	public PersonaEntity mapeoCoreData(Persona persona) {
-		TipoDocumentoEntity tipoDocumento = tipoDocumentoModelo_tipoDocumentoEntity(persona);
-		SangreEntity sangre = sangreModelo_SangreEntity(persona);
-		ObraSocialEntity obraSocial = obraSocialModelo_obraSocialEntity(persona);
-		Collection<AntecedenteMedicoEntity> antecedentesMedicos = antecedentesModelo_AntecedentesEntity(persona);
+		TipoDocumentoEntity tipoDocumento = tipoDocumentoRepositorioImplementacion.mapeoCoreData(persona.getTipoDocumento());
+		SangreEntity sangre = sangreRepositorioImplementacion.mapeoCoreData(persona.getSangre());
+		ObraSocialEntity obraSocial = obraSocialRepositorioImplementacion.mapeoCoreData(persona.getObraSocial());
+		Collection<AntecedenteMedicoEntity> antecedentesMedicos = antecedentesModelo_AntecedentesEntity(persona.getAntecedentesMedico());
 		return new PersonaEntity(persona.getApellidos(), persona.getNombres(), persona.getFechaNacimiento(),
 				persona.getDomicilio(), tipoDocumento, persona.getDocumento(), sangre, persona.getTelefono(),
 				obraSocial, persona.getNroAfiliado(), antecedentesMedicos, persona.getNroOrden());
 	}
 
-	public Persona maperoDataCore(PersonaEntity personaEntity) {
+	public Persona mapeoDataCore(PersonaEntity personaEntity) {
 		Collection<AntecedenteMedico> antecedentes = antecedentesEntity_antecedentesModelo(personaEntity);
 		return new Persona(personaEntity.getIdPersona(), personaEntity.getApellidos(), personaEntity.getNombres(),
 				personaEntity.getFechaNacimiento(), personaEntity.getDomicilio(),
@@ -91,35 +103,19 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 				personaEntity.getNroAfiliado(), antecedentes, personaEntity.getNroOrden());
 	}
 
-	private Collection<AntecedenteMedicoEntity> antecedentesModelo_AntecedentesEntity(Persona persona) {
+	private Collection<AntecedenteMedicoEntity> antecedentesModelo_AntecedentesEntity(Collection<AntecedenteMedico> antecedentePersona) {
 		Collection<AntecedenteMedicoEntity> antecedenteMedicoEntities = new ArrayList<>();
-		persona.getAntecedentesMedico().stream().forEach(antecedente -> {
+        antecedentePersona.forEach(antecedente -> {
 			AntecedenteMedicoEntity antecedenteMedicoEntity = new AntecedenteMedicoEntity();
-			AfeccionEntity afeccion = new AfeccionEntity(antecedente.getAfeccion().getNombreAfeccion());
-			afeccion.setIdAfeccion(antecedente.getAfeccion().getIdAfeccion());
+			AfeccionEntity afeccion = afeccionRepositorioImplementacion.mapeoCoreData(antecedente.getAfeccion());
+			if(antecedente.getIdAntecedenteMedico()!=null){
+			    antecedenteMedicoEntity.setIdAntecedenteMedico(antecedente.getIdAntecedenteMedico());
+            }
 			antecedenteMedicoEntity.setAfeccion(afeccion);
 			antecedenteMedicoEntity.setObservacion(antecedente.getObservacion());
 			antecedenteMedicoEntities.add(antecedenteMedicoEntity);
 		});
 		return antecedenteMedicoEntities;
-	}
-
-	private TipoDocumentoEntity tipoDocumentoModelo_tipoDocumentoEntity(Persona persona) {
-		TipoDocumentoEntity tipoDocumento = new TipoDocumentoEntity(persona.getTipoDocumento().getNombre());
-		tipoDocumento.setIdTipoDocumento(persona.getTipoDocumento().getIdTipoDocumento());
-		return tipoDocumento;
-	}
-
-	private SangreEntity sangreModelo_SangreEntity(Persona persona) {
-		SangreEntity sangre = new SangreEntity(persona.getSangre().getGrupo(), persona.getSangre().getFactor());
-		sangre.setIdSangre(persona.getSangre().getIdSangre());
-		return sangre;
-	}
-
-	private ObraSocialEntity obraSocialModelo_obraSocialEntity(Persona persona) {
-		ObraSocialEntity os = new ObraSocialEntity(persona.getObraSocial().getNombre());
-		os.setIdObraSocial(persona.getObraSocial().getIdObraSocial());
-		return os;
 	}
 
 	private Collection<AntecedenteMedico> antecedentesEntity_antecedentesModelo(PersonaEntity persona) {

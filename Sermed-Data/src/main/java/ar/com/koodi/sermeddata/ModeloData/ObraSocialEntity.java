@@ -2,12 +2,12 @@ package ar.com.koodi.sermeddata.ModeloData;
 
 import javax.persistence.*;
 
-@Entity(name = "ObraSocial")
+@Entity(name = "obrasocial")
 @SequenceGenerator(name="obrasocial_idobrasocial_seq", initialValue = 1, sequenceName = "obrasocial_idobrasocial_seq", allocationSize = 1)
 public class ObraSocialEntity {
 
     @Id
-    @Column(name = "idObraSocial", nullable = false)
+    @Column(name = "idobrasocial", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "obrasocial_idobrasocial_seq")
     private Integer idObraSocial;
 

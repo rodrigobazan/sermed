@@ -11,8 +11,7 @@ public class AntecedenteMedicoEntity {
     @Id
     @Column(name = "idAntedecenteMedico", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "antecedentemedico_idantecedentemedico_seq")
-    private int idAntecedenteMedico;
-
+    private Integer idAntecedenteMedico;
     
     //@ManyToOne
     @ManyToOne
@@ -34,11 +33,11 @@ public class AntecedenteMedicoEntity {
         this.observacion = observacion;
     }
 
-    public int getIdAntecedenteMedico() {
+    public Integer getIdAntecedenteMedico() {
         return idAntecedenteMedico;
     }
 
-    public void setIdAntecedenteMedico(int idAntecedenteMedico) {
+    public void setIdAntecedenteMedico(Integer idAntecedenteMedico) {
         this.idAntecedenteMedico = idAntecedenteMedico;
     }
 

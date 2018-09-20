@@ -2,7 +2,7 @@ package Modelo;
 
 public class AntecedenteMedico {
 
-    private int idAntecedenteMedico;
+    private Integer idAntecedenteMedico;
     private Afeccion afeccion;
     private String observacion;
 
@@ -15,11 +15,11 @@ public class AntecedenteMedico {
     public AntecedenteMedico() {
     }
 
-    public int getIdAntecedenteMedico() {
+    public Integer getIdAntecedenteMedico() {
         return idAntecedenteMedico;
     }
 
-    public void setIdAntecedenteMedico(int idAntecedenteMedico) {
+    public void setIdAntecedenteMedico(Integer idAntecedenteMedico) {
         this.idAntecedenteMedico = idAntecedenteMedico;
     }
 

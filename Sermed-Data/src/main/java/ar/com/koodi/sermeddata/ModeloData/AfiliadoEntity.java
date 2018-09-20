@@ -20,14 +20,14 @@ import Modelo.Persona;
 public class AfiliadoEntity {
 
 	@Id
-    @Column(name = "idAfiliado", nullable = false)
+    @Column(name = "idafiliado", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "afiliado_idafiliado_seq")
 	private Integer idAfiliado;
 	
-	@Column(name="fechaAfiliacion")
+	@Column(name="fechaafiliacion")
     private LocalDate fechaAfiliacion;
 	
-	@Column(name="numeroAfiliado")
+	@Column(name="numeroafiliado")
     private String numeroAfiliado;
 
 	@OneToMany(mappedBy = "afiliado")	
@@ -40,10 +40,10 @@ public class AfiliadoEntity {
 	@Column(name="activo")
     private boolean activo;
 	
-	@Column(name="fechaDeBaja")
+	@Column(name="fechadebaja")
     private LocalDate fechaDeBaja;
 	
-	@Column(name="diaDelMesPagoAcordado")
+	@Column(name="diadelmespagoacordado")
     private Integer diaDelMesPagoAcordado;
 	
 	@JoinColumn(name = "idplan", referencedColumnName = "idplan")

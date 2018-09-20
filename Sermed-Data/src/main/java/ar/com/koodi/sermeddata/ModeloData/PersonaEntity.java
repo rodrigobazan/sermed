@@ -6,12 +6,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 
-@Entity(name = "Persona")
+@Entity(name = "persona")
 @SequenceGenerator(name ="persona_idpersona_seq", sequenceName = "persona_idpersona_seq", allocationSize = 1)
 public class PersonaEntity {
 
     @Id
-    @Column(name = "idPersona", nullable = false)
+    @Column(name = "idpersona", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_idpersona_seq")
     private Integer idPersona;
 
@@ -30,36 +30,35 @@ public class PersonaEntity {
     @ManyToOne
     @JoinColumn(name = "tipodocumento", referencedColumnName = "idtipodocumento")
     private TipoDocumentoEntity tipoDocumento;
-    
-    @ManyToOne
-    @JoinColumn(name = "idafiliado", referencedColumnName="idAfiliado")
-    private AfiliadoEntity afiliado; 
 
     @Column(name = "documento")
     private String documento;
 
-    @JoinColumn(name = "sangre", referencedColumnName = "idsangre")
+
     @ManyToOne
+    @JoinColumn(name = "sangre", referencedColumnName = "idsangre")
     private SangreEntity sangre;
+    
+    @ManyToOne
+    @JoinColumn(name = "idafiliado", referencedColumnName="idAfiliado")
+    private AfiliadoEntity afiliado;
 
     @Column(name = "telefono")
     private String telefono;
 
-    @JoinColumn(name = "obrasocial", referencedColumnName = "idobrasocial")
     @ManyToOne
+    @JoinColumn(name = "obrasocial", referencedColumnName = "idobrasocial")
     private ObraSocialEntity obraSocial;
 
     @Column(name = "nroafiliado")
     private String nroAfiliado;
 
-    
-    @OneToMany(mappedBy="persona")
-    private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     @Column(name = "nroOrden")
     private Integer nroOrden;
     
-    
+    @OneToMany(mappedBy="persona")
+    private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     public PersonaEntity() {
     }

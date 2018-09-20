@@ -56,4 +56,15 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
             return null;
         }
     }
+
+    public SangreEntity mapeoCoreData(Sangre sangre){
+        try {
+            SangreEntity sangreEntity = new SangreEntity(sangre.getGrupo(), sangre.getFactor());
+            sangreEntity.setIdSangre(sangre.getIdSangre());
+            return sangreEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

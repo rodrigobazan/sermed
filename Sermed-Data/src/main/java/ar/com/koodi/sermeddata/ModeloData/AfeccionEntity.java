@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class AfeccionEntity {
 
     @Id
-    @Column(name = "idAfeccion", nullable = false)
+    @Column(name = "idafeccion", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "afeccion_idafeccion_seq")
     private Integer idAfeccion;
 
@@ -25,11 +25,6 @@ public class AfeccionEntity {
 
     public AfeccionEntity(String nombreAfeccion) {
         this.nombreAfeccion = nombreAfeccion;
-    }
-    
-    public AfeccionEntity(Integer idAfeccion, String nombreAfeccion) {
-        this.nombreAfeccion = nombreAfeccion;
-        this.idAfeccion = idAfeccion;
     }
 
     public Integer getIdAfeccion() {
