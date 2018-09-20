@@ -25,7 +25,7 @@ public class ConsultarSangreUseCase {
         return (List<Sangre>) iSangreRepositorio.findByFactor(factor);
     }
 
-    public List<Sangre> consultarSangrePorGrupoFactor(String grupo, String factor) {
-        return (List<Sangre>) iSangreRepositorio.findByGrupoFactor(grupo,factor);
+    public Sangre consultarSangrePorGrupoFactor(String grupo, String factor) {
+        return iSangreRepositorio.findByGrupoFactor(grupo,factor);
     }
 }

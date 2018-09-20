@@ -117,7 +117,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	}
 
 	private ObraSocialEntity obraSocialModelo_obraSocialEntity(Persona persona) {
-		ObraSocialEntity os = new ObraSocialEntity(persona.getObraSocial().getObraSocial());
+		ObraSocialEntity os = new ObraSocialEntity(persona.getObraSocial().getNombre());
 		os.setIdObraSocial(persona.getObraSocial().getIdObraSocial());
 		return os;
 	}

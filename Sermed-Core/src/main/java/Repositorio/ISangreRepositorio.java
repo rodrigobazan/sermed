@@ -12,5 +12,6 @@ public interface ISangreRepositorio {
 
     Collection<Sangre> findByFactor(String factor);
 
-    Collection<Sangre> findByGrupoFactor(String grupo, String factor);
+    Sangre findByGrupoFactor(String grupo, String factor);
+
 }

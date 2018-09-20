@@ -1,18 +1,27 @@
 package Modelo;
 
+import Excepciones.SangreIncompletoException;
+
 public class Sangre {
 
     private int idSangre;
     private String grupo;
     private String factor;
 
-    public Sangre(int idSangre, String grupo, String factor) {
+    public Sangre(Integer idSangre, String grupo, String factor) {
         this.idSangre = idSangre;
         this.grupo = grupo;
         this.factor = factor;
     }
 
-public int getIdSangre() {
+    public static Sangre instacia(Integer idSangre, String grupo, String factor) throws SangreIncompletoException {
+        if(grupo == null || factor == null){
+            throw new SangreIncompletoException();
+        }
+        return new Sangre(idSangre,grupo,factor);
+    }
+
+    public int getIdSangre() {
         return idSangre;
     }
 

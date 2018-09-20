@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import Modelo.Sangre;
 import Repositorio.ISangreRepositorio;
 import org.hamcrest.collection.IsEmptyCollection;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -78,20 +79,13 @@ public class ConsultarSangreUnitTest {
         assertThat(sangreList, not(IsEmptyCollection.empty()));
     }
 
-    @Test
-    public void consultarSangrePorFactorGrupo_CriterioCadenaVacia_DevuelveTodos(){
-        when(iSangreRepositorio.findByGrupoFactor("","")).thenReturn(sangres);
+        @Test
+    public void consultarSangrePorFactorGrupo_CriterioConDatos_DevuelveSangre(){
+        when(iSangreRepositorio.findByGrupoFactor("A","RH+")).thenReturn(new Sangre(1,"A","RH+"));
         ConsultarSangreUseCase consultarSangreUseCase = new ConsultarSangreUseCase(iSangreRepositorio);
-        List<Sangre> sangres = consultarSangreUseCase.consultarSangrePorGrupoFactor("","");
-        assertThat(sangres, not(IsEmptyCollection.empty()));
-    }
-
-    @Test
-    public void consultarSangrePorFactorGrupo_CriteriaDatos_DevuelveAlgunos(){
-        when(iSangreRepositorio.findByGrupoFactor("","")).thenReturn(sangres);
-        ConsultarSangreUseCase consultarSangreUseCase = new ConsultarSangreUseCase(iSangreRepositorio);
-        List<Sangre> sangres = consultarSangreUseCase.consultarSangrePorGrupoFactor("","");
-        assertThat(sangres, not(IsEmptyCollection.empty()));
+        Sangre laSangre = consultarSangreUseCase.consultarSangrePorGrupoFactor("A","RH+");
+        Assertions.assertEquals("A",laSangre.getGrupo());
+        Assertions.assertEquals("RH+",laSangre.getFactor());
     }
 
 
