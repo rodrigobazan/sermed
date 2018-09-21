@@ -3,13 +3,12 @@ package ar.com.koodi.sermeddata.ModeloData;
 import javax.persistence.*;
 
 
-@Entity(name = "AntecedenteMedico")
+@Entity(name = "antecedentemedico")
 @SequenceGenerator(name="antecedentemedico_idantecedentemedico_seq", initialValue = 1, sequenceName = "antecedentemedico_idantecedentemedico_seq", allocationSize = 1)
-
 public class AntecedenteMedicoEntity {
 
     @Id
-    @Column(name = "idAntedecenteMedico", nullable = false)
+    @Column(name = "idantedecentemedico", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "antecedentemedico_idantecedentemedico_seq")
     private Integer idAntecedenteMedico;
     
@@ -22,7 +21,7 @@ public class AntecedenteMedicoEntity {
     private String observacion;
     
     @ManyToOne
-    @JoinColumn(name = "idPersona" ,referencedColumnName = "idPersona")
+    @JoinColumn(name = "idpersona" ,referencedColumnName = "idpersona")
     private PersonaEntity persona;
 
     public AntecedenteMedicoEntity() {

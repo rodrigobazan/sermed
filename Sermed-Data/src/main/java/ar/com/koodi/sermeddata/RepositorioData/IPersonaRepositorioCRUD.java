@@ -14,10 +14,11 @@ public interface IPersonaRepositorioCRUD extends CrudRepository<PersonaEntity, I
 
     PersonaEntity findByIdPersona(Integer idPersona);
 
-    //PersonaEntity findByDocumentoandAndTipoDocumento(String documento, String tipoDocumento);
+    PersonaEntity findByDocumentoAndTipoDocumentoNombre(String documento, String tipoDocumento);
 
     Collection<PersonaEntity> findAll();
 
-    Collection<PersonaEntity> findByApellidosContains(String apellido);
+    Collection<PersonaEntity> findByApellidosContainingIgnoreCase(String apellido);
 
+    PersonaEntity findByNroAfiliadoEqualsAndNroOrden(String nroAfiliado, int nroOrden);
 }

@@ -34,7 +34,6 @@ public class PersonaEntity {
     @Column(name = "documento")
     private String documento;
 
-
     @ManyToOne
     @JoinColumn(name = "sangre", referencedColumnName = "idsangre")
     private SangreEntity sangre;
@@ -54,10 +53,10 @@ public class PersonaEntity {
     private String nroAfiliado;
 
 
-    @Column(name = "nroOrden")
+    @Column(name = "nroorden")
     private Integer nroOrden;
     
-    @OneToMany(mappedBy="persona")
+    @OneToMany(mappedBy="persona", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     public PersonaEntity() {

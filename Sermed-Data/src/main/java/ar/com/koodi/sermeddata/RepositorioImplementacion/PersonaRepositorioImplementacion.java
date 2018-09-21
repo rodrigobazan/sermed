@@ -45,8 +45,8 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	@Override
 	@Transactional(readOnly = true)
 	public Persona findByDocumentoAndTipoDocumento(String documento, String tipoDocumento) {
-		// return
-		// maperoDataCore(this.iPersonaRepositorioCRUD.findByDocumentoandAndTipoDocumento(documento,tipoDocumento));
+		PersonaEntity buscada = this.iPersonaRepositorioCRUD.findByDocumentoAndTipoDocumentoNombre(documento,tipoDocumento);
+		if(buscada != null) return mapeoDataCore(buscada);
 		return null;
 	}
 
@@ -67,15 +67,18 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Persona> findByApellido(String apellido) {
 		List<Persona> personas = new ArrayList<>();
-		this.iPersonaRepositorioCRUD.findByApellidosContains(apellido).forEach(e -> personas.add(mapeoDataCore(e)));
+		this.iPersonaRepositorioCRUD.findByApellidosContainingIgnoreCase(apellido).forEach(e -> personas.add(mapeoDataCore(e)));
 		return personas;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Persona findByNumeroAfiliado(String numeroAfiliado, Integer orden) {
+		PersonaEntity personaEntity = iPersonaRepositorioCRUD.findByNroAfiliadoEqualsAndNroOrden(numeroAfiliado, orden);
+		if(personaEntity != null) return mapeoDataCore(personaEntity);
 		return null;
 	}
 
@@ -99,7 +102,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 						personaEntity.getSangre().getGrupo(), personaEntity.getSangre().getFactor()),
 				personaEntity.getTelefono(),
 				new ObraSocial(personaEntity.getObraSocial().getIdObraSocial(),
-						personaEntity.getObraSocial().getObraSocial()),
+						personaEntity.getObraSocial().getNombre()),
 				personaEntity.getNroAfiliado(), antecedentes, personaEntity.getNroOrden());
 	}
 
@@ -120,14 +123,16 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 
 	private Collection<AntecedenteMedico> antecedentesEntity_antecedentesModelo(PersonaEntity persona) {
 		Collection<AntecedenteMedico> antecedenteMedicos = new ArrayList<>();
-		persona.getAntecedenteMedicoCollection().stream().forEach(antecedente -> {
-			AntecedenteMedico antecedenteMedico = new AntecedenteMedico();
-			Afeccion afeccion = new Afeccion(antecedente.getAfeccion().getIdAfeccion(),
-					antecedente.getAfeccion().getNombreAfeccion());
-			antecedenteMedico.setAfeccion(afeccion);
-			antecedenteMedico.setIdAntecedenteMedico(antecedente.getIdAntecedenteMedico());
-			antecedenteMedico.setObservacion(antecedente.getObservacion());
-		});
+		if(persona.getAntecedenteMedicoCollection() != null){
+            persona.getAntecedenteMedicoCollection().stream().forEach(antecedente -> {
+                AntecedenteMedico antecedenteMedico = new AntecedenteMedico();
+                Afeccion afeccion = new Afeccion(antecedente.getAfeccion().getIdAfeccion(),
+                        antecedente.getAfeccion().getNombreAfeccion());
+                antecedenteMedico.setAfeccion(afeccion);
+                antecedenteMedico.setIdAntecedenteMedico(antecedente.getIdAntecedenteMedico());
+                antecedenteMedico.setObservacion(antecedente.getObservacion());
+            });
+        }
 		return antecedenteMedicos;
 	}
 }

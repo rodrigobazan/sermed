@@ -32,7 +32,7 @@ public class ObraSocialEntity {
         this.idObraSocial = idObraSocial;
     }
 
-    public String getObraSocial() {
+    public String getNombre() {
         return obraSocial;
     }
 
