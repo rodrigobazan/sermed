@@ -21,7 +21,7 @@ public class PersonaEntity {
     @Column(name = "nombres")
     private String nombres;
 
-    @Column(name = "fechaNacimiento")
+    @Column(name = "fechanacimiento")
     private LocalDate fechaNacimiento;
 
     @Column(name = "domicilio")
@@ -37,10 +37,6 @@ public class PersonaEntity {
     @ManyToOne
     @JoinColumn(name = "sangre", referencedColumnName = "idsangre")
     private SangreEntity sangre;
-    
-    @ManyToOne
-    @JoinColumn(name = "idafiliado", referencedColumnName="idAfiliado")
-    private AfiliadoEntity afiliado;
 
     @Column(name = "telefono")
     private String telefono;
@@ -52,11 +48,10 @@ public class PersonaEntity {
     @Column(name = "nroafiliado")
     private String nroAfiliado;
 
-
     @Column(name = "nroorden")
     private Integer nroOrden;
     
-    @OneToMany(mappedBy="persona", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     public PersonaEntity() {
@@ -180,14 +175,6 @@ public class PersonaEntity {
     public void setNroAfiliado(String nroAfiliado) {
         this.nroAfiliado = nroAfiliado;
     }
-
-	public AfiliadoEntity getAfiliado() {
-		return afiliado;
-	}
-
-	public void setAfiliado(AfiliadoEntity afiliado) {
-		this.afiliado = afiliado;
-	}
     
     
 }

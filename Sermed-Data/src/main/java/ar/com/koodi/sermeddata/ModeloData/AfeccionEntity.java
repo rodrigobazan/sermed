@@ -17,8 +17,8 @@ public class AfeccionEntity {
     @Column(name = "nombreafeccion")
     private String nombreAfeccion;    
     
-    @OneToMany(mappedBy="afeccion")
-    private Collection<AntecedenteMedicoEntity> antecedentes;
+//    @OneToMany(mappedBy="afeccion")
+//    private Collection<AntecedenteMedicoEntity> antecedentes;
 
     public AfeccionEntity() {
     }
@@ -43,13 +43,7 @@ public class AfeccionEntity {
         this.nombreAfeccion = nombreAfeccion;
     }
 
-	public Collection<AntecedenteMedicoEntity> getAntecedentes() {
-		return antecedentes;
-	}
 
-	public void setAntecedentes(Collection<AntecedenteMedicoEntity> antecedentes) {
-		this.antecedentes = antecedentes;
-	}
     
     
 }

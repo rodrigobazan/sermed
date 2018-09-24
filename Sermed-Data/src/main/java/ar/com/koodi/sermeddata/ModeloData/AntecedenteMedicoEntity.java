@@ -20,9 +20,9 @@ public class AntecedenteMedicoEntity {
     @Column(name = "observacion")
     private String observacion;
     
-    @ManyToOne
-    @JoinColumn(name = "idpersona" ,referencedColumnName = "idpersona")
-    private PersonaEntity persona;
+//    @ManyToOne
+//    @JoinColumn(name = "idpersona" ,referencedColumnName = "idpersona")
+//    private PersonaEntity persona;
 
     public AntecedenteMedicoEntity() {
     }
@@ -56,13 +56,7 @@ public class AntecedenteMedicoEntity {
         this.observacion = observacion;
     }
 
-	public PersonaEntity getPersona() {
-		return persona;
-	}
 
-	public void setPersona(PersonaEntity persona) {
-		this.persona = persona;
-	}
     
     
 }

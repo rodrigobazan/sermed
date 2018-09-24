@@ -39,7 +39,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	@Override
 	@Transactional(readOnly = true)
 	public Persona findById(int idPersona) {
-		return mapeoDataCore(this.iPersonaRepositorioCRUD.findByIdPersona(idPersona));
+ 		return mapeoDataCore(this.iPersonaRepositorioCRUD.findByIdPersona(idPersona));
 	}
 
 	@Override
@@ -86,6 +86,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 		TipoDocumentoEntity tipoDocumento = tipoDocumentoRepositorioImplementacion.mapeoCoreData(persona.getTipoDocumento());
 		SangreEntity sangre = sangreRepositorioImplementacion.mapeoCoreData(persona.getSangre());
 		ObraSocialEntity obraSocial = obraSocialRepositorioImplementacion.mapeoCoreData(persona.getObraSocial());
+		obraSocial.setIdObraSocial(persona.getObraSocial().getIdObraSocial());
 		Collection<AntecedenteMedicoEntity> antecedentesMedicos = antecedentesModelo_AntecedentesEntity(persona.getAntecedentesMedico());
 		return new PersonaEntity(persona.getApellidos(), persona.getNombres(), persona.getFechaNacimiento(),
 				persona.getDomicilio(), tipoDocumento, persona.getDocumento(), sangre, persona.getTelefono(),
@@ -122,17 +123,18 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 	}
 
 	private Collection<AntecedenteMedico> antecedentesEntity_antecedentesModelo(PersonaEntity persona) {
-		Collection<AntecedenteMedico> antecedenteMedicos = new ArrayList<>();
-		if(persona.getAntecedenteMedicoCollection() != null){
-            persona.getAntecedenteMedicoCollection().stream().forEach(antecedente -> {
+		Collection<AntecedenteMedico> listaAntecedenteMedicos = new ArrayList<>();
+		if(persona.getAntecedenteMedicoCollection() != null || !persona.getAntecedenteMedicoCollection().isEmpty()){
+            persona.getAntecedenteMedicoCollection().forEach(antecedente -> {
                 AntecedenteMedico antecedenteMedico = new AntecedenteMedico();
                 Afeccion afeccion = new Afeccion(antecedente.getAfeccion().getIdAfeccion(),
                         antecedente.getAfeccion().getNombreAfeccion());
                 antecedenteMedico.setAfeccion(afeccion);
                 antecedenteMedico.setIdAntecedenteMedico(antecedente.getIdAntecedenteMedico());
                 antecedenteMedico.setObservacion(antecedente.getObservacion());
+                listaAntecedenteMedicos.add(antecedenteMedico);
             });
         }
-		return antecedenteMedicos;
+		return listaAntecedenteMedicos;
 	}
 }

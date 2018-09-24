@@ -3,15 +3,7 @@ package ar.com.koodi.sermeddata.ModeloData;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import Modelo.Persona;
 
@@ -30,11 +22,11 @@ public class AfiliadoEntity {
 	@Column(name="numeroafiliado")
     private String numeroAfiliado;
 
-	@OneToMany(mappedBy = "afiliado")	
+	@OneToMany(cascade = CascadeType.ALL)
     private Collection<PersonaEntity> miembros;
 	
-	@ManyToOne
-	@JoinColumn(name = "idpersona", referencedColumnName="idPersona")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "idpersona", referencedColumnName="idpersona")
     private PersonaEntity titular;
 	
 	@Column(name="activo")
@@ -45,9 +37,9 @@ public class AfiliadoEntity {
 	
 	@Column(name="diadelmespagoacordado")
     private Integer diaDelMesPagoAcordado;
-	
+
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idplan", referencedColumnName = "idplan")
-    @ManyToOne	
     private PlanEntity plan;
 	
     
