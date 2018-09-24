@@ -93,7 +93,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 				obraSocial, persona.getNroAfiliado(), antecedentesMedicos, persona.getNroOrden());
 	}
 
-	public Persona mapeoDataCore(PersonaEntity personaEntity) {
+	public Persona mapeoDataCore(PersonaEntity personaEntity) {		
 		Collection<AntecedenteMedico> antecedentes = antecedentesEntity_antecedentesModelo(personaEntity);
 		return new Persona(personaEntity.getIdPersona(), personaEntity.getApellidos(), personaEntity.getNombres(),
 				personaEntity.getFechaNacimiento(), personaEntity.getDomicilio(),
@@ -124,7 +124,7 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
 
 	private Collection<AntecedenteMedico> antecedentesEntity_antecedentesModelo(PersonaEntity persona) {
 		Collection<AntecedenteMedico> listaAntecedenteMedicos = new ArrayList<>();
-		if(persona.getAntecedenteMedicoCollection() != null || !persona.getAntecedenteMedicoCollection().isEmpty()){
+		if(!persona.getAntecedenteMedicoCollection().isEmpty()){
             persona.getAntecedenteMedicoCollection().forEach(antecedente -> {
                 AntecedenteMedico antecedenteMedico = new AntecedenteMedico();
                 Afeccion afeccion = new Afeccion(antecedente.getAfeccion().getIdAfeccion(),

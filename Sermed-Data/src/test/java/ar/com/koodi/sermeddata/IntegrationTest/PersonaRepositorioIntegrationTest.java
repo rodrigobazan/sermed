@@ -1,6 +1,8 @@
 package ar.com.koodi.sermeddata.IntegrationTest;
 
 import Modelo.*;
+import ar.com.koodi.sermeddata.ModeloData.AfeccionEntity;
+import ar.com.koodi.sermeddata.ModeloData.AntecedenteMedicoEntity;
 import ar.com.koodi.sermeddata.ModeloData.ObraSocialEntity;
 import ar.com.koodi.sermeddata.ModeloData.PersonaEntity;
 import ar.com.koodi.sermeddata.ModeloData.SangreEntity;
@@ -52,7 +54,9 @@ public class PersonaRepositorioIntegrationTest {
                 new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "b", "+"), "423220",
                 new ObraSocial(1, "pami"), "123", factoryAntecedentesMedicos(), 1);
         boolean resultado = personaRepositorioImplementacion.persist(persona);
+        Persona personaBD= personaRepositorioImplementacion.findById(1);
         Assert.assertTrue(resultado);
+        Assert.assertEquals(3, personaBD.getAntecedentesMedico().size());
     }
 
     @Test
@@ -135,7 +139,7 @@ public class PersonaRepositorioIntegrationTest {
     @Test
     public void mapeoDataCore_MapeaCorrectamente_PersonaConId(){
         PersonaEntity personaEntity = crearPersonaEntity();
-        personaEntity.setIdPersona(1);
+        personaEntity.setIdPersona(1);       
         Persona persona = personaRepositorioImplementacion.mapeoDataCore(personaEntity);
         boolean atributosMapeados = persona.getApellidos().equals(personaEntity.getApellidos()) && persona.getNombres().equals(personaEntity.getNombres())
                 && persona.getDocumento().equals(personaEntity.getDocumento()) && persona.getNroOrden() == personaEntity.getNroOrden().intValue()
@@ -170,18 +174,29 @@ public class PersonaRepositorioIntegrationTest {
         obraSocialEntity.setIdObraSocial(2);
         return new PersonaEntity("Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
                 tipoDocumentoEntity, "12332123", sangreEntity, "423220",
-                obraSocialEntity, "123", null, 1);
+                obraSocialEntity, "123", factoryAntecedentesMedicosEntity(), 1);
     }
 
     public Collection<AntecedenteMedico> factoryAntecedentesMedicos() {
-        AntecedenteMedico dislexia = new AntecedenteMedico(1, new Afeccion(1, "Dislexia"), "Cronica");
-        AntecedenteMedico gonorrea = new AntecedenteMedico(2, new Afeccion(2, "gonorrea"), "Cronica Tambien");
-        AntecedenteMedico diabetes = new AntecedenteMedico(3, new Afeccion(3, "diabetes"), "nerviosa");
+        AntecedenteMedico dislexia = new AntecedenteMedico(null, new Afeccion(2, "Gripe"), "Cronica");
+        AntecedenteMedico gonorrea = new AntecedenteMedico(null, new Afeccion(4, "Infección"), "Cronica Tambien");
+        AntecedenteMedico diabetes = new AntecedenteMedico(null, new Afeccion(3, "Apendicitis"), "nerviosa");
 
         Collection<AntecedenteMedico> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
+        System.out.println(listaAntecedentes.size());
+        return listaAntecedentes;
+    }
+    
+    public Collection<AntecedenteMedicoEntity> factoryAntecedentesMedicosEntity() {
+    	AntecedenteMedicoEntity dislexia = new AntecedenteMedicoEntity(afeccionRepositorioImplementacion.mapeoCoreData(afeccionRepositorioImplementacion.findByNombreUnico("Gripe")), "");
+    	AntecedenteMedicoEntity gonorrea = new AntecedenteMedicoEntity(afeccionRepositorioImplementacion.mapeoCoreData(afeccionRepositorioImplementacion.findByNombreUnico("Infección")), "Cronica");
+    	AntecedenteMedicoEntity diabetes = new AntecedenteMedicoEntity(afeccionRepositorioImplementacion.mapeoCoreData(afeccionRepositorioImplementacion.findByNombreUnico("Apendicitis")), "");
+
+        Collection<AntecedenteMedicoEntity> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
 
         return listaAntecedentes;
     }
+
 
     public void factoryPersonas(){
         try {

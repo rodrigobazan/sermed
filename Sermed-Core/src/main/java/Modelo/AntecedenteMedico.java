@@ -6,7 +6,7 @@ public class AntecedenteMedico {
     private Afeccion afeccion;
     private String observacion;
 
-    public AntecedenteMedico(int idAntecedenteMedico, Afeccion afeccion, String observacion) {
+    public AntecedenteMedico(Integer idAntecedenteMedico, Afeccion afeccion, String observacion) {
         this.idAntecedenteMedico = idAntecedenteMedico;
         this.afeccion = afeccion;
         this.observacion = observacion;

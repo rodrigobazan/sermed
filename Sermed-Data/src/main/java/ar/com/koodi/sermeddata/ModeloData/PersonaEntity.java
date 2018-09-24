@@ -1,13 +1,12 @@
 package ar.com.koodi.sermeddata.ModeloData;
 
-import Modelo.ObraSocial;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity(name = "persona")
-@SequenceGenerator(name ="persona_idpersona_seq", sequenceName = "persona_idpersona_seq", allocationSize = 1)
+@SequenceGenerator(name ="persona_idpersona_seq", initialValue = 1, sequenceName = "persona_idpersona_seq", allocationSize = 1)
 public class PersonaEntity {
 
     @Id
@@ -51,7 +50,7 @@ public class PersonaEntity {
     @Column(name = "nroorden")
     private Integer nroOrden;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<AntecedenteMedicoEntity> antecedenteMedicoCollection;
 
     public PersonaEntity() {
@@ -161,6 +160,9 @@ public class PersonaEntity {
     }
 
     public Collection<AntecedenteMedicoEntity> getAntecedenteMedicoCollection() {
+    	if(antecedenteMedicoCollection == null) {
+    		return new ArrayList<>();
+    	}
         return antecedenteMedicoCollection;
     }
 

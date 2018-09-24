@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS persona;
-DROP TABLE IF EXISTS afeccion;
+/*﻿DROP TABLE IF EXISTS afeccion;
 DROP TABLE IF EXISTS afiliado;
 DROP TABLE IF EXISTS antecedentemedico;
 DROP TABLE IF EXISTS plan;
@@ -7,6 +6,7 @@ DROP TABLE IF EXISTS obrasocial;
 DROP TABLE IF EXISTS sangre;
 DROP TABLE IF EXISTS tipodocumento;
 DROP TABLE IF EXISTS plan_lista_precios;
+DROP TABLE IF EXISTS persona;*/
 
 create table afeccion (
       idafeccion integer not null,
@@ -174,6 +174,3 @@ INSERT INTO plan_lista_precios values (1,750,'7');
 
 /*Insert persona*/
 INSERT INTO persona values (1, 'Tompson', '1234567', 'Julian Amatte 21', '2010-09-21', 'Homero', null, null, '2020', null, 1, 1, 1);
-;
-
-

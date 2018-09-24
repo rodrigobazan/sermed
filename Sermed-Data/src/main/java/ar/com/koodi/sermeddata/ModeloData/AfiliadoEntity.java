@@ -8,7 +8,7 @@ import javax.persistence.*;
 import Modelo.Persona;
 
 @Entity(name="afiliado")
-@SequenceGenerator(name ="afiliado_idafiliado_seq", sequenceName = "afiliado_idafiliado_seq", allocationSize = 1)
+@SequenceGenerator(name ="afiliado_idafiliado_seq", initialValue = 1, sequenceName = "afiliado_idafiliado_seq", allocationSize = 1)
 public class AfiliadoEntity {
 
 	@Id

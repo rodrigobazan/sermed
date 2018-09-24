@@ -13,17 +13,13 @@ public class AntecedenteMedicoEntity {
     private Integer idAntecedenteMedico;
     
     //@ManyToOne
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "idafeccion" ,referencedColumnName = "idafeccion")
     private AfeccionEntity afeccion;
 
     @Column(name = "observacion")
     private String observacion;
     
-//    @ManyToOne
-//    @JoinColumn(name = "idpersona" ,referencedColumnName = "idpersona")
-//    private PersonaEntity persona;
-
     public AntecedenteMedicoEntity() {
     }
 
@@ -56,7 +52,5 @@ public class AntecedenteMedicoEntity {
         this.observacion = observacion;
     }
 
-
-    
     
 }

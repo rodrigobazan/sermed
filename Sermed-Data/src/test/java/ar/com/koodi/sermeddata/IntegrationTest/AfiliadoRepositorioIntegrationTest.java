@@ -61,9 +61,9 @@ public class AfiliadoRepositorioIntegrationTest {
 	}
 
 	private Persona factoryPersonaNuevaEnLaBD(){
-		return new Persona(1, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
-				new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "b", "+"), "423220",
-				new ObraSocial(1, "pami"), "123", new ArrayList<>(), 1);
+		return new Persona(null, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
+				new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "A", "RH+"), "423220",
+				new ObraSocial(1, "OSFATUN"), "123", new ArrayList<>(), 1);
 	}
 
 
