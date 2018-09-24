@@ -78,16 +78,22 @@ public class AfiliadoRepositorioImplementacion implements IAfiliadoRepositorio {
     }
 
     public AfiliadoEntity mapeoCoreData(Afiliado afiliado) {
-        PlanEntity planEntity = planRepositorioImplementacion.mapeoCoreData(afiliado.getPlan());
-        planEntity.setIdPlan(afiliado.getPlan().getIdPlan());
-        PersonaEntity titular = personaRepositorioImplementacion.mapeoCoreData(afiliado.getTitular());
-        if(afiliado.getTitular().getIdPersona()!=null){
-            titular.setIdPersona(afiliado.getTitular().getIdPersona());
+        try {
+            PlanEntity planEntity = planRepositorioImplementacion.mapeoCoreData(afiliado.getPlan());
+            planEntity.setIdPlan(afiliado.getPlan().getIdPlan());
+            PersonaEntity titular = personaRepositorioImplementacion.mapeoCoreData(afiliado.getTitular());
+            if(afiliado.getTitular().getIdPersona()!=null){
+                titular.setIdPersona(afiliado.getTitular().getIdPersona());
+            }
+            List<PersonaEntity> miembros = new ArrayList<>();
+            return new AfiliadoEntity(afiliado.getFechaAfiliacion(), afiliado.getNumeroAfiliado(), miembros,
+                    titular, afiliado.getActivo(), afiliado.getFechaDeBaja(), afiliado.getDiaDelMesPagoAcordado(),
+                    planEntity);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        List<PersonaEntity> miembros = new ArrayList<>();
-        return new AfiliadoEntity(afiliado.getFechaAfiliacion(), afiliado.getNumeroAfiliado(), miembros,
-                titular, afiliado.getActivo(), afiliado.getFechaDeBaja(), afiliado.getDiaDelMesPagoAcordado(),
-                planEntity);
+
     }
 
 }

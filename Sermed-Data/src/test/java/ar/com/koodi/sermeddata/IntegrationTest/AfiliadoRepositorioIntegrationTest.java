@@ -54,8 +54,9 @@ public class AfiliadoRepositorioIntegrationTest {
 	
 	@Test
 	public void persistAfiliado_TitularExisteSeAlmacenaCorrectamente_DevuelveTrue() throws AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
+		Persona titular = factoryPersonaTitularExistenteEnBD();
 		Afiliado afiliado = Afiliado.instancia(1,LocalDate.of(2010,9,9), "190000",
-				factoryPersonaTitular(), new ArrayList<>(), true, null, 15, factoryPlan());
+				titular, new ArrayList<>(), true, null, 15, factoryPlan());
 		boolean resultado = afiliadoRepositorioImplementacion.persist(afiliado);
 		Assert.assertTrue(resultado);
 	}
@@ -63,12 +64,14 @@ public class AfiliadoRepositorioIntegrationTest {
 	private Persona factoryPersonaNuevaEnLaBD(){
 		return new Persona(null, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
 				new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "A", "RH+"), "423220",
-				new ObraSocial(1, "OSFATUN"), "123", new ArrayList<>(), 1);
+				new ObraSocial(1, "OSFATUN"), "180000", new ArrayList<>(), 0);
 	}
 
 
-	private Persona factoryPersonaTitular() {
-		return personaRepositorioImplementacion.findById(1);
+	private Persona factoryPersonaTitularExistenteEnBD() {
+		return new Persona(1, "Tompson", "Homero", LocalDate.of(2010, 9, 21), "Julian Amatte 21",
+				new TipoDocumento(1, "DNI"), "1234567", new Sangre(1, "A", "RH+"), "2020",
+				new ObraSocial(1, "OSFATUN"), "190000", new ArrayList<>(), 0);
 	}
 
 	private Plan factoryPlan(){

@@ -1,14 +1,163 @@
-/*﻿DROP TABLE IF EXISTS afeccion;
+DROP TABLE IF EXISTS afeccion;
 DROP TABLE IF EXISTS afiliado;
 DROP TABLE IF EXISTS antecedentemedico;
+DROP TABLE IF EXISTS afiliado_miembros;
 DROP TABLE IF EXISTS plan;
 DROP TABLE IF EXISTS obrasocial;
 DROP TABLE IF EXISTS sangre;
 DROP TABLE IF EXISTS tipodocumento;
 DROP TABLE IF EXISTS plan_lista_precios;
-DROP TABLE IF EXISTS persona;*/
+DROP TABLE IF EXISTS persona;
+DROP TABLE IF EXISTS persona_antecedente_medico_collection;
 
 create table afeccion (
+       idafeccion integer not null,
+        nombreafeccion varchar(255),
+        primary key (idafeccion)
+    );
+
+create table afiliado (
+       idafiliado integer not null,
+        activo boolean,
+        diadelmespagoacordado integer,
+        fechaafiliacion date,
+        fechadebaja date,
+        numeroafiliado varchar(255),
+        idplan integer,
+        idpersona integer,
+        primary key (idafiliado)
+    );
+
+
+create table afiliado_miembros (
+       afiliado_idafiliado integer not null,
+        miembros_idpersona integer not null
+);
+
+create table antecedentemedico (
+       idantedecentemedico integer not null,
+        observacion varchar(255),
+        idafeccion integer,
+        primary key (idantedecentemedico)
+);
+
+create table obrasocial (
+       idobrasocial integer not null,
+        obrasocial varchar(255),
+        primary key (idobrasocial)
+);
+
+create table persona (
+       idpersona integer not null,
+        apellidos varchar(255),
+        documento varchar(255),
+        domicilio varchar(255),
+        fechanacimiento date,
+        nombres varchar(255),
+        nroafiliado varchar(255),
+        nroorden integer,
+        telefono varchar(255),
+        obrasocial integer,
+        sangre integer,
+        tipodocumento integer,
+        primary key (idpersona)
+);
+
+create table persona_antecedente_medico_collection (
+       persona_idpersona integer not null,
+        antecedente_medico_collection_idantedecentemedico integer not null
+    );
+
+create table plan (
+       idplan integer not null,
+        nombreplan varchar(255),
+        primary key (idplan)
+);
+
+create table plan_lista_precios (
+       plan_idplan integer not null,
+        listaprecios double,
+        lista_precios_key varchar(255) not null,
+        primary key (plan_idplan, lista_precios_key)
+);
+
+create table sangre (
+       idsangre integer not null,
+       grupo varchar(255),
+        factor varchar(255),
+        primary key (idsangre)
+);
+
+create table tipodocumento (
+       idtipodocumento integer not null,
+        nombre varchar(255),
+        primary key (idtipodocumento)
+);
+
+alter table afiliado_miembros
+       add constraint UK_rkpgp9at8w04m76coqdc4ntq4 unique (miembros_idpersona);
+
+alter table persona_antecedente_medico_collection
+       add constraint UK_mmluino1qnlora1g3tmwn1mhw unique (antecedente_medico_collection_idantedecentemedico);
+
+alter table afiliado
+       add constraint FKqlmkgvnlqposw5nffurhnfdnr
+       foreign key (idplan)
+       references plan;
+
+alter table afiliado
+       add constraint FKk860x7w4mb7u2to0rq3iyfmir
+       foreign key (idpersona)
+       references persona;
+
+alter table afiliado_miembros
+       add constraint FK2521iifrwajq04bygv92l9qak
+       foreign key (miembros_idpersona)
+       references persona;
+
+alter table afiliado_miembros
+       add constraint FKrxasd9iw0v74msljaun7ocxrf
+       foreign key (afiliado_idafiliado)
+       references afiliado;
+
+alter table antecedentemedico
+       add constraint FKp00up5lkt8107opj38frwpkc9
+       foreign key (idafeccion)
+       references afeccion;
+
+alter table persona
+       add constraint FKj3tdulaoo239ct2westihkot4
+       foreign key (obrasocial)
+       references obrasocial;
+
+alter table persona
+       add constraint FKojk841auaw3ge9yvjxlo0de0r
+       foreign key (sangre)
+       references sangre;
+
+alter table persona
+       add constraint FKqyqrxxoa76ce5ek72lk84qo2u
+       foreign key (tipodocumento)
+       references tipodocumento;
+
+
+alter table persona_antecedente_medico_collection
+       add constraint FKcfxlfh1gqjex7cic21h8dew2u
+       foreign key (antecedente_medico_collection_idantedecentemedico)
+       references antecedentemedico;
+
+
+alter table persona_antecedente_medico_collection
+       add constraint FKfnj2lqm09pb1hwwo0afejhlyc
+       foreign key (persona_idpersona)
+       references persona;
+
+alter table plan_lista_precios
+       add constraint FK2lyxvkqsbyubh0do6av94corn
+       foreign key (plan_idplan)
+       references plan;
+
+/*create table afeccion (
       idafeccion integer not null,
       nombreafeccion varchar(255),
       primary key (idafeccion)
@@ -127,7 +276,7 @@ alter table plan_lista_precios
        add constraint FK2lyxvkqsbyubh0do6av94corn
        foreign key (plan_idplan)
        references plan;
-
+*/
 
 /*Inserts ---------*/
 /*Insert de Tipo Documento*/
@@ -173,4 +322,4 @@ INSERT INTO plan_lista_precios values (1,700,'6');
 INSERT INTO plan_lista_precios values (1,750,'7');
 
 /*Insert persona*/
-INSERT INTO persona values (1, 'Tompson', '1234567', 'Julian Amatte 21', '2010-09-21', 'Homero', null, null, '2020', null, 1, 1, 1);
+INSERT INTO persona values (nextval('persona_idpersona_seq'),'Tompson', '1234567', 'Julian Amatte 21', '2010-09-21', 'Homero', '190000', 0, '2020', 1, 1, 1);

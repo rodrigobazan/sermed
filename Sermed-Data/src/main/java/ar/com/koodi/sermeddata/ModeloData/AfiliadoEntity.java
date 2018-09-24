@@ -25,7 +25,7 @@ public class AfiliadoEntity {
 	@OneToMany(cascade = CascadeType.ALL)
     private Collection<PersonaEntity> miembros;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idpersona", referencedColumnName="idpersona")
     private PersonaEntity titular;
 	
