@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS tipodocumento;
 DROP TABLE IF EXISTS sangre;
 DROP TABLE IF EXISTS afeccion;
 DROP TABLE IF EXISTS obrasocial;
+DROP TABLE IF EXISTS periodopago;
 
 CREATE TABLE tipodocumento (
     idtipodocumento integer,
@@ -22,6 +23,12 @@ CREATE TABLE afeccion(
 CREATE TABLE obrasocial(
   idobrasocial integer,
   obrasocial varchar(255)
+);
+
+CREATE TABLE periodopago(
+  idperiodopago integer,
+  mes integer,
+  anio integer
 );
 
 /*Insert de Tipo Documento*/
@@ -53,3 +60,20 @@ INSERT INTO obrasocial values (2, 'OSDE');
 INSERT INTO obrasocial values (3, 'APOS');
 INSERT INTO obrasocial values (4, 'PAMI');
 INSERT INTO obrasocial values (5, 'SANCOR SALUD');
+
+/*Insert de periodos de pago*/
+INSERT INTO periodopago values (1, 1, 2018);
+INSERT INTO periodopago values (2, 2, 2018);
+INSERT INTO periodopago values (3, 3, 2018);
+INSERT INTO periodopago values (4, 4, 2018);
+INSERT INTO periodopago values (5, 5, 2018);
+INSERT INTO periodopago values (6, 6, 2018);
+INSERT INTO periodopago values (7, 7, 2018);
+INSERT INTO periodopago values (8, 8, 2018);
+INSERT INTO periodopago values (9, 9, 2018);
+INSERT INTO periodopago values (10, 10, 2018);
+INSERT INTO periodopago values (11, 11, 2018);
+INSERT INTO periodopago values (12, 12, 2018);
+INSERT INTO periodopago values (13, 1, 2017);
+INSERT INTO periodopago values (14, 2, 2017);
+INSERT INTO periodopago values (15, 3, 2017);
