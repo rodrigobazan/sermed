@@ -50,7 +50,7 @@ public class AfeccionRepositorioIntegrationTest {
 	@Test
 	public void findByNombreUnico_ExistenAfeccion_DevuelveAfeccion() {
 		Afeccion resultado = this.afeccionRepositorioImplementacion.findByNombreUnico("Gripe");
-		Assert.assertEquals(2, resultado.getIdAfeccion());
+		Assert.assertEquals(2, resultado.getIdAfeccion().intValue());
 	}
 
 	@Test

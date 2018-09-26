@@ -157,127 +157,6 @@ alter table plan_lista_precios
        foreign key (plan_idplan)
        references plan;
 
-/*create table afeccion (
-      idafeccion integer not null,
-      nombreafeccion varchar(255),
-      primary key (idafeccion)
-);
-
-create table afiliado (
-  idafiliado integer not null,
-  activo boolean,
-  diadelmespagoacordado integer,
-  fechaafiliacion date,
-  fechadebaja date,
-  numeroafiliado varchar(255),
-  idplan integer,
-  idpersona integer,
-  primary key (idafiliado)
-);
-
-create table antecedentemedico (
-       idantedecentemedico integer not null,
-        observacion varchar(255),
-        idafeccion integer,
-        idpersona integer,
-        primary key (idantedecentemedico)
-);
-
-create table obrasocial (
-  idobrasocial integer not null,
-  obrasocial varchar(255),
-  primary key (idobrasocial)
-);
-
-create table persona (
-       idpersona integer not null,
-        apellidos varchar(255),
-        documento varchar(255),
-        domicilio varchar(255),
-        fechanacimiento date,
-        nombres varchar(255),
-        nroafiliado varchar(255),
-        nroorden integer,
-        telefono varchar(255),
-        idafiliado integer,
-        obrasocial integer,
-        sangre integer,
-        tipodocumento integer,
-        primary key (idpersona)
-);
-
-create table plan (
-  idplan integer not null,
-  nombreplan varchar(255),
-  primary key (idplan)
-);
-
-create table plan_lista_precios (
-  plan_idplan integer not null,
-  listaprecios double,
-  lista_precios_key varchar(255) not null,
-  primary key (plan_idplan, lista_precios_key)
-);
-
-create table sangre (
-       idsangre integer not null,
-        factor varchar(255),
-        grupo varchar(255),
-        primary key (idsangre)
-);
-
-create table tipodocumento (
-       idtipodocumento integer not null,
-        nombre varchar(255),
-        primary key (idtipodocumento)
-);
-
-alter table afiliado
-       add constraint FKqlmkgvnlqposw5nffurhnfdnr
-       foreign key (idplan)
-       references plan;
-
-alter table afiliado
-       add constraint FKk860x7w4mb7u2to0rq3iyfmir
-       foreign key (idpersona)
-       references persona;
-
-alter table antecedentemedico
-       add constraint FKp00up5lkt8107opj38frwpkc9
-       foreign key (idafeccion)
-       references afeccion;
-
-alter table antecedentemedico
-       add constraint FKl9142jv1vqhwl1qdfi4gnvf4p
-       foreign key (idpersona)
-       references persona;
-
-alter table persona
-       add constraint FKwxx38wo44gv6w0wk4nsffucf
-       foreign key (idafiliado)
-       references afiliado;
-
-alter table persona
-       add constraint FKj3tdulaoo239ct2westihkot4
-       foreign key (obrasocial)
-       references obrasocial;
-
-alter table persona
-       add constraint FKojk841auaw3ge9yvjxlo0de0r
-       foreign key (sangre)
-       references sangre;
-
-alter table persona
-       add constraint FKqyqrxxoa76ce5ek72lk84qo2u
-       foreign key (tipodocumento)
-       references tipodocumento;
-
-alter table plan_lista_precios
-       add constraint FK2lyxvkqsbyubh0do6av94corn
-       foreign key (plan_idplan)
-       references plan;
-*/
-
 /*Inserts ---------*/
 /*Insert de Tipo Documento*/
 INSERT INTO tipodocumento values(1, 'DNI');
@@ -311,6 +190,7 @@ INSERT INTO obrasocial values (5, 'SANCOR SALUD');
 
 /*Insert plan */
 INSERT INTO plan values(1, 'Plan Basico');
+INSERT INTO plan values(2, 'Plan Basico Nuevo');
 
 /*Insert lista precios plan*/
 INSERT INTO plan_lista_precios values (1,400,'1');
@@ -321,5 +201,20 @@ INSERT INTO plan_lista_precios values (1,650,'5');
 INSERT INTO plan_lista_precios values (1,700,'6');
 INSERT INTO plan_lista_precios values (1,750,'7');
 
+INSERT INTO plan_lista_precios values (2,405,'1');
+INSERT INTO plan_lista_precios values (2,485,'2');
+INSERT INTO plan_lista_precios values (2,555,'3');
+INSERT INTO plan_lista_precios values (2,605,'4');
+INSERT INTO plan_lista_precios values (2,655,'5');
+INSERT INTO plan_lista_precios values (2,705,'6');
+INSERT INTO plan_lista_precios values (2,755,'7');
+
 /*Insert persona*/
 INSERT INTO persona values (nextval('persona_idpersona_seq'),'Tompson', '1234567', 'Julian Amatte 21', '2010-09-21', 'Homero', '190000', 0, '2020', 1, 1, 1);
+INSERT INTO persona values (nextval('persona_idpersona_seq'),'Brown', '7654321', '9 de julio 456', '2011-09-21', 'Charly', '150000', 0, '2120', 1, 1, 1);
+INSERT INTO persona values (nextval('persona_idpersona_seq'),'Gomez', '7539516', '25 de mayo 1000', '2011-09-21', 'Droopy', '130000', 0, '5050', 1, 1, 1);
+
+/*Insert Afiliado*/
+INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), true, 15, '2018-05-02', null, '190001', 1, 1);
+INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), false, 15, '2018-05-02', null, '150000', 1, 2);
+INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), false, 15, '2018-05-02', null, '130000', 1, 3);

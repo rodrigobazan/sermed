@@ -29,14 +29,14 @@ public class MedicoRepositorioIntegrationTest {
 
 	@Test
 	public void medicoPersist_SeAlmacenaCorrectamente_DevuelveTrue() {
-		Medico medico = new Medico(0, "Vega", "Romina", 123123, "4564564");
+		Medico medico = new Medico(null, "Vega", "Romina", 123123, "4564564");
 		boolean resultado = medicoRepositorioImplementacion.persist(medico);
 		Assert.assertTrue(resultado);
 	}
 
 	@Test
 	public void findById_ExisteMedico_DevuelveMedico() {
-		Medico medico = new Medico(1, "Vega", "Romina", 123123, "456456");
+		Medico medico = new Medico(null, "Vega", "Romina", 123123, "456456");
 		medicoRepositorioImplementacion.persist(medico);
 		Medico medicoData = medicoRepositorioImplementacion.findById(1);
 		Assert.assertNotNull(medicoData);
@@ -50,7 +50,7 @@ public class MedicoRepositorioIntegrationTest {
 
 	@Test
 	public void findByMatricula_ExisteMatricula_DevuelveMedico() {
-		Medico medico = new Medico(1, "Vega", "Romina", 123123, "456456");
+		Medico medico = new Medico(null, "Vega", "Romina", 123123, "456456");
 		medicoRepositorioImplementacion.persist(medico);
 		Medico medicoData = medicoRepositorioImplementacion.findByMatricula(123123);
 		Assert.assertEquals("Vega", medicoData.getApellido());
@@ -92,7 +92,7 @@ public class MedicoRepositorioIntegrationTest {
 	
 	@Test
 	public void update_ActualizaCorrectamente_DevuelveTrue() {
-		Medico medico = new Medico(1, "Vega", "Romina", 123123, "456456");
+		Medico medico = new Medico(null, "Vega", "Romina", 123123, "456456");
 		Medico medicoModificado = new Medico(1, "Vega Saavedra", "Romina", 123123, "456456");
 		medicoRepositorioImplementacion.persist(medico);
 		boolean resultado = medicoRepositorioImplementacion.update(medicoModificado);
@@ -103,7 +103,7 @@ public class MedicoRepositorioIntegrationTest {
 
     @Test
     public void mapeoCoreData_MapeaCorrectamente_MedicoSinId(){
-        Medico medico = new Medico(1, "torres","geerman",12015,"as212321");
+        Medico medico = new Medico(null, "torres","geerman",12015,"as212321");
         MedicoEntity enfermeroEntity = medicoRepositorioImplementacion.mapeoCoreData(medico);
         Assert.assertNull(enfermeroEntity.getIdMedico());
         boolean atributosMapeados=medico.getMatricula()==enfermeroEntity.getMatricula() &&
@@ -128,11 +128,11 @@ public class MedicoRepositorioIntegrationTest {
     
 	private void factoryMedicos() {
 		try {
-			medicoRepositorioImplementacion.persist(new Medico(1, "Vega", "Romina", 123123, "456456"));
-			medicoRepositorioImplementacion.persist(new Medico(2, "Torres", "German", 123, "456456"));
-			medicoRepositorioImplementacion.persist(new Medico(3, "Paez Yañez", "Martin", 456, "456456"));
-			medicoRepositorioImplementacion.persist(new Medico(4, "Ruitti", "Javier", 789, "456456"));
-			medicoRepositorioImplementacion.persist(new Medico(5, "Bazan", "Rodrigo", 654, "456456"));
+			medicoRepositorioImplementacion.persist(new Medico(null, "Vega", "Romina", 123123, "456456"));
+			medicoRepositorioImplementacion.persist(new Medico(null, "Torres", "German", 123, "456456"));
+			medicoRepositorioImplementacion.persist(new Medico(null, "Paez Yañez", "Martin", 456, "456456"));
+			medicoRepositorioImplementacion.persist(new Medico(null, "Ruitti", "Javier", 789, "456456"));
+			medicoRepositorioImplementacion.persist(new Medico(null, "Bazan", "Rodrigo", 654, "456456"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception

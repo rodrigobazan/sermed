@@ -4,7 +4,7 @@ import Excepciones.SangreIncompletoException;
 
 public class Sangre {
 
-    private int idSangre;
+    private Integer idSangre;
     private String grupo;
     private String factor;
 
@@ -21,11 +21,11 @@ public class Sangre {
         return new Sangre(idSangre,grupo,factor);
     }
 
-    public int getIdSangre() {
+    public Integer getIdSangre() {
         return idSangre;
     }
 
-    public void setIdSangre(int idSangre) {
+    public void setIdSangre(Integer idSangre) {
         this.idSangre = idSangre;
     }
 

@@ -56,14 +56,18 @@ public class EnfermeroRepositorioImplementacion implements IEnfermeroRepositorio
     @Override
     @Transactional
     public boolean update(Enfermero enfermero) {
-        EnfermeroEntity enfermeroEntity = mapeoCoreData(enfermero);
+        EnfermeroEntity enfermeroEntity = new EnfermeroEntity(enfermero.getApellido(), enfermero.getNombre(), enfermero.getMatricula(), enfermero.getTelefono());
         enfermeroEntity.setIdEnfermero(enfermero.getIdEnfermero());
         return iEnfermeroRepositorioCRUD.save(enfermeroEntity) != null;
     }
 
 
     public EnfermeroEntity mapeoCoreData(Enfermero enfermero){
-        return new EnfermeroEntity(enfermero.getApellido(), enfermero.getNombre(), enfermero.getMatricula(), enfermero.getTelefono());
+        if(enfermero.getIdEnfermero() == null){
+            return new EnfermeroEntity(enfermero.getApellido(), enfermero.getNombre(), enfermero.getMatricula(), enfermero.getTelefono());
+        }
+        return this.iEnfermeroRepositorioCRUD.findByIdEnfermero(enfermero.getIdEnfermero());
+
     }
 
     public Enfermero mapeoDataCore(EnfermeroEntity enfermeroEntity){

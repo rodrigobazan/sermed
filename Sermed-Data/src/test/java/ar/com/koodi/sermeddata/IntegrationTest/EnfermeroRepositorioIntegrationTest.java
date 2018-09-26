@@ -24,14 +24,14 @@ public class EnfermeroRepositorioIntegrationTest {
 
     @Test
     public void enfermeroPersist_AlmacenaCorrectamente_DevuelveTrue(){
-        Enfermero enfermero = new Enfermero(1, "torres","geerman",12015,"as212321");
+        Enfermero enfermero = new Enfermero(null, "torres","geerman",12015,"as212321");
         boolean resultado = enfermeroRepositorioImplementacion.persist(enfermero);
         Assert.assertTrue(resultado);
     }
 
     @Test
     public void findById_ExisteEnfermero_DevuelveEnfermero(){
-        Enfermero enfermero = new Enfermero(1, "torres","geerman",12015,"as212321");
+        Enfermero enfermero = new Enfermero(null, "torres","geerman",12015,"as212321");
         enfermeroRepositorioImplementacion.persist(enfermero);
         Enfermero enfermeroData = enfermeroRepositorioImplementacion.findById(1);
         Assert.assertNotNull(enfermeroData);
@@ -39,7 +39,7 @@ public class EnfermeroRepositorioIntegrationTest {
 
     @Test
     public void findByMatricula_ExistenMatricula_DevuelveEnfermero(){
-        Enfermero enfermero = new Enfermero(2, "Ruitti","Javier",123456,"38256789132");
+        Enfermero enfermero = new Enfermero(null, "Ruitti","Javier",123456,"38256789132");
         enfermeroRepositorioImplementacion.persist(enfermero);
         Enfermero enfermeroData = enfermeroRepositorioImplementacion.findByMatricula(123456);
         Assert.assertEquals("Ruitti", enfermeroData.getApellido());
@@ -79,9 +79,9 @@ public class EnfermeroRepositorioIntegrationTest {
 
     @Test
     public void update_ActualizaCorrectamente_DevuelveTrue() {
-        Enfermero enfermero = new Enfermero(1, "Ruitti","Javier",123456,"38256789132");
-        Enfermero enfermeroModificado = new Enfermero(1, "itti","Alberto",123456,"38256789132");
+        Enfermero enfermero = new Enfermero(null, "Ruitti","Javier",123456,"38256789132");
         enfermeroRepositorioImplementacion.persist(enfermero);
+        Enfermero enfermeroModificado = new Enfermero(1, "itti","Alberto",123456,"38256789132");
         boolean resultado = enfermeroRepositorioImplementacion.update(enfermeroModificado);
         Enfermero rebusqueda=enfermeroRepositorioImplementacion.findById(1);
         Assert.assertTrue(resultado);
@@ -91,7 +91,7 @@ public class EnfermeroRepositorioIntegrationTest {
 
     @Test
     public void mapeoCoreData_MapeaCorrectamente_EnfermeroSinId(){
-        Enfermero enfermero = new Enfermero(1, "torres","geerman",12015,"as212321");
+        Enfermero enfermero = new Enfermero(null, "torres","geerman",12015,"as212321");
         EnfermeroEntity enfermeroEntity = enfermeroRepositorioImplementacion.mapeoCoreData(enfermero);
         Assert.assertNull(enfermeroEntity.getIdEnfermero());
         boolean atributosMapeados=enfermero.getMatricula().intValue()==enfermeroEntity.getMatricula().intValue() &&
@@ -117,11 +117,11 @@ public class EnfermeroRepositorioIntegrationTest {
 
     public void factoryEnfermeros(){
         try {
-            enfermeroRepositorioImplementacion.persist(new Enfermero(1, "Torres","German",123,"3825679414"));
-            enfermeroRepositorioImplementacion.persist(new Enfermero(2, "Paez Yañez","Martin",456,"3825679414"));
-            enfermeroRepositorioImplementacion.persist(new Enfermero(3, "Ruitti","Javier",789,"3825679414"));
-            enfermeroRepositorioImplementacion.persist(new Enfermero(4, "Vega","Romina",987,"3825679414"));
-            enfermeroRepositorioImplementacion.persist(new Enfermero(5, "Bazan","Rodrigo",654,"3825679414"));
+            enfermeroRepositorioImplementacion.persist(new Enfermero(null, "Torres","German",123,"3825679414"));
+            enfermeroRepositorioImplementacion.persist(new Enfermero(null, "Paez Yañez","Martin",456,"3825679414"));
+            enfermeroRepositorioImplementacion.persist(new Enfermero(null, "Ruitti","Javier",789,"3825679414"));
+            enfermeroRepositorioImplementacion.persist(new Enfermero(null, "Vega","Romina",987,"3825679414"));
+            enfermeroRepositorioImplementacion.persist(new Enfermero(null, "Bazan","Rodrigo",654,"3825679414"));
         }catch (Exception e){
             e.printStackTrace();
         }

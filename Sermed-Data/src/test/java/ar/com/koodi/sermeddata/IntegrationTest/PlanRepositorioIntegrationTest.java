@@ -25,7 +25,7 @@ public class PlanRepositorioIntegrationTest {
 
     @Test
     public void planPersist_AlmacenaCorrectamente_DevuelveTrue() throws PlanIncompletoException {
-        Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
+        Plan plan = Plan.instancia(null, "Plan Basico", factoryListaPrecios());
         boolean resultado = planRepositorioImplementacion.persist(plan);
         Assert.assertTrue(resultado);
     }
@@ -60,7 +60,7 @@ public class PlanRepositorioIntegrationTest {
 
     @Test
     public void findById_ExisteId_DevuelvePlan() throws PlanIncompletoException {
-        Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
+        Plan plan = Plan.instancia(null, "Plan Basico", factoryListaPrecios());
         planRepositorioImplementacion.persist(plan);
         Plan planBuscado = planRepositorioImplementacion.findById(1);
         Assert.assertNotNull(planBuscado);
@@ -68,7 +68,7 @@ public class PlanRepositorioIntegrationTest {
 
     @Test
     public void update_ActualizaCorrectamente_Devuelvetrue() throws PlanIncompletoException {
-        Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
+        Plan plan = Plan.instancia(null, "Plan Basico", factoryListaPrecios());
         Plan planModificado = Plan.instancia(1, "Plan Basico Nuevo", factoryListaPrecios());
         planRepositorioImplementacion.persist(plan);
         boolean resultado = planRepositorioImplementacion.update(planModificado);
@@ -80,7 +80,7 @@ public class PlanRepositorioIntegrationTest {
 
     @Test
     public void mapeoCoreData_MapeaCorrectamente_PlanSinId() throws PlanIncompletoException {
-        Plan plan = Plan.instancia(1, "Plan Basico", factoryListaPrecios());
+        Plan plan = Plan.instancia(null, "Plan Basico", factoryListaPrecios());
         PlanEntity planEntity = planRepositorioImplementacion.mapeoCoreData(plan);
         boolean atributosMapeados = planEntity.getNombrePlan().equals(plan.getNombre()) && !planEntity.getListaPrecios().isEmpty();
         Assert.assertNull(planEntity.getIdPlan());
@@ -89,10 +89,10 @@ public class PlanRepositorioIntegrationTest {
 
     private void factoryPlanes() {
         try {
-            planRepositorioImplementacion.persist(Plan.instancia(1, "Plan Basico", factoryListaPrecios()));
-            planRepositorioImplementacion.persist(Plan.instancia(2, "Plan Basico con tarjeta", factoryListaPrecios()));
-            planRepositorioImplementacion.persist(Plan.instancia(3, "Plan Especial", factoryListaPrecios()));
-            planRepositorioImplementacion.persist(Plan.instancia(4, "Plan Especial con tarjeta", factoryListaPrecios()));
+            planRepositorioImplementacion.persist(Plan.instancia(null, "Plan Basico", factoryListaPrecios()));
+            planRepositorioImplementacion.persist(Plan.instancia(null, "Plan Basico con tarjeta", factoryListaPrecios()));
+            planRepositorioImplementacion.persist(Plan.instancia(null, "Plan Especial", factoryListaPrecios()));
+            planRepositorioImplementacion.persist(Plan.instancia(null, "Plan Especial con tarjeta", factoryListaPrecios()));
         } catch (PlanIncompletoException e) {
             e.printStackTrace();
         }

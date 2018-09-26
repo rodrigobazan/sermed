@@ -53,7 +53,14 @@ public class PersonaRepositorioImplementacion implements IPersonaRepositorio {
     @Override
     @Transactional
     public boolean update(Persona personaDatosNuevos) {
-        PersonaEntity personaEntity = mapeoCoreData(personaDatosNuevos);
+        TipoDocumentoEntity tipoDocumento = tipoDocumentoRepositorioImplementacion.mapeoCoreData(personaDatosNuevos.getTipoDocumento());
+        SangreEntity sangre = sangreRepositorioImplementacion.mapeoCoreData(personaDatosNuevos.getSangre());
+        ObraSocialEntity obraSocial = obraSocialRepositorioImplementacion.mapeoCoreData(personaDatosNuevos.getObraSocial());
+        obraSocial.setIdObraSocial(personaDatosNuevos.getObraSocial().getIdObraSocial());
+        Collection<AntecedenteMedicoEntity> antecedentesMedicos = antecedentesModelo_AntecedentesEntity(personaDatosNuevos.getAntecedentesMedico());
+        PersonaEntity personaEntity = new PersonaEntity(personaDatosNuevos.getApellidos(), personaDatosNuevos.getNombres(), personaDatosNuevos.getFechaNacimiento(),
+                personaDatosNuevos.getDomicilio(), tipoDocumento, personaDatosNuevos.getDocumento(), sangre, personaDatosNuevos.getTelefono(),
+                obraSocial, personaDatosNuevos.getNroAfiliado(), antecedentesMedicos, personaDatosNuevos.getNroOrden());
         personaEntity.setIdPersona(personaDatosNuevos.getIdPersona());
         return iPersonaRepositorioCRUD.save(personaEntity) != null;
     }

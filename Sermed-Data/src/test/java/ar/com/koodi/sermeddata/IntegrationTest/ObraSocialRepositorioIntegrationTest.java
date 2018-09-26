@@ -23,14 +23,14 @@ public class ObraSocialRepositorioIntegrationTest {
 	
 	@Test
 	public void persistObraSocial_SeGuardaCorrectamente_DevuelveTrue() {
-		ObraSocial obraSocial = new ObraSocial(1,"OSFATUN"); 
+		ObraSocial obraSocial = new ObraSocial(null,"OSFATUN");
 		boolean resultado = obraSocialRepositorioImplementacion.persist(obraSocial);
 		Assert.assertTrue(resultado);		
 	}
 
 	@Test
 	public void findByNombreUnico_ExisteObraSocial_DevuelveObraSocial() {
-		ObraSocial obraSocial = new ObraSocial(1,"OSFATUN"); 
+		ObraSocial obraSocial = new ObraSocial(null,"OSFATUN");
 		obraSocialRepositorioImplementacion.persist(obraSocial);
 		ObraSocial resultado = obraSocialRepositorioImplementacion.findByNombreUnico("OSFATUN");
 		Assert.assertEquals(1,resultado.getIdObraSocial().intValue());
@@ -64,7 +64,7 @@ public class ObraSocialRepositorioIntegrationTest {
 	
 	@Test
 	public void findById_ExisteObraSocial_DevuelveObraSocial() {
-		ObraSocial obraSocial = new ObraSocial(1,"OSFATUN"); 
+		ObraSocial obraSocial = new ObraSocial(null,"OSFATUN");
 		obraSocialRepositorioImplementacion.persist(obraSocial);
 		ObraSocial resultado = obraSocialRepositorioImplementacion.findById(1);
 		Assert.assertEquals("OSFATUN",resultado.getNombre());
@@ -72,7 +72,7 @@ public class ObraSocialRepositorioIntegrationTest {
 	
 	@Test
 	public void updateObraSocial_ActualizaCorrectamente_DevuelveTrue() {
-		ObraSocial obraSocial = new ObraSocial(1,"OSFATUN"); 
+		ObraSocial obraSocial = new ObraSocial(null,"OSFATUN");
 		ObraSocial obraSocialModificada = new ObraSocial(1,"OSFACTURA"); 
 		obraSocialRepositorioImplementacion.persist(obraSocial);
 		boolean resultado = obraSocialRepositorioImplementacion.update(obraSocialModificada);
@@ -83,11 +83,11 @@ public class ObraSocialRepositorioIntegrationTest {
 	
 	private void factoryObrasSociales() {
 		try {
-			obraSocialRepositorioImplementacion.persist(new ObraSocial(1, "OSFATUN"));
-			obraSocialRepositorioImplementacion.persist(new ObraSocial(2, "OSDE"));
-			obraSocialRepositorioImplementacion.persist(new ObraSocial(3, "APOS"));
-			obraSocialRepositorioImplementacion.persist(new ObraSocial(4, "PAMI"));
-			obraSocialRepositorioImplementacion.persist(new ObraSocial(5, "SANCOR SALUD"));
+			obraSocialRepositorioImplementacion.persist(new ObraSocial(null, "OSFATUN"));
+			obraSocialRepositorioImplementacion.persist(new ObraSocial(null, "OSDE"));
+			obraSocialRepositorioImplementacion.persist(new ObraSocial(null, "APOS"));
+			obraSocialRepositorioImplementacion.persist(new ObraSocial(null, "PAMI"));
+			obraSocialRepositorioImplementacion.persist(new ObraSocial(null, "SANCOR SALUD"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

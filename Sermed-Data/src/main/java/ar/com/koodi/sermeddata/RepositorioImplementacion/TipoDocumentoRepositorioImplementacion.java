@@ -33,19 +33,21 @@ public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRep
 
     @Override
     public TipoDocumento findByNombreUnico(String nombre) {
-         return mapeoDataCore(this.iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase(nombre));
+        return mapeoDataCore(this.iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase(nombre));
     }
 
     public TipoDocumento mapeoDataCore(TipoDocumentoEntity tipoDocumento) {
-        if(tipoDocumento != null){
+        if (tipoDocumento != null) {
             return new TipoDocumento(tipoDocumento.getIdTipoDocumento(), tipoDocumento.getNombre());
         }
         return null;
     }
 
-    public TipoDocumentoEntity mapeoCoreData(TipoDocumento tipoDocumento){
-        TipoDocumentoEntity tipoDocumentoEntity = new TipoDocumentoEntity(tipoDocumento.getNombre());
-        tipoDocumentoEntity.setIdTipoDocumento(tipoDocumento.getIdTipoDocumento());
-        return tipoDocumentoEntity;
+    public TipoDocumentoEntity mapeoCoreData(TipoDocumento tipoDocumento) {
+        if (tipoDocumento.getIdTipoDocumento() == null) {
+            return new TipoDocumentoEntity(tipoDocumento.getNombre());
+        }
+        return this.iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase(tipoDocumento.getNombre());
+
     }
 }

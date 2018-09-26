@@ -42,27 +42,28 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
 
     @Override
     public Sangre findByGrupoFactor(String grupo, String factor) {
-        SangreEntity sangre = this.ISangreRepositorioCRUD.findByGrupoAndFactor(grupo,factor);
-        if(sangre != null) return mapeoDataCore(sangre);
+        SangreEntity sangre = this.ISangreRepositorioCRUD.findByGrupoAndFactor(grupo, factor);
+        if (sangre != null) return mapeoDataCore(sangre);
         return null;
     }
 
 
-    public Sangre mapeoDataCore(SangreEntity sangreEntity){
-        try{
-            return Sangre.instacia(sangreEntity.getIdSangre(),sangreEntity.getGrupo(),sangreEntity.getFactor());
+    public Sangre mapeoDataCore(SangreEntity sangreEntity) {
+        try {
+            return Sangre.instacia(sangreEntity.getIdSangre(), sangreEntity.getGrupo(), sangreEntity.getFactor());
         } catch (SangreIncompletoException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public SangreEntity mapeoCoreData(Sangre sangre){
+    public SangreEntity mapeoCoreData(Sangre sangre) {
         try {
-            SangreEntity sangreEntity = new SangreEntity(sangre.getGrupo(), sangre.getFactor());
-            sangreEntity.setIdSangre(sangre.getIdSangre());
-            return sangreEntity;
-        }catch (Exception e){
+            if (sangre.getIdSangre() == null) {
+                return new SangreEntity(sangre.getGrupo(), sangre.getFactor());
+            }
+            return this.ISangreRepositorioCRUD.findByGrupoAndFactor(sangre.getGrupo(), sangre.getFactor());
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

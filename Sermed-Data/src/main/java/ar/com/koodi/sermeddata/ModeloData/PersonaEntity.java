@@ -1,5 +1,8 @@
 package ar.com.koodi.sermeddata.ModeloData;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

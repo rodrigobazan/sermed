@@ -57,13 +57,17 @@ public class MedicoRepositorioImplementacion implements IMedicoRepositorio {
 
     @Override
     public boolean update(Medico medico) {
-        MedicoEntity medicoEntity = mapeoCoreData(medico);
+        MedicoEntity medicoEntity = new MedicoEntity(medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
         medicoEntity.setIdMedico(medico.getIdMedico());
         return iMedicoRepositorioCRUD.save(medicoEntity) != null;
     }
 
     public MedicoEntity mapeoCoreData(Medico medico) {
-        return new MedicoEntity(medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
+        if(medico.getIdMedico() == null){
+            return new MedicoEntity(medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
+        }
+        return this.iMedicoRepositorioCRUD.findByIdMedico(medico.getIdMedico());
+
     }
 
     public Medico mapeoDataCore(MedicoEntity medicoEntity) {

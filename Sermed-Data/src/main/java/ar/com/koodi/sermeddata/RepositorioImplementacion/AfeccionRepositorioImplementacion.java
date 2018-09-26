@@ -51,9 +51,11 @@ public class AfeccionRepositorioImplementacion implements IAfeccionRepositorio {
 
 	public AfeccionEntity mapeoCoreData(Afeccion afeccion){
 		try {
-			AfeccionEntity afeccionEntity = new AfeccionEntity(afeccion.getNombreAfeccion());
-			afeccionEntity.setIdAfeccion(afeccion.getIdAfeccion());
-			return afeccionEntity;
+			if(afeccion.getIdAfeccion() == null){
+				AfeccionEntity afeccionEntity = new AfeccionEntity(afeccion.getNombreAfeccion());
+				return afeccionEntity;
+			}
+			return this.iAfeccionRepositorioCRUD.findByNombreAfeccionEquals(afeccion.getNombreAfeccion());
 		}catch (Exception e){
 			e.printStackTrace();
 			return null;

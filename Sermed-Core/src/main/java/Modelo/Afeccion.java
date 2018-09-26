@@ -1,15 +1,15 @@
 package Modelo;
 
 public class Afeccion {
-    private int idAfeccion;
+    private Integer idAfeccion;
     private String nombreAfeccion;
 
-    public Afeccion(int idAfeccion, String nombreAfeccion) {
+    public Afeccion(Integer idAfeccion, String nombreAfeccion) {
         this.idAfeccion = idAfeccion;
         this.nombreAfeccion = nombreAfeccion;
     }
 
-    public int getIdAfeccion() {
+    public Integer getIdAfeccion() {
         return idAfeccion;
     }
 

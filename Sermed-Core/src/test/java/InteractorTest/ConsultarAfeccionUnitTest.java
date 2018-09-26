@@ -52,8 +52,8 @@ public class ConsultarAfeccionUnitTest {
 	@Test
 	public void consultarAfeccionesPorNombre_ExistenDatos_DevuelveListaDatos() {
 		ConsultarAfeccionUseCase consultarAfeccionUseCase= new ConsultarAfeccionUseCase(repositorioAfeccion);
-		when(repositorioAfeccion.findByNombre("Infección")).thenReturn(filtroAfecciones());
-		List<Afeccion> afecciones = consultarAfeccionUseCase.consultarAfeccionesPorNombre("Infección");
+		when(repositorioAfeccion.findByNombre("Infecciï¿½n")).thenReturn(filtroAfecciones());
+		List<Afeccion> afecciones = consultarAfeccionUseCase.consultarAfeccionesPorNombre("Infecciï¿½n");
 		assertThat(afecciones, not(IsEmptyCollection.empty()));
 		Assertions.assertEquals(2, afecciones.size());				
 	}
@@ -70,9 +70,9 @@ public class ConsultarAfeccionUnitTest {
 	@Test
 	public void consultarAfeccionPorNombre_AfeccionExiste_DevuelveAfeccion() throws AfeccionNoExisteException {
 		ConsultarAfeccionUseCase consultarAfeccionUseCase= new ConsultarAfeccionUseCase(repositorioAfeccion);		
-		when(repositorioAfeccion.findByNombreUnico("Infección")).thenReturn(new Afeccion(1, "Infección"));
-		Afeccion resultado = consultarAfeccionUseCase.consultarAfeccionPorNombre("Infección");
-		Assertions.assertEquals(1, resultado.getIdAfeccion());
+		when(repositorioAfeccion.findByNombreUnico("Infecciï¿½n")).thenReturn(new Afeccion(1, "Infecciï¿½n"));
+		Afeccion resultado = consultarAfeccionUseCase.consultarAfeccionPorNombre("Infecciï¿½n");
+		Assertions.assertEquals(1, resultado.getIdAfeccion().intValue());
 		
 	}
 	
@@ -87,18 +87,18 @@ public class ConsultarAfeccionUnitTest {
 
 	private List<Afeccion> filtroAfecciones(){
 		List<Afeccion> lista = new ArrayList<Afeccion>();		
-		lista.add(new Afeccion(1, "Infección"));
-		lista.add(new Afeccion(2, "Infección Generalizada"));
+		lista.add(new Afeccion(1, "Infecciï¿½n"));
+		lista.add(new Afeccion(2, "Infecciï¿½n Generalizada"));
 		return lista;
 	}
 	
 	private List<Afeccion> crearAfeccionesArray() {
 		List<Afeccion> lista = new ArrayList<Afeccion>();
-		lista.add(new Afeccion(1, "Migraña Cronica"));
+		lista.add(new Afeccion(1, "Migraï¿½a Cronica"));
 		lista.add(new Afeccion(2, "Gripe"));
 		lista.add(new Afeccion(3, "Apendicitis"));
-		lista.add(new Afeccion(4, "Infección"));
-		lista.add(new Afeccion(5, "Infección Generalizada"));
+		lista.add(new Afeccion(4, "Infecciï¿½n"));
+		lista.add(new Afeccion(5, "Infecciï¿½n Generalizada"));
 		return lista;
 	}
 	

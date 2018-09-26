@@ -23,7 +23,7 @@ public class PlanRepositorioImplementacion implements IPlanRepositorio {
     @Transactional(readOnly = true)
     public Plan findUnicoByNombre(String nombre) {
         PlanEntity planEntity = this.iPlanRepositorioCRUD.findByNombrePlanEquals(nombre);
-        if(planEntity != null) return mapeoDataCore(planEntity);
+        if (planEntity != null) return mapeoDataCore(planEntity);
         return null;
     }
 
@@ -58,17 +58,20 @@ public class PlanRepositorioImplementacion implements IPlanRepositorio {
     @Override
     @Transactional
     public boolean update(Plan plan) {
-        PlanEntity planEntity = mapeoCoreData(plan);
+        PlanEntity planEntity = new PlanEntity(plan.getNombre(), plan.getListaPrecios());
         planEntity.setIdPlan(plan.getIdPlan());
         return this.iPlanRepositorioCRUD.save(planEntity) != null;
 
     }
 
     public PlanEntity mapeoCoreData(Plan plan) {
-        return new PlanEntity(plan.getNombre(), plan.getListaPrecios());
+        if (plan.getIdPlan() == null) {
+            return new PlanEntity(plan.getNombre(), plan.getListaPrecios());
+        }
+        return this.iPlanRepositorioCRUD.findByIdPlan(plan.getIdPlan());
     }
 
-    private Plan mapeoDataCore(PlanEntity planEntity) {
+    public Plan mapeoDataCore(PlanEntity planEntity) {
         try {
             return Plan.instancia(planEntity.getIdPlan(), planEntity.getNombrePlan(), new HashMap<>(planEntity.getListaPrecios()));
         } catch (PlanIncompletoException pie) {

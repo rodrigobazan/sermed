@@ -50,8 +50,8 @@ public class PersonaRepositorioIntegrationTest {
 
     @Test
     public void personaPersist_SeGuardaCorrectamente_DevuelveTrue() {
-        Persona persona = new Persona(1, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
-                new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "b", "+"), "423220",
+        Persona persona = new Persona(null, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
+                new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "B", "RH+"), "423220",
                 new ObraSocial(1, "pami"), "123", factoryAntecedentesMedicos(), 1);
         boolean resultado = personaRepositorioImplementacion.persist(persona);
         Persona personaBD= personaRepositorioImplementacion.findById(1);
@@ -152,9 +152,9 @@ public class PersonaRepositorioIntegrationTest {
 
     @Test
     public void mapeoCoreData_MapeaCorrectamente_PersonaSinId(){
-        Persona persona = new Persona(1, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
+        Persona persona = new Persona(null, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
                 new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "A", "RH+"), "423220",
-                new ObraSocial(1, "pami"), "123", factoryAntecedentesMedicos(), 1);
+                new ObraSocial(1, "OSFATUN"), "123", factoryAntecedentesMedicos(), 1);
         PersonaEntity personaEntity = personaRepositorioImplementacion.mapeoCoreData(persona);
         boolean atributosMapeados = persona.getApellidos().equals(personaEntity.getApellidos()) && persona.getNombres().equals(personaEntity.getNombres())
                 && persona.getDocumento().equals(personaEntity.getDocumento()) && persona.getNroOrden() == personaEntity.getNroOrden().intValue()
@@ -200,16 +200,16 @@ public class PersonaRepositorioIntegrationTest {
 
     public void factoryPersonas(){
         try {
-            personaRepositorioImplementacion.persist(new Persona(1, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
+            personaRepositorioImplementacion.persist(new Persona(null, "Perez", "Juan", LocalDate.of(2011, 9, 3), "julian amatte 21",
                     new TipoDocumento(1, "DNI"), "12332123", new Sangre(1, "A", "RH+"), "423220",
                     new ObraSocial(1, "pami"), "123", factoryAntecedentesMedicos(), 1));
-            personaRepositorioImplementacion.persist(new Persona(2, "Cosme", "Fulanito", LocalDate.of(2012, 10, 4), "julian amatte 210",
+            personaRepositorioImplementacion.persist(new Persona(null, "Cosme", "Fulanito", LocalDate.of(2012, 10, 4), "julian amatte 210",
                     new TipoDocumento(2, "Libreta Civica"), "987654321", new Sangre(2, "A", "RH-"), "423030",
                     new ObraSocial(2, "OSDE"), "1234", factoryAntecedentesMedicos(), 2));
-            personaRepositorioImplementacion.persist(new Persona(3, "Green", "Grass", LocalDate.of(2013, 11, 5), "San Martin 30",
+            personaRepositorioImplementacion.persist(new Persona(null, "Green", "Grass", LocalDate.of(2013, 11, 5), "San Martin 30",
                     new TipoDocumento(3, "Pasaporte"), "123789654", new Sangre(3, "B", "RH+"), "425050",
                     new ObraSocial(3, "APOS"), "12345", factoryAntecedentesMedicos(), 3));
-            personaRepositorioImplementacion.persist(new Persona(4, "Perez", "Pablo", LocalDate.of(2010, 8, 2), "Julian amatte 21",
+            personaRepositorioImplementacion.persist(new Persona(null, "Perez", "Pablo", LocalDate.of(2010, 8, 2), "Julian amatte 21",
                     new TipoDocumento(1, "DNI"), "7539514268", new Sangre(4, "B", "RH-"), "467896",
                     new ObraSocial(3, "APOS"), "123456", factoryAntecedentesMedicos(), 4));
         }catch (Exception e){

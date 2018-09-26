@@ -6,6 +6,8 @@ import java.util.Collection;
 import javax.persistence.*;
 
 import Modelo.Persona;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity(name="afiliado")
 @SequenceGenerator(name ="afiliado_idafiliado_seq", initialValue = 1, sequenceName = "afiliado_idafiliado_seq", allocationSize = 1)

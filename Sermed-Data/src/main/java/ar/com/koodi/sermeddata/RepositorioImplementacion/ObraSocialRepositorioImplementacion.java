@@ -45,7 +45,7 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 
 	@Override
 	public boolean update(ObraSocial obraSocial) {
-		ObraSocialEntity obraSocialEntity = mapeoCoreData(obraSocial);
+		ObraSocialEntity obraSocialEntity = new ObraSocialEntity(obraSocial.getNombre());
 		obraSocialEntity.setIdObraSocial(obraSocial.getIdObraSocial());
 		return iObraSocialRepositorioCRUD.save(obraSocialEntity) !=null;
 	}
@@ -57,8 +57,10 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	
 	public ObraSocialEntity mapeoCoreData(ObraSocial obraSocial) {
 		try {
-			ObraSocialEntity obraSocialEntity = new ObraSocialEntity(obraSocial.getNombre());
-			return obraSocialEntity;
+			if(obraSocial.getIdObraSocial() == null){
+				return new ObraSocialEntity(obraSocial.getNombre());
+			}
+			return this.iObraSocialRepositorioCRUD.findByIdObraSocial(obraSocial.getIdObraSocial());
 		}catch (Exception e){
 			e.printStackTrace();
 			return null;
