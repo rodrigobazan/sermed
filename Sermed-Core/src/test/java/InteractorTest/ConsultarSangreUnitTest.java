@@ -28,8 +28,6 @@ public class ConsultarSangreUnitTest {
     @Spy
     List<Sangre> sangres = crearSangresArray();
 
-
-
     @Test
     public void consultarSangre_ExistenDatos_ColeccionConDatos(){
         when(iSangreRepositorio.findAll()).thenReturn(sangres);

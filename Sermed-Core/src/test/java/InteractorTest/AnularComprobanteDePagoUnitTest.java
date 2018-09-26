@@ -39,9 +39,9 @@ public class AnularComprobanteDePagoUnitTest {
 
     private List<PeriodoPago> listaDePeriodosDePago(){
         List<PeriodoPago> periodosPago = new ArrayList<>();
-        periodosPago.add(new PeriodoPago(2,2018));
-        periodosPago.add(new PeriodoPago(3,2018));
-        periodosPago.add(new PeriodoPago(4,2018));
+        periodosPago.add(new PeriodoPago(1,2,2018));
+        periodosPago.add(new PeriodoPago(2,3,2018));
+        periodosPago.add(new PeriodoPago(3,4,2018));
         return periodosPago;
     }
 

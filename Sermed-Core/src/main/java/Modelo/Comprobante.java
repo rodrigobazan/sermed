@@ -53,6 +53,14 @@ public class Comprobante {
         return false;
     }
 
+    public Integer getIdComprobante() {
+        return idComprobante;
+    }
+
+    public Afiliado getAfiliado() {
+        return afiliado;
+    }
+
     public String getNumero() {
         return this.numeroComprobante;
     }
