@@ -5,3 +5,4 @@ DELETE FROM persona;
 DELETE FROM afiliado;
 DELETE FROM periodopago;
 DELETE FROM comprobante;
+DELETE FROM visita;
