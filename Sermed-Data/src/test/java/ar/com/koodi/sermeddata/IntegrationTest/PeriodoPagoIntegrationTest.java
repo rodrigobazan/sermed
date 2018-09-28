@@ -1,6 +1,7 @@
 package ar.com.koodi.sermeddata.IntegrationTest;
 
 import Modelo.PeriodoPago;
+import ar.com.koodi.sermeddata.ModeloData.PeriodoPagoEntity;
 import ar.com.koodi.sermeddata.RepositorioImplementacion.PeriodoPagoRepositorioImplementacion;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,5 +73,15 @@ public class PeriodoPagoIntegrationTest {
     public void findIntervalo_ExistenPeriodos_DevuelveListaConDatos(){
         List<PeriodoPago> periodoPagos = (List<PeriodoPago>) periodoPagoRepositorioImplementacion.findIntervalo(1,4, 2018);
         Assert.assertEquals(4, periodoPagos.size());
+    }
+
+    @Test
+    public void mapeoDataCore_mapeaCorrectamente_PeriodoPagoConId(){
+        PeriodoPagoEntity periodoPagoEntity = new PeriodoPagoEntity(1, 2018);
+        periodoPagoEntity.setIdPeriodoPago(1);
+        PeriodoPago periodoPago = periodoPagoRepositorioImplementacion.mapeoDataCore(periodoPagoEntity);
+        Assert.assertEquals(1, periodoPago.getIdPeriodoPago().intValue());
+
+
     }
 }

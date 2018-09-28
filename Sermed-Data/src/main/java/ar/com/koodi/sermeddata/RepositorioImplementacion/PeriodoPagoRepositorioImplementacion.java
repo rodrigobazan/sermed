@@ -35,6 +35,7 @@ public class PeriodoPagoRepositorioImplementacion implements IPeriodoPagoReposit
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<PeriodoPago> findByMes(int mes) {
         List<PeriodoPago> periodoPagos = new ArrayList<>();
         this.iPeriodoPagoRepositorioCRUD.findByMes(mes).forEach(p -> periodoPagos.add(mapeoDataCore(p)));
@@ -42,6 +43,7 @@ public class PeriodoPagoRepositorioImplementacion implements IPeriodoPagoReposit
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PeriodoPago findByMesAnio(int mes, int anio) {
         PeriodoPagoEntity periodoPagoEntity = this.iPeriodoPagoRepositorioCRUD.findByMesAndAnio(mes, anio);
         if(periodoPagoEntity != null) return mapeoDataCore(periodoPagoEntity);
@@ -49,6 +51,7 @@ public class PeriodoPagoRepositorioImplementacion implements IPeriodoPagoReposit
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<PeriodoPago> findIntervalo(int mesDesde, int mesHasta, int anio) {
         List<PeriodoPago> periodoPagos = new ArrayList<>();
         this.iPeriodoPagoRepositorioCRUD.findByMesIsBetweenAndAnio(mesDesde, mesHasta, anio).forEach(p -> periodoPagos.add(mapeoDataCore(p)));
@@ -56,7 +59,15 @@ public class PeriodoPagoRepositorioImplementacion implements IPeriodoPagoReposit
 
     }
 
-    private PeriodoPago mapeoDataCore(PeriodoPagoEntity periodoPagoEntity) {
+    public PeriodoPago mapeoDataCore(PeriodoPagoEntity periodoPagoEntity) {
         return new PeriodoPago(periodoPagoEntity.getIdPeriodoPago(), periodoPagoEntity.getMes(), periodoPagoEntity.getAnio());
+    }
+
+    public PeriodoPagoEntity mapeoCoreData(PeriodoPago periodoPago){
+        if(periodoPago.getIdPeriodoPago() == null){
+            return new PeriodoPagoEntity(periodoPago.getMes(),periodoPago.getAnio());
+        }else {
+            return iPeriodoPagoRepositorioCRUD.findByMesAndAnio(periodoPago.getMes(), periodoPago.getAnio());
+        }
     }
 }

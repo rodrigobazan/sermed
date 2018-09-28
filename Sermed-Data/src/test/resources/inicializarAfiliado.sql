@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS tipodocumento;
 DROP TABLE IF EXISTS plan_lista_precios;
 DROP TABLE IF EXISTS persona;
 DROP TABLE IF EXISTS persona_antecedente_medico_collection;
+DROP TABLE IF EXISTS periodopago;
 
 create table afeccion (
        idafeccion integer not null,
@@ -92,6 +93,12 @@ create table tipodocumento (
        idtipodocumento integer not null,
         nombre varchar(255),
         primary key (idtipodocumento)
+);
+
+CREATE TABLE periodopago(
+  idperiodopago integer,
+  mes integer,
+  anio integer
 );
 
 alter table afiliado_miembros
@@ -218,3 +225,20 @@ INSERT INTO persona values (nextval('persona_idpersona_seq'),'Gomez', '7539516',
 INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), true, 15, '2018-05-02', null, '190001', 1, 1);
 INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), false, 15, '2018-05-02', null, '150000', 1, 2);
 INSERT INTO afiliado values (nextval('afiliado_idafiliado_seq'), false, 15, '2018-05-02', null, '130000', 1, 3);
+
+/*Insert de periodos de pago*/
+INSERT INTO periodopago values (1, 1, 2018);
+INSERT INTO periodopago values (2, 2, 2018);
+INSERT INTO periodopago values (3, 3, 2018);
+INSERT INTO periodopago values (4, 4, 2018);
+INSERT INTO periodopago values (5, 5, 2018);
+INSERT INTO periodopago values (6, 6, 2018);
+INSERT INTO periodopago values (7, 7, 2018);
+INSERT INTO periodopago values (8, 8, 2018);
+INSERT INTO periodopago values (9, 9, 2018);
+INSERT INTO periodopago values (10, 10, 2018);
+INSERT INTO periodopago values (11, 11, 2018);
+INSERT INTO periodopago values (12, 12, 2018);
+INSERT INTO periodopago values (13, 1, 2017);
+INSERT INTO periodopago values (14, 2, 2017);
+INSERT INTO periodopago values (15, 3, 2017);

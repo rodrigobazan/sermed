@@ -41,6 +41,7 @@ public class MedicoRepositorioImplementacion implements IMedicoRepositorio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Medico> findAll() {
         List<Medico> medicos = new ArrayList<>();
         this.iMedicoRepositorioCRUD.findAll().forEach(medico -> medicos.add(mapeoDataCore(medico)));
@@ -48,6 +49,7 @@ public class MedicoRepositorioImplementacion implements IMedicoRepositorio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Medico> findByApellido(String apellido) {
         List<Medico> medicos = new ArrayList<>();
         this.iMedicoRepositorioCRUD.findByApellidoContainingIgnoreCase(apellido).forEach(medico -> medicos.add(mapeoDataCore(medico)));
@@ -56,6 +58,7 @@ public class MedicoRepositorioImplementacion implements IMedicoRepositorio {
     }
 
     @Override
+    @Transactional
     public boolean update(Medico medico) {
         MedicoEntity medicoEntity = new MedicoEntity(medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
         medicoEntity.setIdMedico(medico.getIdMedico());

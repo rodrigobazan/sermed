@@ -32,7 +32,7 @@ public class ComprobanteEntity {
     @Column(name = "activo")
     private boolean activo;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Collection<PeriodoPagoEntity> periodosAbonados;
 
     public ComprobanteEntity(String numeroComprobante, AfiliadoEntity afiliado, Double total, LocalDate fechaCreacion, String modoDePago, boolean activo, Collection<PeriodoPagoEntity> periodosAbonados) {

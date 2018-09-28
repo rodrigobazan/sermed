@@ -11,6 +11,7 @@ import Modelo.ObraSocial;
 import Repositorio.IObraSocialRepositorio;
 import ar.com.koodi.sermeddata.ModeloData.ObraSocialEntity;
 import ar.com.koodi.sermeddata.RepositorioData.IObraSocialRepositorioCRUD;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ObraSocialRepositorioImplementacion implements IObraSocialRepositorio{
@@ -19,17 +20,20 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	IObraSocialRepositorioCRUD iObraSocialRepositorioCRUD;
 
 	@Override
+	@Transactional(readOnly = true)
 	public ObraSocial findByNombreUnico(String nombre) {
 		return mapeoDataCore(iObraSocialRepositorioCRUD.findByObraSocial(nombre));
 	}
 
 	@Override
+	@Transactional
 	public boolean persist(ObraSocial obraSocial) {
 		if(iObraSocialRepositorioCRUD.save(mapeoCoreData(obraSocial))!=null) return true;
 		return false;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Collection<ObraSocial> findAll() {
 		List<ObraSocial> obrasSociales = new ArrayList<>();
 		iObraSocialRepositorioCRUD.findAll().forEach(obraSocial-> obrasSociales.add(mapeoDataCore(obraSocial)));
@@ -37,6 +41,7 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Collection<ObraSocial> findByNombre(String nombre) {
 		List<ObraSocial> obrasSociales = new ArrayList<>();
 		iObraSocialRepositorioCRUD.findByObraSocialContainingIgnoreCase(nombre).forEach(obraSocial-> obrasSociales.add(mapeoDataCore(obraSocial)));
@@ -44,6 +49,7 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	}
 
 	@Override
+	@Transactional
 	public boolean update(ObraSocial obraSocial) {
 		ObraSocialEntity obraSocialEntity = new ObraSocialEntity(obraSocial.getNombre());
 		obraSocialEntity.setIdObraSocial(obraSocial.getIdObraSocial());
@@ -51,6 +57,7 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public ObraSocial findById(Integer idObraSocial) {
 		return mapeoDataCore(iObraSocialRepositorioCRUD.findByIdObraSocial(idObraSocial));
 	}

@@ -6,6 +6,7 @@ import ar.com.koodi.sermeddata.ModeloData.TipoDocumentoEntity;
 import ar.com.koodi.sermeddata.RepositorioData.ITipoDocumentoRepositorioCRUD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +19,7 @@ public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRep
     ITipoDocumentoRepositorioCRUD iTipoDocumentoRepositorioCRUD;
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<TipoDocumento> findAll() {
         List<TipoDocumento> tipoDocumentos = new ArrayList<>();
         this.iTipoDocumentoRepositorioCRUD.findAll().forEach(tipoDocumentoEntity -> tipoDocumentos.add(mapeoDataCore(tipoDocumentoEntity)));
@@ -25,6 +27,7 @@ public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRep
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<TipoDocumento> findByNombre(String nombre) {
         List<TipoDocumento> tipoDocumentos = new ArrayList<>();
         this.iTipoDocumentoRepositorioCRUD.findByNombreContainingIgnoreCase(nombre).forEach(tipoDocumentoEntity -> tipoDocumentos.add(mapeoDataCore(tipoDocumentoEntity)));
@@ -32,6 +35,7 @@ public class TipoDocumentoRepositorioImplementacion implements ITipoDocumentoRep
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TipoDocumento findByNombreUnico(String nombre) {
         return mapeoDataCore(this.iTipoDocumentoRepositorioCRUD.findByNombreEqualsIgnoreCase(nombre));
     }

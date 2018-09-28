@@ -93,6 +93,10 @@ public class Comprobante {
         return this.modoDePago;
     }
 
+    public List<PeriodoPago> getPeriodosAbonados() {
+        return periodosAbonados;
+    }
+
     public boolean contienePeriodo(int mes, int anio) {
         return periodosAbonados.stream().anyMatch(periodoPago -> periodoPago.esDePeriodo(mes, anio));
     }

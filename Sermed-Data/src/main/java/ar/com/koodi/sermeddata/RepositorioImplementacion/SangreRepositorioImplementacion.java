@@ -27,6 +27,7 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Sangre> findByGrupo(String grupo) {
         Collection<Sangre> sangres = new ArrayList<>();
         this.ISangreRepositorioCRUD.findByGrupo(grupo).forEach(sangreEntity -> sangres.add(mapeoDataCore(sangreEntity)));
@@ -34,6 +35,7 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Sangre> findByFactor(String factor) {
         Collection<Sangre> sangres = new ArrayList<>();
         this.ISangreRepositorioCRUD.findByFactor(factor).forEach(sangreEntity -> sangres.add(mapeoDataCore(sangreEntity)));
@@ -41,6 +43,7 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Sangre findByGrupoFactor(String grupo, String factor) {
         SangreEntity sangre = this.ISangreRepositorioCRUD.findByGrupoAndFactor(grupo, factor);
         if (sangre != null) return mapeoDataCore(sangre);
