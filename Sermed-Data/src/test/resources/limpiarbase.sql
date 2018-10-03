@@ -15,6 +15,7 @@ DELETE FROM enfermero CASCADE;
 DELETE FROM medico CASCADE;
 DELETE FROM obrasocial CASCADE;
 
+/*--------------------DESCOMENTAR PARA CORRER SOBRE POSTGRESQL ------------------------------*/
 /*ALTER SEQUENCE "afeccion_idafeccion_seq" RESTART WITH 1;
 ALTER SEQUENCE "afiliado_idafiliado_seq" RESTART WITH 1;
 ALTER SEQUENCE "antecedentemedico_idantecedentemedico_seq" RESTART WITH 1;
