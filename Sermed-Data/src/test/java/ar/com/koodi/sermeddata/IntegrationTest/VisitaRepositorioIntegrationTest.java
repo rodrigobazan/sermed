@@ -27,7 +27,8 @@ import ar.com.koodi.sermeddata.RepositorioImplementacion.VisitaRepositorioImplem
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SqlGroup({
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:inicializarVisita.sql")
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:inicializarVisita.sql"),
+		@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:limpiarbase.sql")
 })
 public class VisitaRepositorioIntegrationTest {
 

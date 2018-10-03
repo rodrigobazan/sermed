@@ -258,9 +258,12 @@ public class Visita {
 	}
 
 
-
 	public Persona getPaciente() {
         return this.elPaciente;
     }
-    
+
+	public LocalDate getFecha() {
+		return this.fechaHoraVisita.toLocalDate();
+	}
+
 }

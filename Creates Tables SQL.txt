@@ -1,0 +1,173 @@
+create table afeccion (
+       idafeccion serial not null,
+        nombreafeccion varchar(255),
+        primary key (idafeccion)
+    );
+
+create table afiliado (
+       idafiliado serial not null,
+        activo boolean,
+        diadelmespagoacordado integer,
+        fechaafiliacion date,
+        fechadebaja date,
+        numeroafiliado varchar(255),
+        idplan integer,
+        idpersona integer,
+        primary key (idafiliado)
+    );
+
+create table afiliado_miembros (
+       afiliado_idafiliado integer not null,
+        miembros_idpersona integer not null
+);
+
+create table antecedentemedico (
+       idantedecentemedico serial not null,
+        observacion varchar(255),
+        idafeccion integer,
+        primary key (idantedecentemedico)
+);
+
+create table obrasocial (
+       idobrasocial serial not null,
+        obrasocial varchar(255),
+        primary key (idobrasocial)
+);
+
+create table persona (
+       idpersona serial not null,
+        apellidos varchar(255),
+        documento varchar(255),
+        domicilio varchar(255),
+        fechanacimiento date,
+        nombres varchar(255),
+        nroafiliado varchar(255),
+        nroorden integer,
+        telefono varchar(255),
+        obrasocial integer,
+        sangre integer,
+        tipodocumento integer,
+        primary key (idpersona)
+);
+
+create table plan (
+       idplan serial not null,
+        nombreplan varchar(255),
+        primary key (idplan)
+);
+
+create table plan_lista_precios (
+       plan_idplan serial not null,
+        listaprecios decimal,
+        lista_precios_key varchar(255) not null,
+        primary key (plan_idplan, lista_precios_key)
+);
+
+create table sangre (
+       idsangre serial not null,
+       grupo varchar(255),
+        factor varchar(255),
+        primary key (idsangre)
+);
+
+create table tipodocumento (
+       idtipodocumento serial not null,
+        nombre varchar(255),
+        primary key (idtipodocumento)
+);
+
+CREATE TABLE periodopago(
+  idperiodopago serial,
+  mes integer,
+  anio integer
+);
+
+
+create table persona_antecedente_medico_collection (
+       persona_idpersona integer not null,
+        antecedente_medico_collection_idantedecentemedico integer not null
+    );
+
+create table medico (
+       idmedico serial not null,
+        apellido varchar(255),
+        matricula integer,
+        nombre varchar(255),
+        telefono varchar(255),
+        primary key (idmedico)
+);
+
+create table enfermero (
+       idenfermero serial not null,
+        apellido varchar(255),
+        matricula integer,
+        nombre varchar(255),
+        telefono varchar(255),
+        primary key (idenfermero)
+    );
+
+alter table afiliado_miembros
+       add constraint UK_rkpgp9at8w04m76coqdc4ntq4 unique (miembros_idpersona);
+
+alter table persona_antecedente_medico_collection
+       add constraint UK_mmluino1qnlora1g3tmwn1mhw unique (antecedente_medico_collection_idantedecentemedico);
+
+alter table afiliado
+       add constraint FKqlmkgvnlqposw5nffurhnfdnr
+       foreign key (idplan)
+       references plan;
+
+alter table afiliado
+       add constraint FKk860x7w4mb7u2to0rq3iyfmir
+       foreign key (idpersona)
+       references persona;
+
+alter table afiliado_miembros
+       add constraint FK2521iifrwajq04bygv92l9qak
+       foreign key (miembros_idpersona)
+       references persona;
+
+alter table afiliado_miembros
+       add constraint FKrxasd9iw0v74msljaun7ocxrf
+       foreign key (afiliado_idafiliado)
+       references afiliado;
+
+alter table antecedentemedico
+       add constraint FKp00up5lkt8107opj38frwpkc9
+       foreign key (idafeccion)
+       references afeccion;
+
+alter table persona
+       add constraint FKj3tdulaoo239ct2westihkot4
+       foreign key (obrasocial)
+       references obrasocial;
+
+alter table persona
+       add constraint FKojk841auaw3ge9yvjxlo0de0r
+       foreign key (sangre)
+       references sangre;
+
+alter table persona
+       add constraint FKqyqrxxoa76ce5ek72lk84qo2u
+       foreign key (tipodocumento)
+       references tipodocumento;
+
+
+alter table persona_antecedente_medico_collection
+       add constraint FKcfxlfh1gqjex7cic21h8dew2u
+       foreign key (antecedente_medico_collection_idantedecentemedico)
+       references antecedentemedico;
+
+
+alter table persona_antecedente_medico_collection
+       add constraint FKfnj2lqm09pb1hwwo0afejhlyc
+       foreign key (persona_idpersona)
+       references persona;
+
+alter table plan_lista_precios
+       add constraint FK2lyxvkqsbyubh0do6av94corn
+       foreign key (plan_idplan)
+       references plan;
+
+
+

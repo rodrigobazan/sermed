@@ -1,17 +1,18 @@
-DROP TABLE IF EXISTS afeccion;
-DROP TABLE IF EXISTS afiliado;
-DROP TABLE IF EXISTS antecedentemedico;
-DROP TABLE IF EXISTS afiliado_miembros;
-DROP TABLE IF EXISTS plan;
-DROP TABLE IF EXISTS obrasocial;
-DROP TABLE IF EXISTS sangre;
-DROP TABLE IF EXISTS tipodocumento;
-DROP TABLE IF EXISTS plan_lista_precios;
-DROP TABLE IF EXISTS persona;
-DROP TABLE IF EXISTS persona_antecedente_medico_collection;
-DROP TABLE IF EXISTS periodopago;
-DROP TABLE IF EXISTS medico;
-DROP TABLE IF EXISTS enfermero;
+DROP TABLE IF EXISTS afeccion CASCADE;
+DROP TABLE IF EXISTS afiliado CASCADE;
+DROP TABLE IF EXISTS antecedentemedico CASCADE;
+DROP TABLE IF EXISTS afiliado_miembros CASCADE;
+DROP TABLE IF EXISTS plan CASCADE;
+DROP TABLE IF EXISTS obrasocial CASCADE;
+DROP TABLE IF EXISTS sangre CASCADE;
+DROP TABLE IF EXISTS tipodocumento CASCADE;
+DROP TABLE IF EXISTS plan_lista_precios CASCADE;
+DROP TABLE IF EXISTS persona CASCADE;
+DROP TABLE IF EXISTS persona_antecedente_medico_collection CASCADE;
+DROP TABLE IF EXISTS periodopago CASCADE;
+DROP TABLE IF EXISTS medico CASCADE;
+DROP TABLE IF EXISTS enfermero CASCADE;
+
 
 create table afeccion (
        idafeccion integer not null,
@@ -79,7 +80,7 @@ create table plan (
 
 create table plan_lista_precios (
        plan_idplan integer not null,
-        listaprecios double,
+        listaprecios decimal,
         lista_precios_key varchar(255) not null,
         primary key (plan_idplan, lista_precios_key)
 );

@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS tipodocumento;
-DROP TABLE IF EXISTS sangre;
-DROP TABLE IF EXISTS afeccion;
-DROP TABLE IF EXISTS obrasocial;
-DROP TABLE IF EXISTS periodopago;
+DROP TABLE IF EXISTS tipodocumento CASCADE;
+DROP TABLE IF EXISTS sangre CASCADE;
+DROP TABLE IF EXISTS afeccion CASCADE;
+DROP TABLE IF EXISTS obrasocial CASCADE;
+DROP TABLE IF EXISTS periodopago CASCADE;
 
 CREATE TABLE tipodocumento (
     idtipodocumento integer,
