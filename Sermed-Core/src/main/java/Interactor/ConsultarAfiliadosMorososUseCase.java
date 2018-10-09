@@ -1,5 +1,6 @@
 package Interactor;
 
+import Inputs.ConsultarAfiliadosMorosos;
 import Modelo.Afiliado;
 import Modelo.Comprobante;
 import Repositorio.IAfiliadoRepositorio;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsultarAfiliadosMorososUseCase {
+public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMorosos {
 
     private IAfiliadoRepositorio repositoriosAfiliado;
     private IComprobanteRepositorio repositorioComprobante;
@@ -20,6 +21,7 @@ public class ConsultarAfiliadosMorososUseCase {
         this.repositorioComprobante = repositoriosComprobante;
     }
 
+    @Override
     public List<Afiliado> consultarAfiliadosMorosos(LocalDate fecha) {
         ConsultarComprobanteDeAfiliadoUseCase consultarComprobanteDeAfiliadoUseCase = new ConsultarComprobanteDeAfiliadoUseCase(repositorioComprobante);
         List<Afiliado> afiliados = (List<Afiliado>) this.repositoriosAfiliado.findAllActivos();
