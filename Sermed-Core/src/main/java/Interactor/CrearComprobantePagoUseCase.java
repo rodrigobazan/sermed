@@ -1,10 +1,11 @@
 package Interactor;
 
 import Excepciones.ComprobanteExisteException;
+import Inputs.CrearComprobanteDePagoInput;
 import Modelo.Comprobante;
 import Repositorio.IComprobanteRepositorio;
 
-public class CrearComprobantePagoUseCase {
+public class CrearComprobantePagoUseCase implements CrearComprobanteDePagoInput {
     private IComprobanteRepositorio repositorioComprobante;
 
     public CrearComprobantePagoUseCase(IComprobanteRepositorio repositorioComprobante) {
