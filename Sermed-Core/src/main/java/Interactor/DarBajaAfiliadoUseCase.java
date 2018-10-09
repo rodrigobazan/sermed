@@ -1,12 +1,13 @@
 package Interactor;
 
 import Excepciones.AfiliadoDeBajaException;
+import Inputs.DarBajaAfiliadoInput;
 import Modelo.Afiliado;
 import Repositorio.IAfiliadoRepositorio;
 
 import java.time.LocalDate;
 
-public class DarBajaAfiliadoUseCase {
+public class DarBajaAfiliadoUseCase implements DarBajaAfiliadoInput {
     private IAfiliadoRepositorio repositorioAfiliado;
 
     public DarBajaAfiliadoUseCase(IAfiliadoRepositorio repositorioAfiliado) {
