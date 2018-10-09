@@ -49,7 +49,7 @@ public class MedicoRepositorioIntegrationTest {
 	
 //	@Test
 //	public void findById_NoExisteMedico_DevuelveNull() {		
-//		Medico medicoData = medicoRepositorioImplementacion.findById(10);
+//		CrearMedico medicoData = medicoRepositorioImplementacion.findById(10);
 //		Assert.assertNull(medicoData);
 //	}	
 

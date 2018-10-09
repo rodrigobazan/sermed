@@ -12,6 +12,8 @@
     <modules>
         <module>Sermed-Core</module>
         <module>Sermed-Data</module>
+        <module>Sermed-Presenter</module>
+        <module>sermed-adapter</module>
     </modules>
 
 

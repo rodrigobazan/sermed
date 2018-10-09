@@ -50,7 +50,7 @@ public class CrearVisitaUnitTest {
 //    @Test
 //    public void CrearVisita_afiliadoDeBaja_NoCreaVisita() throws VisitaIncompletaException, PlanIncompletoException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException {
 //        Afiliado afiliado = Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), false, LocalDate.of(2018,5,15), null, factoryPlan());
-//        Medico medico = new Medico(1,"torres","geerman",12015,"as212321");
+//        CrearMedico medico = new CrearMedico(1,"torres","geerman",12015,"as212321");
 //        Enfermero enfermero = new Enfermero(1,"torres","geerman",12015,"as212321");
 //        Visita visita = Visita.instancia(1, 1452, afiliado, LocalDateTime.of(2018,8,7,10,1),"Dolores columna", "Espina bifida", "110/80",36.5f,45,82,"Analgesicos", "Reposo", "Estres", "Fisioterapia", "ninguna", medico, enfermero  );
 //

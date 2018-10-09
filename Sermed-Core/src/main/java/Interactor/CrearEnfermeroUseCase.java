@@ -1,10 +1,11 @@
 package Interactor;
 
 import Excepciones.EnfermeroExisteException;
+import Inputs.CrearEnfermeroInput;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
-public class CrearEnfermeroUseCase {
+public class CrearEnfermeroUseCase implements CrearEnfermeroInput {
 
 
     private IEnfermeroRepositorio repositorioEnfermero;
@@ -13,6 +14,7 @@ public class CrearEnfermeroUseCase {
         this.repositorioEnfermero = repositorioEnfermero;
     }
 
+    @Override
     public boolean crearEnfermero(Enfermero Enfermero) throws EnfermeroExisteException {
         if (!validarEnfermeroExiste(Enfermero)) {
             return repositorioEnfermero.persist(Enfermero);
