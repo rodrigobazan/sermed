@@ -1,10 +1,11 @@
 package Interactor;
 
 import Excepciones.PlanExisteException;
+import Inputs.CrearPlanInput;
 import Modelo.Plan;
 import Repositorio.IPlanRepositorio;
 
-public class CrearPlanUseCase {
+public class CrearPlanUseCase implements CrearPlanInput{
     private IPlanRepositorio repositorioPlan;
 
     public CrearPlanUseCase(IPlanRepositorio repositorioPlan) {

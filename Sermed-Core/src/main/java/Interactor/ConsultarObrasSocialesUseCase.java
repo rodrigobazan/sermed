@@ -1,21 +1,21 @@
 package Interactor;
 
 import Excepciones.ObraSocialNoExisteException;
+import Inputs.ConsultarObrasSocialesInput;
 import Modelo.ObraSocial;
 import Repositorio.IObraSocialRepositorio;
 
-import java.util.Collection;
 import java.util.List;
 
-public class ConsultarObrasSocialesUseCase {
+public class ConsultarObrasSocialesUseCase implements ConsultarObrasSocialesInput {
     private IObraSocialRepositorio repositorioObraSocial;
 
     public ConsultarObrasSocialesUseCase(IObraSocialRepositorio repositorioObraSocial) {
         this.repositorioObraSocial = repositorioObraSocial;
     }
 
-    public Collection<ObraSocial> consultarObrasSociales() {
-        return repositorioObraSocial.findAll();
+    public List<ObraSocial> consultarObrasSociales() {
+        return (List<ObraSocial>) repositorioObraSocial.findAll();
     }
 
     public List<ObraSocial> consultarObrasSocialesPorNombre(String nombre) {

@@ -6,15 +6,17 @@ import Repositorio.ISangreRepositorio;
 import java.util.Collection;
 import java.util.List;
 
-public class ConsultarSangreUseCase {
+import Inputs.ConsultarSangreInput;
+
+public class ConsultarSangreUseCase implements ConsultarSangreInput {
     private ISangreRepositorio iSangreRepositorio;
 
     public ConsultarSangreUseCase(ISangreRepositorio iSangreRepositorio) {
         this.iSangreRepositorio = iSangreRepositorio;
     }
 
-    public Collection<Sangre> consultarSangre(){
-        return iSangreRepositorio.findAll();
+    public List<Sangre> consultarSangre(){
+        return (List<Sangre>) iSangreRepositorio.findAll();
     }
 
     public List<Sangre> consultarSangrePorGrupo(String grupo){

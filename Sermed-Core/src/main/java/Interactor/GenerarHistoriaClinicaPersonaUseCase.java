@@ -1,6 +1,7 @@
 package Interactor;
 
 import Excepciones.PersonaNoExisteException;
+import Inputs.GenerarHistoriaClinicaPersonaInput;
 import Modelo.Persona;
 import Modelo.Visita;
 import ModeloReporte.HistoriaClinicaPersonaDTO;
@@ -9,7 +10,7 @@ import Repositorio.IVisitaRepositorio;
 
 import java.util.List;
 
-public class GenerarHistoriaClinicaPersonaUseCase {
+public class GenerarHistoriaClinicaPersonaUseCase implements GenerarHistoriaClinicaPersonaInput {
     private IPersonaRepositorio repositorioPersona;
     private IVisitaRepositorio repositorioVisita;
 

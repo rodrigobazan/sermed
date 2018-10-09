@@ -1,9 +1,10 @@
 package Interactor;
 
+import Inputs.CrearVisitaInput;
 import Modelo.Visita;
 import Repositorio.IVisitaRepositorio;
 
-public class CrearVisitaUseCase {
+public class CrearVisitaUseCase implements CrearVisitaInput {
     private IVisitaRepositorio repositorioVisita;
 
     public CrearVisitaUseCase(IVisitaRepositorio repositorioVisita) {

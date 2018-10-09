@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConsultarVisitasDePersonaUseCase {
+import Inputs.ConsultarVisitasDePersonaInput;
+
+public class ConsultarVisitasDePersonaUseCase implements ConsultarVisitasDePersonaInput{
     private IVisitaRepositorio repositorioVisita;
 
     public ConsultarVisitasDePersonaUseCase(IVisitaRepositorio repositorioVisita) {

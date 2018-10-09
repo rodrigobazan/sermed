@@ -3,10 +3,11 @@ package Interactor;
 import Excepciones.MatriculasIgualesException;
 import Excepciones.MedicoIncompletoException;
 import Excepciones.UpdateMedicoException;
+import Inputs.ModificarMedicoInput;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 
-public class ModificarMedicoUseCase {
+public class ModificarMedicoUseCase implements ModificarMedicoInput {
 
 
     private IMedicoRepositorio repositorioMedico;

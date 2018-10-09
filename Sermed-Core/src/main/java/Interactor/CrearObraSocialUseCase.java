@@ -1,10 +1,11 @@
 package Interactor;
 
 import Excepciones.ObraSocialExisteException;
+import Inputs.CrearObraSocialInput;
 import Modelo.ObraSocial;
 import Repositorio.IObraSocialRepositorio;
 
-public class CrearObraSocialUseCase {
+public class CrearObraSocialUseCase implements CrearObraSocialInput {
 
     private IObraSocialRepositorio repositorioObraSocial;
 
