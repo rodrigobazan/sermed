@@ -3,10 +3,11 @@ package Interactor;
 import Excepciones.EnfermeroIncompletoException;
 import Excepciones.MatriculasIgualesException;
 import Excepciones.UpdateEnfermeroException;
+import Inputs.ModificarEnfermeroInput;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
-public class ModificarEnfermeroUseCase {
+public class ModificarEnfermeroUseCase implements ModificarEnfermeroInput{
 
 
     private IEnfermeroRepositorio repositorioEnfermero;

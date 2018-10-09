@@ -1,6 +1,7 @@
 package Interactor;
 
 import Excepciones.VisitaNoExisteException;
+import Inputs.ConsultarVisitaInput;
 import Modelo.Visita;
 import Repositorio.IVisitaRepositorio;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConsultarVisitaUseCase {
+public class ConsultarVisitaUseCase implements ConsultarVisitaInput {
     private IVisitaRepositorio repositorioVisita;
 
     public ConsultarVisitaUseCase(IVisitaRepositorio repositorioVisita) {

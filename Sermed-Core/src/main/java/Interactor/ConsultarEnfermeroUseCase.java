@@ -1,13 +1,14 @@
 package Interactor;
 
 import Excepciones.EnfermeroNoExisteException;
+import Inputs.ConsultarEnfermeroInput;
 import Modelo.Enfermero;
 import Repositorio.IEnfermeroRepositorio;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsultarEnfermeroUseCase {
+public class ConsultarEnfermeroUseCase implements ConsultarEnfermeroInput {
     private IEnfermeroRepositorio repositorioEnfermero;
 
     public ConsultarEnfermeroUseCase(IEnfermeroRepositorio repositorioEnfermero) {

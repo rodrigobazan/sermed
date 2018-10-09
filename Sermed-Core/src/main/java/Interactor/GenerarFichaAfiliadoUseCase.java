@@ -1,11 +1,12 @@
 package Interactor;
 
 import Excepciones.AfiliadoNoExisteException;
+import Inputs.GenerarFichaAfiliadoInput;
 import Modelo.Afiliado;
 import ModeloReporte.FichaAfiliadoDTO;
 import Repositorio.IAfiliadoRepositorio;
 
-public class GenerarFichaAfiliadoUseCase {
+public class GenerarFichaAfiliadoUseCase implements GenerarFichaAfiliadoInput{
     private IAfiliadoRepositorio repositorioAfiliado;
 
     public GenerarFichaAfiliadoUseCase(IAfiliadoRepositorio repositorioAfiliado) {

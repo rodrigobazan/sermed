@@ -3,10 +3,11 @@ package Interactor;
 import Excepciones.PlanExisteException;
 import Excepciones.PlanIncompletoException;
 import Excepciones.UpdatePlanException;
+import Inputs.ModificarPlanInput;
 import Modelo.Plan;
 import Repositorio.IPlanRepositorio;
 
-public class ModificarPlanUseCase {
+public class ModificarPlanUseCase implements ModificarPlanInput {
     private IPlanRepositorio repositorioPlan;
 
     public ModificarPlanUseCase(IPlanRepositorio repositorioPlan) {

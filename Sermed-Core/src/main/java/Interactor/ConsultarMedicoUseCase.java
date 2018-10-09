@@ -1,11 +1,12 @@
 package Interactor;
 
 import Excepciones.MedicoNoExisteException;
+import Inputs.ConsultarMedicoInput;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 import java.util.List;
 
-public class ConsultarMedicoUseCase {
+public class ConsultarMedicoUseCase implements ConsultarMedicoInput {
     private IMedicoRepositorio repositorioMedico;
 
     public ConsultarMedicoUseCase(IMedicoRepositorio repositorioMedico) {

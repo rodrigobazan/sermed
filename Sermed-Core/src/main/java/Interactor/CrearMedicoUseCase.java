@@ -1,10 +1,11 @@
 package Interactor;
 
 import Excepciones.MedicoExisteException;
+import Inputs.CrearMedicoInput;
 import Modelo.Medico;
 import Repositorio.IMedicoRepositorio;
 
-public class CrearMedicoUseCase {
+public class CrearMedicoUseCase implements CrearMedicoInput{
 
 
     private IMedicoRepositorio repositorioMedico;

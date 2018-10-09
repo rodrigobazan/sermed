@@ -1,11 +1,12 @@
 package Interactor;
 
 import Excepciones.ComprobanteNoExisteException;
+import Inputs.GenerarComprobanteAfiliadoInput;
 import Modelo.Comprobante;
 import ModeloReporte.ComprobanteAfiliadoDTO;
 import Repositorio.IComprobanteRepositorio;
 
-public class GenerarComprobanteAfiliadoUseCase {
+public class GenerarComprobanteAfiliadoUseCase implements GenerarComprobanteAfiliadoInput {
     private IComprobanteRepositorio repositorioComprobante;
 
     public GenerarComprobanteAfiliadoUseCase(IComprobanteRepositorio repositorioComprobante) {

@@ -2,10 +2,11 @@ package Interactor;
 
 import Excepciones.NombreObraSocialExisteException;
 import Excepciones.UpdateObraSocialException;
+import Inputs.ModificarObraSocialInput;
 import Modelo.ObraSocial;
 import Repositorio.IObraSocialRepositorio;
 
-public class ModificarObraSocialUseCase {
+public class ModificarObraSocialUseCase implements ModificarObraSocialInput {
     private IObraSocialRepositorio repositorioObraSocial;
 
     public ModificarObraSocialUseCase(IObraSocialRepositorio repositorioObraSocial) {

@@ -5,7 +5,9 @@ import Repositorio.IPlanRepositorio;
 
 import java.util.List;
 
-public class ConsultarPlanUseCase {
+import Inputs.ConsultarPlanInput;
+
+public class ConsultarPlanUseCase implements ConsultarPlanInput {
     private IPlanRepositorio repositorioPlan;
 
     public ConsultarPlanUseCase(IPlanRepositorio repositorioPlan) {

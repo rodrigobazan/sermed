@@ -1,6 +1,5 @@
 package Repositorio;
 
-import Modelo.Afiliado;
 import Modelo.Persona;
 import Modelo.Visita;
 
