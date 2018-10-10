@@ -30,15 +30,15 @@ public class CrearEnfermeroAdapterTest {
     }
 
     @Test
-    public void crearEnfermero_NoGuardaCorrectamente_DevuelveFalse() throws EnfermeroExisteException {
-        EnfermeroDTO enfermeroDTO = factoryEnfermero();
+    public void crearEnfermero_EnfermeroExiste_EnfermeroExisteException() throws EnfermeroExisteException {
+        EnfermeroDTO enfermeroDTO = new EnfermeroDTO(null, "Gomez", "Droopy", 123456, "12345678");
         CrearEnfermeroAdapter crearEnfermeroAdapter = new CrearEnfermeroAdapter(crearEnfermeroInput);
-        when(crearEnfermeroInput.crearEnfermero(any(Enfermero.class))).thenReturn(false);
-        boolean resultado = crearEnfermeroAdapter.crearEnfermero(enfermeroDTO);
-        Assertions.assertFalse(resultado);
+        when(crearEnfermeroInput.crearEnfermero(any(Enfermero.class))).thenThrow(EnfermeroExisteException.class);
+        Assertions.assertThrows(EnfermeroExisteException.class, () -> crearEnfermeroAdapter.crearEnfermero(enfermeroDTO));
+
     }
 
-    public EnfermeroDTO factoryEnfermero(){
+    public EnfermeroDTO factoryEnfermero() {
         return new EnfermeroDTO(null, "Cosme", "Fulanito", 123456, "3825674678");
     }
 

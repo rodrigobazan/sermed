@@ -67,7 +67,8 @@ public class ConsultarEnfermeroUnitTest {
         verify(repositorioEnfermero).findByApellido("");
     }
 
-    @Test void consultarEnfermerosPorApellido_CriterioCadenaConDatos_DevolverAlgunos(){
+    @Test
+    void consultarEnfermerosPorApellido_CriterioCadenaConDatos_DevolverAlgunos(){
         when(repositorioEnfermero.findByApellido("torr")).thenReturn(crearEnfermeroFiltroApellidoArray());
 
         ConsultarEnfermeroUseCase consultarEnfermeroUseCase = new ConsultarEnfermeroUseCase(repositorioEnfermero);
@@ -78,6 +79,7 @@ public class ConsultarEnfermeroUnitTest {
         verify(repositorioEnfermero).findByApellido("torr");
 
     }
+
     @Test
     void consultarEnfermeroMatricula_MatriculaExiste_RetornaEnfermero() throws EnfermeroNoExisteException {
         when(repositorioEnfermero.findByMatricula(190252)).thenReturn(new Enfermero(2,"Torres", "German", 190252, "674678"));
@@ -94,12 +96,8 @@ public class ConsultarEnfermeroUnitTest {
     void consultarEnfermeroMatricula_MatriculaNoExiste_EnfermeroNoExisteException()
     {
         when(repositorioEnfermero.findByMatricula(190123)).thenReturn(null);
-
         ConsultarEnfermeroUseCase consultarEnfermeroUseCase=new ConsultarEnfermeroUseCase(repositorioEnfermero);
-
-
         Assertions.assertThrows(EnfermeroNoExisteException.class, () -> consultarEnfermeroUseCase.consultarEnfermeroPorMatricula(190123));
-
     }
 
 
