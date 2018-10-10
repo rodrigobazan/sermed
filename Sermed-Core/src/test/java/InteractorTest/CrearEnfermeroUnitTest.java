@@ -35,7 +35,7 @@ public class CrearEnfermeroUnitTest {
     }
 
     @Test
-    public void crearEnfermero_EnfermeroExiste_EnfermeroExisteException() throws EnfermeroExisteException {
+    public void crearEnfermero_EnfermeroExiste_EnfermeroExisteException() {
         when(repositorioEnfermero.findByMatricula(190202)).thenReturn(new Enfermero(1, "vega", "romina", 190202, "674678"));
         CrearEnfermeroUseCase crearEnfermeroUseCase = new CrearEnfermeroUseCase(repositorioEnfermero);
         Enfermero enfermero = new Enfermero(1, "vega", "romina", 190202, "674678");

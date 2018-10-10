@@ -30,12 +30,11 @@ public class CrearMedicoAdapterTest {
     }
 
     @Test
-    public void crearMedico_NoGuardaCorrectamente_DevuelveFalse() throws MedicoExisteException {
-        MedicoDTO medicoDTO = factoryMedico();
+    public void crearEnfermero_EnfermeroExiste_EnfermeroExisteException() throws MedicoExisteException {
+        MedicoDTO medicoDTO = new MedicoDTO(null, "Morales", "Cachete", 190200, "85235791");
         CrearMedicoAdapter crearMedicoAdapter = new CrearMedicoAdapter(crearMedicoInput);
-        when(crearMedicoInput.crearMedico(any(Medico.class))).thenReturn(false);
-        boolean resultado = crearMedicoAdapter.crearMedico(medicoDTO);
-        Assertions.assertFalse(resultado);
+        when(crearMedicoInput.crearMedico(any(Medico.class))).thenThrow(MedicoExisteException.class);
+        Assertions.assertThrows(MedicoExisteException.class, () -> crearMedicoAdapter.crearMedico(medicoDTO));
     }
 
     private MedicoDTO factoryMedico() {

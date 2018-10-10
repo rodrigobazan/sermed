@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 
+
+import Mockito.MockitoExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +17,6 @@ import Excepciones.PlanExisteException;
 import Excepciones.PlanIncompletoException;
 import Excepciones.UpdatePlanException;
 import Inputs.ModificarPlanInput;
-import Mockito.MockitoExtension;
 import Modelo.Plan;
 import ModeloApi.PlanDTO;
 
@@ -27,15 +28,15 @@ public class ModificarPlanAdapterTest {
 	
 	@Test
 	public void modificarPlan_ActualizaCorrectamente_ReturnObjetoModificado() throws PlanExisteException, PlanIncompletoException, UpdatePlanException {
-		PlanDTO plan = new PlanDTO(1, "Plan Básico", factoryListaPrecios());
+		PlanDTO plan = new PlanDTO(1, "Plan Basico", factoryListaPrecios());
 		ModificarPlanAdapter modificarPlanAdapter = new ModificarPlanAdapter(modificarPlanInput); 
 		when(modificarPlanInput.modificarPlan(any(Plan.class))).thenReturn(factoryPlanModificado());
 		PlanDTO planModificado = modificarPlanAdapter.modificarPlan(plan);
-		Assertions.assertEquals("Plan Básico", planModificado.nombrePlan);
+		Assertions.assertEquals("Plan Basico", planModificado.nombrePlan);
 	}
 
 	private Plan factoryPlanModificado() throws PlanIncompletoException {
-		return Plan.instancia(1, "Plan Básico", factoryListaPrecios());
+		return Plan.instancia(1, "Plan Basico", factoryListaPrecios());
 	}
 	
 	private HashMap<String, Double> factoryListaPrecios(){

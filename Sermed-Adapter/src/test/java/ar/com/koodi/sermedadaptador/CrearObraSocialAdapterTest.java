@@ -30,12 +30,11 @@ public class CrearObraSocialAdapterTest {
     }
 
     @Test
-    public void crearObraSocial_NoGuardaCorrectamente_DevuelveFalse() throws ObraSocialExisteException {
-        ObraSocialDTO obraSocialDTO = factoryObraSocial();
+    public void crearObraSocial_NombreExiste_ObraSocialExisteException() throws ObraSocialExisteException {
+        ObraSocialDTO obraSocialDTO = new ObraSocialDTO(null, "APOS");
         CrearObraSocialAdapter crearObraSocialAdapter = new CrearObraSocialAdapter(crearObraSocialInput);
-        when(crearObraSocialInput.crearObraSocial(any(ObraSocial.class))).thenReturn(false);
-        boolean resultado = crearObraSocialAdapter.crearObraSocial(obraSocialDTO);
-        Assertions.assertFalse(resultado);
+        when(crearObraSocialInput.crearObraSocial(any(ObraSocial.class))).thenThrow(ObraSocialExisteException.class);
+        Assertions.assertThrows(ObraSocialExisteException.class, () -> crearObraSocialAdapter.crearObraSocial(obraSocialDTO));
     }
 
     private ObraSocialDTO factoryObraSocial() {
