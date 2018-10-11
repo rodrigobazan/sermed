@@ -1,8 +1,8 @@
 package Adaptadores;
 
 import Excepciones.EnfermeroExisteException;
+import Factorys.EnfermeroFactory;
 import Inputs.CrearEnfermeroInput;
-import Modelo.Enfermero;
 import ModeloApi.EnfermeroDTO;
 
 public class CrearEnfermeroAdapter {
@@ -15,12 +15,7 @@ public class CrearEnfermeroAdapter {
     }
 
     public boolean crearEnfermero(EnfermeroDTO enfermeroDTO) throws EnfermeroExisteException {
-        return crearEnfermeroInput.crearEnfermero(mapeoAdaptadorCore(enfermeroDTO));
+        return crearEnfermeroInput.crearEnfermero(EnfermeroFactory.mapeoDTOCore(enfermeroDTO));
     }
 
-
-    private Enfermero mapeoAdaptadorCore(EnfermeroDTO enfermeroDTO) {
-        return new Enfermero(enfermeroDTO.idEnfermero, enfermeroDTO.apellido, enfermeroDTO.nombre, enfermeroDTO.matricula,
-                enfermeroDTO.telefono);
-    }
 }
