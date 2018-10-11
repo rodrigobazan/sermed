@@ -72,6 +72,15 @@ public class ConsultarSangreAdapterTest {
         assertThat(sangreDTOS, not(IsEmptyCollection.empty()));
     }
 
+    @Test
+    public void consultarSangrePorFactorGrupo_CriterioConDatos_DevuelveSangre() {
+        when(consultarSangreInput.consultarSangrePorGrupoFactor("A","RH+")).thenReturn(new Sangre(1,"A","RH+"));
+        ConsultarSangreAdapter consultarSangreAdapter = new ConsultarSangreAdapter(consultarSangreInput);
+        SangreDTO sangreDTO = consultarSangreAdapter.consultarSangrePorGrupoFactor("A","RH+");
+        Assertions.assertEquals("A");
+
+    }
+
 
 
 
