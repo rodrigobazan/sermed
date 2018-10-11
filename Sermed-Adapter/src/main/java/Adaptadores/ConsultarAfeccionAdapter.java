@@ -1,6 +1,7 @@
 package Adaptadores;
 
 import Excepciones.AfeccionNoExisteException;
+import Factorys.AfeccionFactory;
 import Inputs.ConsultarAfeccionIput;
 import Modelo.Afeccion;
 import ModeloApi.AfeccionDTO;
@@ -17,23 +18,19 @@ public class ConsultarAfeccionAdapter {
 
     public List<AfeccionDTO> consultarAfecciones() {
         List<AfeccionDTO> afecciones = new ArrayList<>();
-        consultarAfeccionIput.consultarAfecciones().forEach(afeccion -> afecciones.add(mapeoCoreDTO(afeccion)));
+        consultarAfeccionIput.consultarAfecciones().forEach(afeccion -> afecciones.add(AfeccionFactory.mapeoCoreDTO(afeccion)));
         return afecciones;
     }
 
     public List<AfeccionDTO> consultarAfeccionesPorNombre(String nombre){
         List<AfeccionDTO> afecciones = new ArrayList<>();
-        consultarAfeccionIput.consultarAfeccionesPorNombre(nombre).forEach(afeccion -> afecciones.add(mapeoCoreDTO(afeccion)));
+        consultarAfeccionIput.consultarAfeccionesPorNombre(nombre).forEach(afeccion -> afecciones.add(AfeccionFactory.mapeoCoreDTO(afeccion)));
         return afecciones;
     }
 
     public AfeccionDTO consultarAfeccionPorNombre(String nombre) throws AfeccionNoExisteException {
-        return mapeoCoreDTO(consultarAfeccionIput.consultarAfeccionPorNombre(nombre));
+        return AfeccionFactory.mapeoCoreDTO(consultarAfeccionIput.consultarAfeccionPorNombre(nombre));
     }
 
-
-    private AfeccionDTO mapeoCoreDTO(Afeccion afeccion) {
-        return new AfeccionDTO(afeccion.getIdAfeccion(), afeccion.getNombreAfeccion());
-    }
 
 }

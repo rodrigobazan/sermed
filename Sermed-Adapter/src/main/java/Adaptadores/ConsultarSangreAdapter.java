@@ -1,5 +1,6 @@
 package Adaptadores;
 
+import Factorys.SangreFactory;
 import Inputs.ConsultarSangreInput;
 import Modelo.Sangre;
 import ModeloApi.SangreDTO;
@@ -17,28 +18,24 @@ public class ConsultarSangreAdapter {
 
     public List<SangreDTO> consultarSangre(){
         List<SangreDTO> sangreDTOS = new ArrayList<>();
-        this.consultarSangreInput.consultarSangre().forEach(sangre -> sangreDTOS.add(mapeoCoreDtoSangre(sangre)));
+        this.consultarSangreInput.consultarSangre().forEach(sangre -> sangreDTOS.add(SangreFactory.mapeoCoreDto(sangre)));
         return sangreDTOS;
     }
 
     public List<SangreDTO> consultarSangrePorGrupo(String grupo){
         List<SangreDTO> sangreDTOS = new ArrayList<>();
-        this.consultarSangreInput.consultarSangrePorGrupo(grupo).forEach(sangre -> sangreDTOS.add(mapeoCoreDtoSangre(sangre)));
+        this.consultarSangreInput.consultarSangrePorGrupo(grupo).forEach(sangre -> sangreDTOS.add(SangreFactory.mapeoCoreDto(sangre)));
         return sangreDTOS;
     }
 
     public List<SangreDTO> consultarSangrePorFactor(String factor){
         List<SangreDTO> sangreDTOS = new ArrayList<>();
-        this.consultarSangreInput.consultarSangrePorFactor(factor).forEach(sangre -> sangreDTOS.add(mapeoCoreDtoSangre(sangre)));
+        this.consultarSangreInput.consultarSangrePorFactor(factor).forEach(sangre -> sangreDTOS.add(SangreFactory.mapeoCoreDto(sangre)));
         return sangreDTOS;
     }
 
     public SangreDTO consultarSangrePorGrupoFactor (String grupo, String factor){
-        return mapeoCoreDtoSangre(this.consultarSangreInput.consultarSangrePorGrupoFactor(grupo, factor));
-    }
-
-    public SangreDTO mapeoCoreDtoSangre (Sangre sangre) {
-        return new SangreDTO(sangre.getIdSangre(),sangre.getGrupo(),sangre.getFactor());
+        return SangreFactory.mapeoCoreDto(this.consultarSangreInput.consultarSangrePorGrupoFactor(grupo, factor));
     }
 
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Excepciones.TipoDocumentoNoExisteException;
+import Factorys.TipoDocumentoFactory;
 import Inputs.ConsultarTipoDocumentoInput;
 import Modelo.TipoDocumento;
 import ModeloApi.TipoDocumentoDTO;
@@ -22,7 +23,7 @@ public class ConsultarTipoDocumentoAdapter {
 		List<TipoDocumentoDTO> tiposDTO = new ArrayList<>();
 		if(!tipos.isEmpty()) {
 			tipos.stream().forEach(tipo -> {
-				tiposDTO.add(mapeoCoreDTO(tipo));
+				tiposDTO.add(TipoDocumentoFactory.mapeoCoreDTO(tipo));
 			});
 		}
 		return tiposDTO;
@@ -33,24 +34,15 @@ public class ConsultarTipoDocumentoAdapter {
 		List<TipoDocumentoDTO> tiposDTO = new ArrayList<>();
 		if(!tipos.isEmpty()) {
 			tipos.stream().forEach(tipo->{
-				tiposDTO.add(mapeoCoreDTO(tipo));
+				tiposDTO.add(TipoDocumentoFactory.mapeoCoreDTO(tipo));
 			});
 		}
 		return tiposDTO;
 	}
 	
 	public TipoDocumentoDTO consultarTiposDocumentoUnicoPorNombre(String nombre) throws TipoDocumentoNoExisteException {
-		return mapeoCoreDTO(consultarTipoDocumentoInput.consultarTiposDocumentoUnicoPorNombre(nombre));
+		return TipoDocumentoFactory.mapeoCoreDTO(consultarTipoDocumentoInput.consultarTiposDocumentoUnicoPorNombre(nombre));
 	}
 
-
-	private TipoDocumentoDTO mapeoCoreDTO(TipoDocumento tipo) {
-		return new TipoDocumentoDTO(tipo.getIdTipoDocumento(), tipo.getNombre());
-	}
-
-	
-
-	
-	
 
 }

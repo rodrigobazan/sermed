@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Excepciones.ObraSocialNoExisteException;
+import Factorys.ObraSocialFactory;
 import Inputs.ConsultarObrasSocialesInput;
 import Modelo.ObraSocial;
 import ModeloApi.ObraSocialDTO;
@@ -22,7 +23,7 @@ public class ConsultarObrasSocialesAdapter {
 		List<ObraSocialDTO> obrasSocialesDTO = new ArrayList<>();
 		if (!obrasSociales.isEmpty()) {
 			obrasSociales.stream().forEach(obraSocial -> {
-				obrasSocialesDTO.add(mapeoCoreDTO(obraSocial));
+				obrasSocialesDTO.add(ObraSocialFactory.mapeoCoreDTO(obraSocial));
 			});
 		}
 		return obrasSocialesDTO;
@@ -33,20 +34,15 @@ public class ConsultarObrasSocialesAdapter {
 		List<ObraSocialDTO> obrasSocialesDTO = new ArrayList<>();
 		if (!obrasSociales.isEmpty()) {
 			obrasSociales.stream().forEach(obraSocial -> {
-				obrasSocialesDTO.add(mapeoCoreDTO(obraSocial));
+				obrasSocialesDTO.add(ObraSocialFactory.mapeoCoreDTO(obraSocial));
 			});
 		}
 		return obrasSocialesDTO;
 	}
 
 	public ObraSocialDTO consultarObraSocialPorNombre(String nombre) throws ObraSocialNoExisteException {
-		return mapeoCoreDTO(consultarObrasSocialesInput.consultarObraSocialPorNombre(nombre));
+		return ObraSocialFactory.mapeoCoreDTO(consultarObrasSocialesInput.consultarObraSocialPorNombre(nombre));
 	}
-	
-	private ObraSocialDTO mapeoCoreDTO(ObraSocial obraSocial) {
-		return new ObraSocialDTO(obraSocial.getIdObraSocial(), obraSocial.getNombre());
-	}
-
 
 
 }

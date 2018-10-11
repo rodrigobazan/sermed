@@ -1,5 +1,6 @@
 package ModeloApi;
 
+import Modelo.TipoDocumento;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TipoDocumentoDTO {

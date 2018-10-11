@@ -1,6 +1,7 @@
 package Adaptadores;
 
 import Excepciones.MedicoNoExisteException;
+import Factorys.MedicoFactory;
 import Inputs.ConsultarMedicoInput;
 import Modelo.Medico;
 import ModeloApi.MedicoDTO;
@@ -17,22 +18,18 @@ public class ConsultarMedicoAdapter {
 
     public List<MedicoDTO> consultarMedicos() {
         List<MedicoDTO> listaDeMedicos = new ArrayList<>();
-        consultarMedicoInput.consultarMedicos().forEach(medico -> listaDeMedicos.add(mapeoCoreDTO(medico)));
+        consultarMedicoInput.consultarMedicos().forEach(medico -> listaDeMedicos.add(MedicoFactory.mapeoCoreDTO(medico)));
         return listaDeMedicos;
     }
 
     public List<MedicoDTO> consultarMedicosPorApellido(String apellido) {
         List<MedicoDTO> listaMedicos = new ArrayList<>();
-        consultarMedicoInput.consultarMedicosPorApellido(apellido).forEach(medico -> listaMedicos.add(mapeoCoreDTO(medico)));
+        consultarMedicoInput.consultarMedicosPorApellido(apellido).forEach(medico -> listaMedicos.add(MedicoFactory.mapeoCoreDTO(medico)));
         return listaMedicos;
     }
 
     public MedicoDTO consultarMedicoPorMatricula(int matricula) throws MedicoNoExisteException {
-        return mapeoCoreDTO(consultarMedicoInput.consultarMedicoPorMatricula(matricula));
-    }
-
-    private MedicoDTO mapeoCoreDTO(Medico medico) {
-        return new MedicoDTO(medico.getIdMedico(), medico.getApellido(), medico.getNombre(), medico.getMatricula(), medico.getTelefono());
+        return MedicoFactory.mapeoCoreDTO(consultarMedicoInput.consultarMedicoPorMatricula(matricula));
     }
 
 }
