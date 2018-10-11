@@ -9,7 +9,7 @@ public class PlanFactory {
     private PlanFactory() {
     }
 
-    static public Plan mapeoAdaptadorCore(PlanDTO plan) throws PlanIncompletoException {
+    public static Plan mapeoAdaptadorCore(PlanDTO plan) throws PlanIncompletoException {
         return Plan.instancia(plan.idPlan, plan.nombrePlan, plan.listaPrecios);
     }
 }
