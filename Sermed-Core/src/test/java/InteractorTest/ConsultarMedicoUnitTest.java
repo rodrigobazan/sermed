@@ -68,7 +68,8 @@ public class ConsultarMedicoUnitTest {
         verify(repositorioMedico).findByApellido("");
     }
 
-    @Test void consultarMedicosPorApellido_CriterioCadenaConDatos_DevolverAlgunos(){
+    @Test
+    public void consultarMedicosPorApellido_CriterioCadenaConDatos_DevolverAlgunos(){
         when(repositorioMedico.findByApellido("torr")).thenReturn(crearMedicoFiltroApellidoArray());
 
         ConsultarMedicoUseCase consultarMedicoUseCase = new ConsultarMedicoUseCase(repositorioMedico);
