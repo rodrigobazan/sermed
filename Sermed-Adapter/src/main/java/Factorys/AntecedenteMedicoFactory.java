@@ -19,4 +19,13 @@ public class AntecedenteMedicoFactory {
         });
         return listaDeAntecedenteMedicos;
     }
+
+	public static Collection<AntecedenteMedicoDTO> mapeoCoreDTO(Collection<AntecedenteMedico> antecedentesMedico) {
+		Collection<AntecedenteMedicoDTO> listaDeAntecedenteMedicos = new ArrayList<>();
+        antecedentesMedico.forEach(antecedenteMedico -> {
+        	AntecedenteMedicoDTO a = new AntecedenteMedicoDTO(antecedenteMedico.getIdAntecedenteMedico(), AfeccionFactory.mapeoCoreDTO(antecedenteMedico.getAfeccion()), antecedenteMedico.getObservacion());
+            listaDeAntecedenteMedicos.add(a);
+        });
+        return listaDeAntecedenteMedicos;
+	}
 }

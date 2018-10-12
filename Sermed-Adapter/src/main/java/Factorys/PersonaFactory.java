@@ -5,7 +5,9 @@ import Excepciones.NumeroAfiliadoIncorrectoException;
 import Excepciones.PersonaExisteException;
 import Excepciones.PersonaIncompletaException;
 import Modelo.Persona;
+import ModeloApi.ObraSocialDTO;
 import ModeloApi.PersonaDTO;
+import ModeloApi.SangreDTO;
 
 public class PersonaFactory {
 
@@ -18,4 +20,11 @@ public class PersonaFactory {
                 AntecedenteMedicoFactory.mapeoDTOCore(persona.antecedentesMedico), persona.nroOrden);
 
     }
+
+	public static PersonaDTO mapeoCoreDTO(Persona persona) {
+		return new PersonaDTO(persona.getIdPersona(), persona.getApellidos(), persona.getNombres(),
+				persona.getFechaNacimiento(), persona.getDomicilio(), TipoDocumentoFactory.mapeoCoreDTO(persona.getTipoDocumento()), persona.getDocumento(), 
+				SangreFactory.mapeoCoreDTO(persona.getSangre()), persona.getTelefono(), ObraSocialFactory.mapeoCoreDTO(persona.getObraSocial()), 
+				persona.getNroAfiliado(), persona.getNroOrden(), AntecedenteMedicoFactory.mapeoCoreDTO(persona.getAntecedentesMedico()));
+	}
 }
