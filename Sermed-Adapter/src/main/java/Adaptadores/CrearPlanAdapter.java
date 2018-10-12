@@ -4,7 +4,6 @@ import Excepciones.PlanExisteException;
 import Excepciones.PlanIncompletoException;
 import Factorys.PlanFactory;
 import Inputs.CrearPlanInput;
-import Modelo.Plan;
 import ModeloApi.PlanDTO;
 
 public class CrearPlanAdapter {
@@ -16,7 +15,7 @@ public class CrearPlanAdapter {
 	}
 
 	public boolean crearPlan(PlanDTO plan) throws PlanExisteException, PlanIncompletoException {
-		return crearPlanInput.crearPlan(PlanFactory.mapeoAdaptadorCore(plan));
+		return crearPlanInput.crearPlan(PlanFactory.mapeoDTOCore(plan));
 	}
 
 }
