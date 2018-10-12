@@ -15,4 +15,12 @@ public class VisitaFactory {
 				visita.observaciones, MedicoFactory.mapeoDTOCore(visita.medico), EnfermeroFactory.mapeoDTOCore(visita.enfermero));
 	}
 
+	public static VisitaDTO mapeoCoreDTO(Visita visita) {
+		return new VisitaDTO(visita.getIdVisita(), visita.getNumeroVisita(), PersonaFactory.mapeoCoreDTO(visita.getPaciente()), 
+				visita.getFechaHoraVisita(), visita.getMotivoConsulta(), visita.getAntecedentesPatologicos(), visita.getTensionArterial(),
+				visita.getTemperatura(), visita.getFrecuenciaCardiaca(), visita.getSaturacionOxigeno(), visita.getMedicacionHabitual(), 
+				visita.getExamenClinico(), visita.getDiagnosticoPresuntivo(), visita.getTratamiento(), visita.getObservaciones(),
+				MedicoFactory.mapeoCoreDTO(visita.getMedico()), EnfermeroFactory.mapeoCoreDTO(visita.getEnfermero()));
+	}
+
 }
