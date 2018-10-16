@@ -22,8 +22,9 @@ public class PlanDTO {
 		this.nombrePlan = nombrePlan;
 		this.listaPrecios = listaPrecios;
 	}
-	
-	
-	
-	
+
+
+    public String mostrarPlan() {
+		return this.nombrePlan;
+    }
 }
