@@ -23,10 +23,13 @@ public class FichaAfiliadoDTO {
         miembrosGrupoFamiliar=afiliado.getMiembros();
         planAfiliado=afiliado.getPlan();
 
-    }   
+    }
+
+	public FichaAfiliadoDTO() {
+	}
 
 	public FichaAfiliadoDTO(LocalDate fechaAfiliacion, String nroAfiliado, Persona titular,
-			Collection<Persona> miembrosGrupoFamiliar, Plan planAfiliado) {
+							Collection<Persona> miembrosGrupoFamiliar, Plan planAfiliado) {
 		super();
 		this.fechaAfiliacion = fechaAfiliacion;
 		this.nroAfiliado = nroAfiliado;
