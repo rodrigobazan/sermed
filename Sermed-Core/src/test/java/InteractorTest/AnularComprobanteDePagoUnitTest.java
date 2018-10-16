@@ -26,7 +26,7 @@ public class AnularComprobanteDePagoUnitTest {
         Comprobante comprobanteAnular = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago());
         AnularComprobantesUseCase anularComprobantesUseCase = new AnularComprobantesUseCase(repositorioComprobante);
         when(repositorioComprobante.update(comprobanteAnular)).thenReturn(true);
-        boolean resultado = anularComprobantesUseCase.anularComprobante(comprobanteAnular );
+        boolean resultado = anularComprobantesUseCase.anularComprobante(comprobanteAnular);
         Assertions.assertTrue(resultado);
     }
 
