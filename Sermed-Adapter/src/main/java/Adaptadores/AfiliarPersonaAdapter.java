@@ -7,10 +7,10 @@ import Inputs.AfiliarPersonaInput;
 import ModeloApi.AfiliadoDTO;
 import ModeloApi.PersonaDTO;
 
-public class AfiliadPersonaAdapter {
+public class AfiliarPersonaAdapter {
     private AfiliarPersonaInput afiliarPersonaInput;
 
-    public AfiliadPersonaAdapter(AfiliarPersonaInput afiliarPersonaInput) {
+    public AfiliarPersonaAdapter(AfiliarPersonaInput afiliarPersonaInput) {
         this.afiliarPersonaInput = afiliarPersonaInput;
     }
 

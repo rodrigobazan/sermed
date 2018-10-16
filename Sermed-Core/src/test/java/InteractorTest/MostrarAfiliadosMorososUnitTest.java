@@ -6,7 +6,6 @@ import Mockito.MockitoExtension;
 import Modelo.*;
 import Repositorio.IAfiliadoRepositorio;
 import Repositorio.IComprobanteRepositorio;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

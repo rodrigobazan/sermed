@@ -57,4 +57,8 @@ public class AfiliadoDTO {
         this.diaDelMesPagoAcordado = diaDelMesPagoAcordado;
         this.plan = plan;
     }
+
+    public String mostrarPlanAfiliado() {
+        return plan.mostrarPlan();
+    }
 }

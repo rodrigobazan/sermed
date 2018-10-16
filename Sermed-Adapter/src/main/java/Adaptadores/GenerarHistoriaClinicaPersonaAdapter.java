@@ -3,7 +3,7 @@ package Adaptadores;
 import Excepciones.PersonaNoExisteException;
 import Factorys.HistoriaClinicaFactory;
 import Inputs.GenerarHistoriaClinicaPersonaInput;
-import ModeloApi.HistoriaClinicaDTO;
+import ModeloApi.HistoriaClinicaReporteDTO;
 
 public class GenerarHistoriaClinicaPersonaAdapter {
 
@@ -14,7 +14,7 @@ public class GenerarHistoriaClinicaPersonaAdapter {
 		this.generarHistoriaClinicaPersonaInput = generarHistoriaClinicaPersonaInput;
 	}
 
-	public HistoriaClinicaDTO generarHistoriaClinicaPersona(String numeroAfiliado, int nroOrden) throws PersonaNoExisteException {
+	public HistoriaClinicaReporteDTO generarHistoriaClinicaPersona(String numeroAfiliado, int nroOrden) throws PersonaNoExisteException {
 		return HistoriaClinicaFactory.mapeoCoreDTO(generarHistoriaClinicaPersonaInput.generarHistoriaClinicaPersona(numeroAfiliado, nroOrden));
 	}
 	
