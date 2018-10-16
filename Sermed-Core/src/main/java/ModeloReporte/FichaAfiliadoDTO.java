@@ -23,5 +23,37 @@ public class FichaAfiliadoDTO {
         miembrosGrupoFamiliar=afiliado.getMiembros();
         planAfiliado=afiliado.getPlan();
 
-    }
+    }   
+
+	public FichaAfiliadoDTO(LocalDate fechaAfiliacion, String nroAfiliado, Persona titular,
+			Collection<Persona> miembrosGrupoFamiliar, Plan planAfiliado) {
+		super();
+		this.fechaAfiliacion = fechaAfiliacion;
+		this.nroAfiliado = nroAfiliado;
+		this.titular = titular;
+		this.miembrosGrupoFamiliar = miembrosGrupoFamiliar;
+		this.planAfiliado = planAfiliado;
+	}
+
+	public LocalDate getFechaAfiliacion() {
+		return fechaAfiliacion;
+	}
+
+	public String getNroAfiliado() {
+		return nroAfiliado;
+	}
+
+	public Persona getTitular() {
+		return titular;
+	}
+
+	public Collection<Persona> getMiembrosGrupoFamiliar() {
+		return miembrosGrupoFamiliar;
+	}
+
+	public Plan getPlanAfiliado() {
+		return planAfiliado;
+	}
+    
+    
 }
