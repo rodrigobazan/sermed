@@ -1,6 +1,6 @@
 package ar.com.koodi.sermedadaptador;
 
-import Adaptadores.AfiliadPersonaAdapter;
+import Adaptadores.AfiliarPersonaAdapter;
 import Excepciones.*;
 import Inputs.AfiliarPersonaInput;
 import Mockito.MockitoExtension;
@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class AfiliarPersonaAdapterTest {
 
@@ -23,13 +26,26 @@ public class AfiliarPersonaAdapterTest {
     AfiliarPersonaInput afiliarPersonaInput;
 
     @Test
-    public void afiliarPersona_PersonaYaAfiliada_PersonaAfiliadaException() throws PlanIncompletoException, PersonaIncompletaException {
+    public void afiliarPersona_PersonaYaAfiliada_PersonaAfiliadaException() throws PlanIncompletoException, PersonaIncompletaException, PersonaAfiliadaException {
+        when(afiliarPersonaInput.afiliarPersona(any(Persona.class), any(Afiliado.class))).thenThrow(PersonaAfiliadaException.class);
         PersonaDTO persona = new PersonaDTO(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "14000001", new SangreDTO(1, "B", "RH+"), "3825672746",
                 new ObraSocialDTO(1, "OSFATUN"), "000001", 0, null);
         AfiliadoDTO afiliado = new AfiliadoDTO(1, LocalDate.of(2018, 6, 27), "000003", factoryPersonaMiembros(), factoryPersona(), true, null, null, factoryPlan());
-        AfiliadPersonaAdapter afiliadPersonaAdapter = new AfiliadPersonaAdapter(afiliarPersonaInput);
-        Assertions.assertThrows(PersonaAfiliadaException.class, () -> afiliadPersonaAdapter.afiliadPersona(persona, afiliado));
+        AfiliarPersonaAdapter afiliarPersonaAdapter = new AfiliarPersonaAdapter(afiliarPersonaInput);
+        Assertions.assertThrows(PersonaAfiliadaException.class, () -> afiliarPersonaAdapter.afiliadPersona(persona, afiliado));
+    }
+
+    @Test
+    public void afiliadoPersona_PersonaNoAfiliada_SeAfilia() throws PersonaIncompletaException, PlanIncompletoException, DniConPuntosException, AfiliadoSinTitularException, NumeroAfiliadoIncorrectoException, AfiliadoSinPlanException, PersonaAfiliadaException {
+        when(afiliarPersonaInput.afiliarPersona(any(Persona.class), any(Afiliado.class))).thenReturn(true);
+        PersonaDTO persona = new PersonaDTO(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "14000001", new SangreDTO(1, "B", "RH+"), "3825672746",
+                new ObraSocialDTO(1, "OSFATUN"), "000001", 0, null);
+        AfiliadoDTO afiliado = new AfiliadoDTO(1, LocalDate.of(2018, 6, 27), "000003", factoryPersonaMiembros(), factoryPersona(), true, null, null, factoryPlan());
+        AfiliarPersonaAdapter afiliarPersonaAdapter = new AfiliarPersonaAdapter(afiliarPersonaInput);
+        boolean resultado = afiliarPersonaAdapter.afiliadPersona(persona, afiliado);
+        Assertions.assertTrue(resultado);
     }
 
 

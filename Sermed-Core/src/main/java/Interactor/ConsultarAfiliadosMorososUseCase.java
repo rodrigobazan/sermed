@@ -1,6 +1,6 @@
 package Interactor;
 
-import Inputs.ConsultarAfiliadosMorosos;
+import Inputs.ConsultarAfiliadosMorososInput;
 import Modelo.Afiliado;
 import Modelo.Comprobante;
 import Repositorio.IAfiliadoRepositorio;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMorosos {
+public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMorososInput {
 
     private IAfiliadoRepositorio repositoriosAfiliado;
     private IComprobanteRepositorio repositorioComprobante;

@@ -41,7 +41,7 @@ public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
     }
 
     @Test
-    public void buscarPersonaEntreAfiliadosDeBaja_PersonaNoSeEncuentra_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
+    public void buscarPersonaEntreAfiliadosDeBaja_PersonaSeEncuentra_DevuelveTrue() throws DniConPuntosException, PersonaIncompletaException, NumeroAfiliadoIncorrectoException {
         when(repositorioAfiliado.findAllInactivos()).thenReturn(afiliadosList);
         Persona laPersona = Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                 "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "B", "RH+"), "3825672746",
