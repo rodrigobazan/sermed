@@ -22,4 +22,28 @@ public class ComprobanteAfiliadoDTO {
         this.total = comprobante.getTotal();
         this.formaDePago = comprobante.getModoPago();
     }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public String getNumeroComprobante() {
+        return numeroComprobante;
+    }
+
+    public String getNombreApellidoAfiliado() {
+        return nombreApellidoAfiliado;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public String getFormaDePago() {
+        return formaDePago;
+    }
 }

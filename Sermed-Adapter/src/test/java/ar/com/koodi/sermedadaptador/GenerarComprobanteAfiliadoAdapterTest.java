@@ -1,12 +1,12 @@
-package InteractorTest;
+package ar.com.koodi.sermedadaptador;
 
+import Adaptadores.GenerarComprobanteAfiliadoAdapter;
 import Excepciones.*;
-import Interactor.GenerarComprobanteAfiliadoUseCase;
+import Inputs.GenerarComprobanteAfiliadoInput;
 import Mockito.MockitoExtension;
 import Modelo.*;
+import ModeloApi.ComprobanteAfiliadoReporteDTO;
 import ModeloReporte.ComprobanteAfiliadoDTO;
-import Repositorio.IAfiliadoRepositorio;
-import Repositorio.IComprobanteRepositorio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,24 +18,31 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenerarComprobanteAfiliadoUnitTest {
+public class GenerarComprobanteAfiliadoAdapterTest {
 
     @Mock
-    IComprobanteRepositorio repositorioComprobante;
+    GenerarComprobanteAfiliadoInput generarComprobanteAfiliadoInput;
 
     @Test
-    public void generarComprobanteAfiliado_ComprobanteExiste_SeGeneraComprobante() throws FechaIncorrectaException, ComprobanteIncompletoException, AfiliadoDeBajaException, NumeroComprobanteIncorrectoException, ComprobanteNoExisteException {
-        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago()));
-        GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
-        ComprobanteAfiliadoDTO comprobanteAfiliado = generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891");
-        Assertions.assertNotNull(comprobanteAfiliado);
+    public void generarComprobanteAfiliado_ComprobanteExiste_SeGeneraComprobante() throws ComprobanteNoExisteException, ComprobanteIncompletoException, FechaIncorrectaException, NumeroComprobanteIncorrectoException, AfiliadoDeBajaException {
+        GenerarComprobanteAfiliadoAdapter generarComprobanteAfiliadoAdapter = new GenerarComprobanteAfiliadoAdapter(generarComprobanteAfiliadoInput);
+        when(generarComprobanteAfiliadoInput.generarComprobanteAfiliadoReporte("123-567891")).thenReturn(factoryComprobanteReporte());
+        ComprobanteAfiliadoReporteDTO comprobanteAfiliadoReporteDTO = generarComprobanteAfiliadoAdapter.generarComprobanteAfiliadoReporte("123-567891");
+        Assertions.assertNotNull(comprobanteAfiliadoReporteDTO);
     }
 
     @Test
-    public void generarComprobanteAfiliado_ComprobanteNoExiste_ComprobanteNoExisteException() {
-        when(repositorioComprobante.findByNumero("1234-567891")).thenReturn(null);
-        GenerarComprobanteAfiliadoUseCase generarComprobanteAfiliadoUseCase = new GenerarComprobanteAfiliadoUseCase(repositorioComprobante);
-        Assertions.assertThrows(ComprobanteNoExisteException.class, () -> generarComprobanteAfiliadoUseCase.generarComprobanteAfiliadoReporte("1234-567891"));
+    public void generarComprobanteAfiliado_ComprobanteNoExiste_ComprobanteNoExisteException() throws ComprobanteNoExisteException {
+        when(generarComprobanteAfiliadoInput.generarComprobanteAfiliadoReporte("1234-567891")).thenThrow(ComprobanteNoExisteException.class);
+        GenerarComprobanteAfiliadoAdapter generarComprobanteAfiliadoAdapter = new GenerarComprobanteAfiliadoAdapter(generarComprobanteAfiliadoInput);
+        Assertions.assertThrows(ComprobanteNoExisteException.class, () -> generarComprobanteAfiliadoAdapter.generarComprobanteAfiliadoReporte("1234-567891"));
+    }
+
+    private ComprobanteAfiliadoDTO factoryComprobanteReporte() throws ComprobanteIncompletoException, FechaIncorrectaException, NumeroComprobanteIncorrectoException, AfiliadoDeBajaException {
+        Comprobante comprobante = Comprobante.instancia(1, "1234-567891", factoryAfiliado(), 123.45, LocalDate.of(2018, 6, 15), "Efectivo", true, listaDePeriodosDePago());
+        ComprobanteAfiliadoDTO comprobanteAfiliadoDTO = new ComprobanteAfiliadoDTO();
+        comprobanteAfiliadoDTO.generarComprobanteDTO(comprobante);
+        return comprobanteAfiliadoDTO;
     }
 
     private List<PeriodoPago> listaDePeriodosDePago(){
@@ -128,6 +135,4 @@ public class GenerarComprobanteAfiliadoUnitTest {
 
         return Plan.instancia(1, "Plan Basico", listaPrecios);
     }
-
-
 }

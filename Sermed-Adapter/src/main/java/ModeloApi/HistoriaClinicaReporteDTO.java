@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HistoriaClinicaDTO {
+public class HistoriaClinicaReporteDTO {
 	
 	@JsonProperty("persona")
 	public final PersonaDTO persona;
@@ -15,8 +15,8 @@ public class HistoriaClinicaDTO {
 	@JsonProperty("antecedentesMedicos")
 	public final List<AntecedenteMedicoDTO> antecedentesMedicos;
 	
-	public HistoriaClinicaDTO(@JsonProperty("persona") PersonaDTO persona, @JsonProperty("visitas") List<VisitaDTO> visitas,
-			@JsonProperty("antecedentesMedicos")List<AntecedenteMedicoDTO>antecedentesMedicos) {
+	public HistoriaClinicaReporteDTO(@JsonProperty("persona") PersonaDTO persona, @JsonProperty("visitas") List<VisitaDTO> visitas,
+									 @JsonProperty("antecedentesMedicos")List<AntecedenteMedicoDTO>antecedentesMedicos) {
 		super();
 		this.persona = persona;
 		this.visitas = visitas;

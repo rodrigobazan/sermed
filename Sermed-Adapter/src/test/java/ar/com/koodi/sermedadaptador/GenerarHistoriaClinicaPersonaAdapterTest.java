@@ -30,7 +30,7 @@ import Modelo.Persona;
 import Modelo.Sangre;
 import Modelo.TipoDocumento;
 import Modelo.Visita;
-import ModeloApi.HistoriaClinicaDTO;
+import ModeloApi.HistoriaClinicaReporteDTO;
 import ModeloReporte.HistoriaClinicaPersonaDTO;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,7 +43,7 @@ public class GenerarHistoriaClinicaPersonaAdapterTest {
 	public void generarHistoriaClinicaPersona_GeneraCorrectamente_ReturnHistoriClinica() throws PersonaNoExisteException, PersonaIncompletaException {
 		GenerarHistoriaClinicaPersonaAdapter generarHistoriaClinicaPersonaAdapter = new GenerarHistoriaClinicaPersonaAdapter(generarHistoriaClinicaPersonaInput);
 		when(generarHistoriaClinicaPersonaInput.generarHistoriaClinicaPersona("000001", 0)).thenReturn(factoryHistoriaClinica());
-		HistoriaClinicaDTO historiaClinica = generarHistoriaClinicaPersonaAdapter.generarHistoriaClinicaPersona("000001",0);		
+		HistoriaClinicaReporteDTO historiaClinica = generarHistoriaClinicaPersonaAdapter.generarHistoriaClinicaPersona("000001",0);
 		Assertions.assertEquals(4, historiaClinica.visitas.size());
 		Assertions.assertEquals("Torres", historiaClinica.persona.apellidos);
 	}

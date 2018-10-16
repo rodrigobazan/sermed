@@ -6,7 +6,7 @@ import java.util.List;
 import Modelo.AntecedenteMedico;
 import Modelo.Visita;
 import ModeloApi.AntecedenteMedicoDTO;
-import ModeloApi.HistoriaClinicaDTO;
+import ModeloApi.HistoriaClinicaReporteDTO;
 import ModeloApi.VisitaDTO;
 import ModeloReporte.HistoriaClinicaPersonaDTO;
 
@@ -14,7 +14,7 @@ public class HistoriaClinicaFactory {
 
 	private HistoriaClinicaFactory() {}
 
-	public static HistoriaClinicaDTO mapeoCoreDTO(HistoriaClinicaPersonaDTO generarHistoriaClinicaPersona) {
+	public static HistoriaClinicaReporteDTO mapeoCoreDTO(HistoriaClinicaPersonaDTO generarHistoriaClinicaPersona) {
 		List<VisitaDTO> visitasDTO = new ArrayList<>();
 		List<Visita> visitas = generarHistoriaClinicaPersona.getVisitasDeLaPersona();
 		if(!visitas.isEmpty()) {
@@ -24,7 +24,7 @@ public class HistoriaClinicaFactory {
 		}
 		List<AntecedenteMedico> antecedentes = generarHistoriaClinicaPersona.getAntecedenteMedicos();
 		List<AntecedenteMedicoDTO> antecedentesDTO = (List<AntecedenteMedicoDTO>) AntecedenteMedicoFactory.mapeoCoreDTO(antecedentes);
-		return new HistoriaClinicaDTO(PersonaFactory.mapeoCoreDTO(generarHistoriaClinicaPersona.getPersonaBuscada()),visitasDTO, antecedentesDTO); 
+		return new HistoriaClinicaReporteDTO(PersonaFactory.mapeoCoreDTO(generarHistoriaClinicaPersona.getPersonaBuscada()),visitasDTO, antecedentesDTO);
 				
 	}
 	
