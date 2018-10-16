@@ -83,7 +83,7 @@ public class ConsultarComprobantesDePagoAdapterTest {
         Assertions.assertEquals(0, comprobantes.size());
         assertThat(comprobantes, IsEmptyCollection.empty());
     }
-    
+
     private List<Comprobante> crearComprobantesFiltroArray() {
         try {
             List<Comprobante> comprobantes = new ArrayList<>();

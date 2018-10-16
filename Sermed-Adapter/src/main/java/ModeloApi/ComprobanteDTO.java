@@ -33,7 +33,7 @@ public class ComprobanteDTO {
     public final boolean activo;
 
     @JsonProperty("periodosAbonados")
-    public final List<PeriodoPago> periodosAbonados;
+    public final List<PeriodoPagoDTO> periodosAbonados;
 
     @JsonCreator
     public ComprobanteDTO(@JsonProperty("idComprobante") Integer idComprobante,
@@ -43,7 +43,7 @@ public class ComprobanteDTO {
                           @JsonProperty("fechaCreacion") LocalDate fechaCreacion,
                           @JsonProperty("modoPago") String modoDePago,
                           @JsonProperty("activo") boolean activo,
-                          @JsonProperty("periodosAbonados") List<PeriodoPago> periodosAbonados) {
+                          @JsonProperty("periodosAbonados") List<PeriodoPagoDTO> periodosAbonados) {
         this.idComprobante = idComprobante;
         this.numeroComprobante = numeroComprobante;
         this.afiliado = afiliado;
