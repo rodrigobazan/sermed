@@ -8,7 +8,11 @@ public class ObraSocialFactory {
     private ObraSocialFactory() {
     }
 
-    static public ObraSocialDTO mapeoCoreDTO(ObraSocial obraSocial) {
+    public static ObraSocialDTO mapeoCoreDTO(ObraSocial obraSocial) {
         return new ObraSocialDTO(obraSocial.getIdObraSocial(), obraSocial.getNombre());
+    }
+
+    public static ObraSocial mapeoDTOCore(ObraSocialDTO obraSocialDTO){
+        return new ObraSocial(obraSocialDTO.idObraSocial, obraSocialDTO.obraSocial);
     }
 }

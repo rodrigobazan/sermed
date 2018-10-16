@@ -21,7 +21,6 @@ public class MedicoDTO {
     public final String telefono;
 
     @JsonCreator
-
     public MedicoDTO(@JsonProperty("idMedico") Integer idMedico,
                      @JsonProperty("apellido") String apellido,
                      @JsonProperty("nombre") String nombre,

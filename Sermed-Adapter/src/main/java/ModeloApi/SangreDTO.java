@@ -1,19 +1,23 @@
 package ModeloApi;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SangreDTO {
 
     @JsonProperty("idSangre")
-    public static Integer idSangre;
+    public final Integer idSangre;
 
     @JsonProperty("grupo")
-    public static String grupo;
+    public final String grupo;
 
     @JsonProperty("factor")
-    public static String factor;
+    public final String factor;
 
-    public SangreDTO(Integer idSangre, String grupo, String factor) {
+    @JsonCreator
+    public SangreDTO(@JsonProperty("idSangre") Integer idSangre,
+                     @JsonProperty("grupo") String grupo,
+                     @JsonProperty("factor") String factor) {
 
         this.idSangre = idSangre;
         this.grupo = grupo;
