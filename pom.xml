@@ -13,6 +13,7 @@
         <module>Sermed-Core</module>
         <module>Sermed-Data</module>
         <module>Sermed-Adapter</module>
+        <module>Sermed-Services</module>
     </modules>
 
 
