@@ -10,7 +10,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import Modelo.*;
-import ModeloApi.ComprobanteDTO;
+import ModeloApi.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ public class CrearComprobantePagoAdapterTest {
     private CrearComprobanteDePagoInput crearComprobanteDePagoInput;
 
  @Test
-    public void crearComprobanteDePago_guardaCorrectamente_DevuelveTrue() throws ComprobanteExisteException, ComprobanteIncompletoException, FechaIncorrectaException, NumeroComprobanteIncorrectoException, AfiliadoDeBajaException {
+    public void crearComprobanteDePago_guardaCorrectamente_DevuelveTrue() throws ComprobanteExisteException, PersonaIncompletaException, PlanIncompletoException, AfiliadoSinPlanException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, DniConPuntosException {
      ComprobanteDTO comprobanteDTO = factoryComprobante() ;
      CrearComprobantePagoAdapter crearComprobantePagoAdapter = new CrearComprobantePagoAdapter(crearComprobanteDePagoInput);
      when(crearComprobanteDePagoInput.crearComprobante(any(Comprobante.class))).thenReturn(true);
@@ -39,85 +39,65 @@ public class CrearComprobantePagoAdapterTest {
         return new ComprobanteDTO(1,"123",factoryAfiliado(),1500,LocalDate.of(2017,7,4),"contado",true,listaDePeriodosDePago());
     }
 
-    private List<PeriodoPago> listaDePeriodosDePago(){
-        List<PeriodoPago> periodosPago = new ArrayList<>();
-        periodosPago.add(new PeriodoPago(1,2,2018));
-        periodosPago.add(new PeriodoPago(2,3,2018));
-        periodosPago.add(new PeriodoPago(3,4,2018));
+    private List<PeriodoPagoDTO> listaDePeriodosDePago(){
+        List<PeriodoPagoDTO> periodosPago = new ArrayList<>();
+        periodosPago.add(new PeriodoPagoDTO(1,2,2018));
+        periodosPago.add(new PeriodoPagoDTO(2,3,2018));
+        periodosPago.add(new PeriodoPagoDTO(3,4,2018));
         return periodosPago;
     }
 
-    public Afiliado factoryAfiliado() {
+    public AfiliadoDTO factoryAfiliado() {
         try {
-            return Afiliado.instancia(1, LocalDate.of(2018, 6, 15), "190000", factoryPersonaTitular(), factoryPersonaMiembros(), true, null, null, factoryPlan());
-        } catch (AfiliadoSinTitularException e) {
+            return new AfiliadoDTO(1,LocalDate.of(2018,5,1),"000001",factoryPersonaMiembros(),factoryPersonaTitular(),true,null,12,factoryPlan());
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        } catch (AfiliadoSinPlanException e) {
-            e.printStackTrace();
-        } catch (PlanIncompletoException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public Persona factoryPersonaTitular() {
+    public PersonaDTO factoryPersonaTitular() {
         try {
-            return Persona.instancia(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumento(1, "DNI"),
-                    "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
-            return null;
-        } catch (DniConPuntosException e) {
-            e.printStackTrace();
+            return new PersonaDTO(1, "Ruitti", "Javiel", LocalDate.of(1984, 1, 31), "25 de mayo", new TipoDocumentoDTO(1, "DNI"),
+                    "30672405", new SangreDTO(1, "A", "RH+"), "3825674978", new ObraSocialDTO(1, "ASDA"), "",1 , factoryAntecedenteMedico());
+        } catch (Exception e){
             return null;
         }
 
     }
 
-    private List<Persona> factoryPersonaMiembros() {
+    private List<PersonaDTO> factoryPersonaMiembros() {
         try {
-            List<Persona> personas = new ArrayList<>();
-            personas.add(Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
-                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(), 0));
-            personas.add(Persona.instancia(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "34215324", new Sangre(1, "B", "RH-"), "3825532112",
-                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(), 0));
-            personas.add(Persona.instancia(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "33166401", new Sangre(1, "0", "RH+"), "3825423547",
-                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(), 0));
-            personas.add(Persona.instancia(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
-                    "Sin Domicilio", new TipoDocumento(1, "DNI"), "32123457", new Sangre(1, "A", "RH+"), "382584521",
-                    new ObraSocial(1, "OSFATUN"), "190000", factoryAntecedenteMedico(), 0));
+            List<PersonaDTO> personas = new ArrayList<>();
+            personas.add( new PersonaDTO(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
+                    "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "14000001", new SangreDTO(1, "B", "RH+"), "3825672746",
+                    new ObraSocialDTO(1, "OSFATUN"), "190000",1 , factoryAntecedenteMedico()));
+            personas.add(new PersonaDTO(1, "Bazan", "Rodrigo Andres", LocalDate.of(1993, 5, 12),
+                    "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "34215324", new SangreDTO(1, "B", "RH-"), "3825532112",
+                    new ObraSocialDTO(1, "OSFATUN"), "190000",2, factoryAntecedenteMedico()));
+            personas.add(new PersonaDTO(1, "Vega", "Romina del Valle de Antinaco", LocalDate.of(1987, 3, 12),
+                    "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "33166401", new SangreDTO(1, "0", "RH+"), "3825423547",
+                    new ObraSocialDTO(1, "OSFATUN"), "190000",3 , factoryAntecedenteMedico()));
+            personas.add(new PersonaDTO(1, "Flores", "Eduardo Heriberto", LocalDate.of(1991, 11, 12),
+                    "Sin Domicilio", new TipoDocumentoDTO(1, "DNI"), "32123457", new SangreDTO(1, "A", "RH+"), "382584521",
+                    new ObraSocialDTO(1, "OSFATUN"), "190000", 4, factoryAntecedenteMedico()));
             return personas;
-        } catch (PersonaIncompletaException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
-            return new ArrayList<>();
-        } catch (DniConPuntosException e) {
-            e.printStackTrace();
+        } catch (Exception e){
             return new ArrayList<>();
         }
     }
 
-    private Collection<AntecedenteMedico> factoryAntecedenteMedico() {
-        AntecedenteMedico dislexia = new AntecedenteMedico(1, new Afeccion(1, "Dislexia"), "Cronica");
-        AntecedenteMedico gonorrea = new AntecedenteMedico(2, new Afeccion(1, "gonorrea"), "Cronica Tambien");
-        AntecedenteMedico diabetes = new AntecedenteMedico(3, new Afeccion(1, "diabetes"), "nerviosa");
+    private Collection<AntecedenteMedicoDTO> factoryAntecedenteMedico() {
+        AntecedenteMedicoDTO dislexia = new AntecedenteMedicoDTO(1, new AfeccionDTO(1, "Dislexia"), "Cronica");
+        AntecedenteMedicoDTO gonorrea = new AntecedenteMedicoDTO(2, new AfeccionDTO(1, "gonorrea"), "Cronica Tambien");
+        AntecedenteMedicoDTO diabetes = new AntecedenteMedicoDTO(3, new AfeccionDTO(1, "diabetes"), "nerviosa");
 
-        Collection<AntecedenteMedico> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
+        Collection<AntecedenteMedicoDTO> listaAntecedentes = Arrays.asList(dislexia, gonorrea, diabetes);
 
         return listaAntecedentes;
     }
 
-    private Plan factoryPlan() throws PlanIncompletoException {
+    private PlanDTO factoryPlan() throws PlanIncompletoException {
         HashMap<String, Double> listaPrecios = new HashMap<>();
         listaPrecios.put("1", (double) 380);
         listaPrecios.put("2", (double) 480);
@@ -127,7 +107,7 @@ public class CrearComprobantePagoAdapterTest {
         listaPrecios.put("6", (double) 700);
         listaPrecios.put("7", (double) 750);
 
-        return Plan.instancia(1, "Plan Basico", listaPrecios);
+        return  new PlanDTO(1, "Plan Basico", listaPrecios);
     }
 
 }

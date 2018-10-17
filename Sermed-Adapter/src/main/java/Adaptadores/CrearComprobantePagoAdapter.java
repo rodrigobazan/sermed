@@ -1,7 +1,7 @@
 package Adaptadores;
 
 import Excepciones.*;
-import Factorys.CrearComprobanteFactory;
+import Factorys.ComprobanteFactory;
 import Inputs.CrearComprobanteDePagoInput;
 import ModeloApi.ComprobanteDTO;
 
@@ -12,7 +12,7 @@ public class CrearComprobantePagoAdapter {
         this.crearComprobanteDePagoInput = crearComprobanteDePagoInput;
     }
 
-    public boolean crearComprobantePago(ComprobanteDTO comprobanteDTO) throws ComprobanteIncompletoException, FechaIncorrectaException, NumeroComprobanteIncorrectoException, AfiliadoDeBajaException, ComprobanteExisteException {
-        return crearComprobanteDePagoInput.crearComprobante(CrearComprobanteFactory.mapeoCoreDTO(comprobanteDTO));
+    public boolean crearComprobantePago(ComprobanteDTO comprobanteDTO) throws PersonaIncompletaException, PlanIncompletoException, DniConPuntosException, NumeroAfiliadoIncorrectoException, AfiliadoSinTitularException, AfiliadoSinPlanException, ComprobanteExisteException {
+        return crearComprobanteDePagoInput.crearComprobante(ComprobanteFactory.mapeoDTOCore(comprobanteDTO));
     }
 }
