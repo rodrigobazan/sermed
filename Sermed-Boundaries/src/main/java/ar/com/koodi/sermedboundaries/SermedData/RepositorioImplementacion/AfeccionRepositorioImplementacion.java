@@ -31,7 +31,7 @@ public class AfeccionRepositorioImplementacion implements IAfeccionRepositorio {
 	@Transactional(readOnly=true)
 	public List<Afeccion> findByNombre(String nombre) {
 		List<Afeccion> afecciones = new ArrayList<>();
-		this.iAfeccionRepositorioCRUD.findByNombreAfeccionContains(nombre)
+		this.iAfeccionRepositorioCRUD.findByNombreAfeccionContainingIgnoreCase(nombre)
 				.forEach(afeccion -> afecciones.add(mapeoDataCore(afeccion)));
 		return afecciones;
 	}

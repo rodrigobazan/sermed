@@ -14,5 +14,5 @@ public interface IAfeccionRepositorioCRUD extends CrudRepository<AfeccionEntity,
 	
 	AfeccionEntity findByNombreAfeccionEquals(String afeccion);
 	
-	Collection<AfeccionEntity> findByNombreAfeccionContains(String afeccion);
+	Collection<AfeccionEntity> findByNombreAfeccionContainingIgnoreCase(String afeccion);
 }
