@@ -3,11 +3,11 @@ package Interactor;
 import java.util.List;
 
 import Excepciones.AfeccionNoExisteException;
-import Inputs.ConsultarAfeccionIput;
+import Inputs.ConsultarAfeccionInput;
 import Modelo.Afeccion;
 import Repositorio.IAfeccionRepositorio;
 
-public class ConsultarAfeccionUseCase implements ConsultarAfeccionIput {
+public class ConsultarAfeccionUseCase implements ConsultarAfeccionInput {
 
 	private IAfeccionRepositorio repositorioAfeccion;
 

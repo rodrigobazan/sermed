@@ -2,7 +2,7 @@ package ar.com.koodi.sermedadaptador;
 
 import Adaptadores.ConsultarAfeccionAdapter;
 import Excepciones.AfeccionNoExisteException;
-import Inputs.ConsultarAfeccionIput;
+import Inputs.ConsultarAfeccionInput;
 import Mockito.MockitoExtension;
 import Modelo.Afeccion;
 import ModeloApi.AfeccionDTO;
@@ -24,15 +24,15 @@ import static org.mockito.Mockito.when;
 public class ConsultarAfeccionAdapterTest {
 
     @Mock
-    ConsultarAfeccionIput consultarAfeccionIput;
+    ConsultarAfeccionInput consultarAfeccionInput;
 
     @Spy
     List<Afeccion> list = crearAfeccionesArray();
 
     @Test
     public void consultarAfecciones_ExistenDatos_DevuelveListaConDatos(){
-        ConsultarAfeccionAdapter consultarAfeccionAdapter = new ConsultarAfeccionAdapter(consultarAfeccionIput);
-        when(consultarAfeccionIput.consultarAfecciones()).thenReturn(list);
+        ConsultarAfeccionAdapter consultarAfeccionAdapter = new ConsultarAfeccionAdapter(consultarAfeccionInput);
+        when(consultarAfeccionInput.consultarAfecciones()).thenReturn(list);
         List<AfeccionDTO> afecciones = consultarAfeccionAdapter.consultarAfecciones();
         assertThat(afecciones, not(IsEmptyCollection.empty()));
         Assertions.assertEquals(5, afecciones.size());
@@ -40,8 +40,8 @@ public class ConsultarAfeccionAdapterTest {
 
     @Test
     public void consultarAfecciones_NoExistenDatos_DevuelveListaVacia() {
-        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionIput);
-        when(consultarAfeccionIput.consultarAfecciones()).thenReturn(new ArrayList<>());
+        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionInput);
+        when(consultarAfeccionInput.consultarAfecciones()).thenReturn(new ArrayList<>());
         List<AfeccionDTO> afecciones = consultarAfeccionAdapter.consultarAfecciones();
         assertThat(afecciones, IsEmptyCollection.empty());
         Assertions.assertEquals(0, afecciones.size());
@@ -49,8 +49,8 @@ public class ConsultarAfeccionAdapterTest {
 
     @Test
     public void consultarAfeccionesPorNombre_ExistenDatos_DevuelveListaDatos() {
-        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionIput);
-        when(consultarAfeccionIput.consultarAfeccionesPorNombre("Infeccion")).thenReturn(filtroAfecciones());
+        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionInput);
+        when(consultarAfeccionInput.consultarAfeccionesPorNombre("Infeccion")).thenReturn(filtroAfecciones());
         List<AfeccionDTO> afecciones = consultarAfeccionAdapter.consultarAfeccionesPorNombre("Infeccion");
         assertThat(afecciones, not(IsEmptyCollection.empty()));
         Assertions.assertEquals(2, afecciones.size());
@@ -58,8 +58,8 @@ public class ConsultarAfeccionAdapterTest {
 
     @Test
     public void consultarAfeccionesPorNombre_CadenaVacia_DevuelveTodasAfecciones() {
-        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionIput);
-        when(consultarAfeccionIput.consultarAfeccionesPorNombre("")).thenReturn(list);
+        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionInput);
+        when(consultarAfeccionInput.consultarAfeccionesPorNombre("")).thenReturn(list);
         List<AfeccionDTO> afecciones = consultarAfeccionAdapter.consultarAfeccionesPorNombre("");
         assertThat(afecciones, not(IsEmptyCollection.empty()));
         Assertions.assertEquals(5, afecciones.size());
@@ -67,8 +67,8 @@ public class ConsultarAfeccionAdapterTest {
 
     @Test
     public void consultarAfeccionPorNombre_AfeccionExiste_DevuelveAfeccion() throws AfeccionNoExisteException{
-        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionIput);
-        when(consultarAfeccionIput.consultarAfeccionPorNombre("Infeccion")).thenReturn(new Afeccion(1, "Infeccion"));
+        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionInput);
+        when(consultarAfeccionInput.consultarAfeccionPorNombre("Infeccion")).thenReturn(new Afeccion(1, "Infeccion"));
         AfeccionDTO resultado = consultarAfeccionAdapter.consultarAfeccionPorNombre("Infeccion");
         Assertions.assertEquals(1, resultado.idAfeccion.intValue());
 
@@ -76,8 +76,8 @@ public class ConsultarAfeccionAdapterTest {
 
     @Test
     public void consultarAfeccionPorNombre_AfeccionNoExiste_AfeccionNoExisteException() throws AfeccionNoExisteException {
-        when(consultarAfeccionIput.consultarAfeccionPorNombre("asd")).thenThrow(AfeccionNoExisteException.class);
-        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionIput);
+        when(consultarAfeccionInput.consultarAfeccionPorNombre("asd")).thenThrow(AfeccionNoExisteException.class);
+        ConsultarAfeccionAdapter consultarAfeccionAdapter= new ConsultarAfeccionAdapter(consultarAfeccionInput);
         Assertions.assertThrows(AfeccionNoExisteException.class, () -> consultarAfeccionAdapter.consultarAfeccionPorNombre("asd"));
 
     }
