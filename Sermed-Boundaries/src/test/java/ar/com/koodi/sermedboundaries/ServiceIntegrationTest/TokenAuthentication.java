@@ -17,7 +17,7 @@ public class TokenAuthentication {
     static String url = "http://localhost:8080";
 
 
-    public static String obtainAccessToken(String usuario, String password) throws Exception {
+    public static String  obtainAccessToken(String usuario, String password) throws Exception {
         String token;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("login", "usuario");
