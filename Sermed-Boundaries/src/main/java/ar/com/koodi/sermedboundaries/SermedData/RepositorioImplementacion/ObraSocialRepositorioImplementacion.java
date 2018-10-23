@@ -22,7 +22,8 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	@Override
 	@Transactional(readOnly = true)
 	public ObraSocial findByNombreUnico(String nombre) {
-		return mapeoDataCore(iObraSocialRepositorioCRUD.findByObraSocial(nombre));
+		if(iObraSocialRepositorioCRUD.findByObraSocial(nombre)!=null) return mapeoDataCore(iObraSocialRepositorioCRUD.findByObraSocial(nombre));
+		return null;
 	}
 
 	@Override
@@ -75,7 +76,8 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 	}
 
     public ObraSocial mapeoDataCore(ObraSocialEntity obraSocialEntity) {
-		return new ObraSocial(obraSocialEntity.getIdObraSocial(), obraSocialEntity.getNombre());
+		if(obraSocialEntity != null) return new ObraSocial(obraSocialEntity.getIdObraSocial(), obraSocialEntity.getNombre());
+		return new ObraSocial(null, obraSocialEntity.getNombre());
 	}
 	
 }

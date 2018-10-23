@@ -20,8 +20,8 @@ public class TokenAuthentication {
     public static String obtainAccessToken(String usuario, String password) throws Exception {
         String token;
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("login", "usuario");
-        jsonObject.put("password", "123456");
+        jsonObject.put("login", usuario);
+        jsonObject.put("password", password);
         HttpPost post = new HttpPost(url + "/sermed/auth/signin");
         StringEntity se = new StringEntity(jsonObject.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
