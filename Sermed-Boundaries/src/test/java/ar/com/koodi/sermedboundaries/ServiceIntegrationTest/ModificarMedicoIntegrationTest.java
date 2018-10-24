@@ -15,24 +15,26 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ModificarEnfermeroController {
+public class ModificarMedicoIntegrationTest {
 
     private String url = "http://localhost:8080";
 
     @Test
-    public void modificarEnfermero_DatosCorrectos_Devuelve200() throws Exception {
+    public void modificarMedico_DatosCorrectos_Devuelve200() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("idEnfermero", 2);
-        jsonObject.put("apellido", "Bazan");
-        jsonObject.put("nombre", "Rodrigo");
-        jsonObject.put("matricula", 190202);
-        jsonObject.put("telefono", "123456789");
+        jsonObject.put("idMedico",1);
+        jsonObject.put("apellido", "Paez Yaneez");
+        jsonObject.put("nombre", "Martin");
+        jsonObject.put("matricula", 192035);
+        jsonObject.put("telefono", "987654321");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpPost post = new HttpPost(url+"/sermed/enfermero/modificar");
+        HttpPost post = new HttpPost(url+"/sermed/medico/modificar");
         StringEntity se = new StringEntity(jsonObject.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         post.setEntity(se);
@@ -44,16 +46,16 @@ public class ModificarEnfermeroController {
     }
 
     @Test
-    public void modificarEnfermero_MatriculaExiste_Devuelve412() throws Exception {
+    public void modificarMedico_MatriculaExiste_Devuelve412() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("idEnfermero", 2);
-        jsonObject.put("apellido", "Bazan");
-        jsonObject.put("nombre", "Rodrigo");
-        jsonObject.put("matricula", 190300);
+        jsonObject.put("idMedico", 1);
+        jsonObject.put("apellido", "Paez Yaneez");
+        jsonObject.put("nombre", "Martin");
+        jsonObject.put("matricula", 156651);
         jsonObject.put("telefono", "987654321");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpPost post = new HttpPost(url+"/sermed/enfermero/modificar");
+        HttpPost post = new HttpPost(url+"/sermed/medico/modificar");
         StringEntity se = new StringEntity(jsonObject.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         post.setEntity(se);
@@ -66,16 +68,16 @@ public class ModificarEnfermeroController {
     }
 
     @Test
-    public void modificarEnfermero_EnfermeroIncompleto_Devuelve412() throws Exception {
+    public void modificarMedico_MedicoIncompleto_Devuelve412() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("idEnfermero", 2);
+        jsonObject.put("idMedico", 2);
         jsonObject.put("apellido", "");
         jsonObject.put("nombre", "");
-        jsonObject.put("matricula", 190202);
+        jsonObject.put("matricula", 156651);
         jsonObject.put("telefono", "987654321");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpPost post = new HttpPost(url+"/sermed/enfermero/modificar");
+        HttpPost post = new HttpPost(url+"/sermed/medico/modificar");
         StringEntity se = new StringEntity(jsonObject.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         post.setEntity(se);
@@ -86,7 +88,4 @@ public class ModificarEnfermeroController {
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_PRECONDITION_FAILED));
         Assertions.assertEquals("Faltan datos", EntityUtils.toString(httpResponse.getEntity()));
     }
-
-
-
 }

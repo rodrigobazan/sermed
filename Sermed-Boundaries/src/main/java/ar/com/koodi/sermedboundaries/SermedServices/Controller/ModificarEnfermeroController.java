@@ -27,7 +27,7 @@ public class ModificarEnfermeroController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(modificarEnfermeroAdapter.modificarEnfermero(enfermero));
         } catch (MatriculasIgualesException e) {
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Matriculas iguales");
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Matricula ya existe");
         } catch (EnfermeroIncompletoException e) {
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Faltan datos");
         } catch (UpdateEnfermeroException e) {
