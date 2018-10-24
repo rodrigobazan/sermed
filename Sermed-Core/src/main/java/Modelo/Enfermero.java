@@ -32,7 +32,7 @@ public class Enfermero {
     }
 
     public void modificarDatos(Enfermero nuevo) throws EnfermeroIncompletoException {
-        if (nuevo.apellido == null || nuevo.nombre == null || nuevo.telefono == null) {
+        if ((nuevo.apellido == null || nuevo.apellido.equals("")) || (nuevo.nombre == null || nuevo.nombre.equals("")) || (nuevo.telefono == null || nuevo.telefono.equals(""))) {
             throw new EnfermeroIncompletoException();
         }
         this.apellido = nuevo.apellido;
