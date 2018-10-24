@@ -108,4 +108,17 @@ public class ConsultarObrasSocialesIntegrationTest {
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
 	}
+	
+	@Test
+	public void consultarObraSocialPorNombre_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
+		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
+        Header header = new BasicHeader("Authorization", "Bearer "+token);
+        HttpUriRequest request = new HttpGet(url+"/sermed/obrasocial/nombre/OSDE");
+        request.setHeader(header);
+        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+        String response= EntityUtils.toString(httpResponse.getEntity());
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ObraSocialDTO obraSocialDTOs = objectMapper.readValue(response, ObraSocialDTO.class);
+        assertNotNull(obraSocialDTOs.obraSocial);
+	}
 }
