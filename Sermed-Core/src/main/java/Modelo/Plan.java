@@ -19,7 +19,7 @@ public class Plan {
     }
 
     public static Plan instancia(Integer idPlan, String nombrePlan, HashMap<String,Double> listaPrecios) throws PlanIncompletoException {
-        if(nombrePlan == null || listaPrecios.isEmpty()){
+        if((nombrePlan == null || nombrePlan.equals("")) || (listaPrecios == null || listaPrecios.isEmpty())){
             throw new PlanIncompletoException();
         }
         return new Plan(idPlan, nombrePlan, listaPrecios);
@@ -38,7 +38,7 @@ public class Plan {
     }
 
     public void modificarDatos(Plan nuevosDatos) throws PlanIncompletoException {
-        if(nuevosDatos.nombrePlan == null || nuevosDatos.listaPrecios.isEmpty()){
+        if((nuevosDatos.nombrePlan == null || nuevosDatos.nombrePlan.equals("")) || (nuevosDatos.listaPrecios == null || nuevosDatos.listaPrecios.isEmpty())){
             throw new PlanIncompletoException();
         }
         this.nombrePlan = nuevosDatos.nombrePlan;

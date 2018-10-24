@@ -18,7 +18,7 @@ public class ModificarEnfermeroUseCase implements ModificarEnfermeroInput{
 
     public Enfermero modificarEnfermero(Enfermero nuevosDatos) throws MatriculasIgualesException, EnfermeroIncompletoException, UpdateEnfermeroException {
         Enfermero elEnfermeroAmodificar = repositorioEnfermero.findById(nuevosDatos.getIdEnfermero());
-        if (elEnfermeroAmodificar.getMatricula() == nuevosDatos.getMatricula() || repositorioEnfermero.findByMatricula(nuevosDatos.getMatricula()) == null) {
+        if (elEnfermeroAmodificar.getMatricula().intValue() == nuevosDatos.getMatricula().intValue() || repositorioEnfermero.findByMatricula(nuevosDatos.getMatricula()) == null) {
             elEnfermeroAmodificar.modificarDatos(nuevosDatos);
             if (repositorioEnfermero.update(elEnfermeroAmodificar))
                 return elEnfermeroAmodificar;

@@ -13,6 +13,6 @@ public class PeriodoPagoFactory {
     }
 
     public static PeriodoPago mapeoDTOCore(PeriodoPagoDTO periodoPagoDTO){
-        return  new PeriodoPago(PeriodoPagoDTO.idPeriodo, PeriodoPagoDTO.mes, PeriodoPagoDTO.anio);
+        return  new PeriodoPago(periodoPagoDTO.idPeriodo, periodoPagoDTO.mes, periodoPagoDTO.anio);
     }
 }
