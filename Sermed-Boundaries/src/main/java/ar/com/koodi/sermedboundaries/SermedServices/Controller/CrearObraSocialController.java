@@ -27,7 +27,7 @@ public class CrearObraSocialController {
             if (resultado) return ResponseEntity.status(HttpStatus.OK).body(true);
             else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (ObraSocialExisteException e) {
-            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Obra social ya existe");
         }
     }
 }
