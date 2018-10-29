@@ -14,7 +14,7 @@ public class Sangre {
         this.factor = factor;
     }
 
-    public static Sangre instacia(Integer idSangre, String grupo, String factor) throws SangreIncompletoException {
+    public static Sangre instancia(Integer idSangre, String grupo, String factor) throws SangreIncompletoException {
         if(grupo == null || factor == null){
             throw new SangreIncompletoException();
         }

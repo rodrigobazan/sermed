@@ -18,7 +18,7 @@ public class PersonaDTO {
     public final String nombres;
 
     @JsonProperty("fechaNacimiento")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public final LocalDate fechaNacimiento;
 
     @JsonProperty("domicilio")

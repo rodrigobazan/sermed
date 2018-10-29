@@ -53,7 +53,7 @@ public class SangreRepositorioImplementacion implements ISangreRepositorio {
 
     public Sangre mapeoDataCore(SangreEntity sangreEntity) {
         try {
-            return Sangre.instacia(sangreEntity.getIdSangre(), sangreEntity.getGrupo(), sangreEntity.getFactor());
+            return Sangre.instancia(sangreEntity.getIdSangre(), sangreEntity.getGrupo(), sangreEntity.getFactor());
         } catch (SangreIncompletoException e) {
             e.printStackTrace();
             return null;
