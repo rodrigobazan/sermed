@@ -47,7 +47,7 @@ public class Persona {
     public static Persona instancia(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
                                     String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException, DniConPuntosException {
 
-        if(apellidos==null || nombres ==null || fechaNacimiento==null || tipoDocumento==null || documento==null || sangre==null || domicilio == null){
+        if((apellidos==null || apellidos.equals("")) || (nombres ==null || nombres.equals("")) || fechaNacimiento==null || tipoDocumento==null || (documento==null || documento.equals("")) || sangre==null || (domicilio == null || domicilio.equals(""))){
             throw new PersonaIncompletaException();
         }
         if(documento.contains(".")){
@@ -70,7 +70,7 @@ public class Persona {
     }
 
     public String getNumeroAfiliado() {
-        if(this.nroAfiliado == ""){
+        if(this.nroAfiliado.equals("")){
             return this.nroAfiliado;
         }
         return this.nroAfiliado + "-" + String.format("%02d", this.nroOrden);
@@ -93,8 +93,12 @@ public class Persona {
     }
 
     public void modificarDatos(Persona personaDatosNuevos) throws PersonaIncompletaException {
-        if(personaDatosNuevos.apellidos==null || personaDatosNuevos.nombres ==null || personaDatosNuevos.fechaNacimiento==null || personaDatosNuevos.domicilio == null
-                || personaDatosNuevos.tipoDocumento==null || personaDatosNuevos.documento==null || personaDatosNuevos.sangre==null){
+        if((personaDatosNuevos.apellidos==null || personaDatosNuevos.apellidos.equals("")) ||
+                (personaDatosNuevos.nombres ==null || personaDatosNuevos.nombres.equals("")) ||
+                personaDatosNuevos.fechaNacimiento==null ||
+                (personaDatosNuevos.domicilio == null || personaDatosNuevos.domicilio.equals(""))
+                || personaDatosNuevos.tipoDocumento==null ||
+                (personaDatosNuevos.documento==null || personaDatosNuevos.documento.equals("")) || personaDatosNuevos.sangre==null){
             throw new PersonaIncompletaException();
         }
         this.apellidos = personaDatosNuevos.apellidos;
