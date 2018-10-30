@@ -45,7 +45,7 @@ public class Persona {
     }
 
     public static Persona instancia(Integer idPersona, String apellidos, String nombres, LocalDate fechaNacimiento, String domicilio, TipoDocumento tipoDocumento, String documento, Sangre sangre,
-                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, NumeroAfiliadoIncorrectoException, DniConPuntosException {
+                                    String telefono, ObraSocial obraSocial, String nroAfiliado, Collection<AntecedenteMedico> antecedentesMedico, Integer nroOrden) throws PersonaIncompletaException, DniConPuntosException {
 
         if((apellidos==null || apellidos.equals("")) || (nombres ==null || nombres.equals("")) || fechaNacimiento==null || tipoDocumento==null || (documento==null || documento.equals("")) || sangre==null || (domicilio == null || domicilio.equals(""))){
             throw new PersonaIncompletaException();

@@ -34,7 +34,10 @@ public class AfiliadoRepositorioImplementacion implements IAfiliadoRepositorio {
     @Override
     @Transactional
     public boolean persist(Afiliado afiliado) {
-        return iAfiliadoRepositorioCRUD.save(mapeoCoreData(afiliado)) != null;
+        AfiliadoEntity afiliadoEntity = mapeoCoreData(afiliado);
+        afiliadoEntity.getTitular().setNroAfiliado(afiliado.getNumeroAfiliado());
+        afiliadoEntity.getTitular().setNroOrden(0);
+        return iAfiliadoRepositorioCRUD.save(afiliadoEntity) != null;
     }
 
     @Override
@@ -106,6 +109,7 @@ public class AfiliadoRepositorioImplementacion implements IAfiliadoRepositorio {
             PlanEntity planEntity = planRepositorioImplementacion.mapeoCoreData(afiliado.getPlan());
             planEntity.setIdPlan(afiliado.getPlan().getIdPlan());
             PersonaEntity titular = personaRepositorioImplementacion.mapeoCoreData(afiliado.getTitular());
+
             if (afiliado.getTitular().getIdPersona() != null) {
                 titular.setIdPersona(afiliado.getTitular().getIdPersona());
             }

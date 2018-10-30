@@ -17,19 +17,15 @@ public class CrearAfiliadoUseCase implements CrearAfiliadoInput {
     @Override
     public boolean crearAfiliado(Afiliado afiliadoNuevo) throws TitularEnAfiliadoActivoException, AfiliadoExisteException {
         if (!validarAfiliadoExiste(afiliadoNuevo)) {
-            Afiliado afiliadoQueContieneAlTitularNuevo = buscarAfiliadoQueContienePersona(afiliadoNuevo.getTitular());
-            if (afiliadoQueContieneAlTitularNuevo == null) return repositorioAfiliado.persist(afiliadoNuevo);
-            if (afiliadoQueContieneAlTitularNuevo.getActivo()) throw new TitularEnAfiliadoActivoException();
-            else {
-                afiliadoNuevo.asignarTitular(afiliadoQueContieneAlTitularNuevo.devolverPersona(afiliadoNuevo.getTitular()));
-                return repositorioAfiliado.persist(afiliadoNuevo);
-            }
+            Afiliado afiliadoActivoQueContieneAlTitularNuevo = buscarAfiliadoQueContienePersona(afiliadoNuevo.getTitular());
+            if (afiliadoActivoQueContieneAlTitularNuevo != null) throw new TitularEnAfiliadoActivoException();
+            return repositorioAfiliado.persist(afiliadoNuevo);
         }
         throw new AfiliadoExisteException();
     }
 
     private Afiliado buscarAfiliadoQueContienePersona(Persona titular) {
-        final Afiliado afiliado = repositorioAfiliado.findAll().stream().filter(a -> a.contienePersona(titular)).findAny().orElse(null);
+        final Afiliado afiliado = repositorioAfiliado.findAll().stream().filter(a -> a.contienePersona(titular) && a.getActivo()).findAny().orElse(null);
         return afiliado;
     }
 

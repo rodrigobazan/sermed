@@ -13,7 +13,7 @@ public class AfiliadoDTO {
     public final Integer idAfiliado;
 
     @JsonProperty("fechaAfiliacion")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public final LocalDate fechaAfiliacion;
 
     @JsonProperty("numeroAfiliado")

@@ -138,9 +138,6 @@ public class ConsultarVisitaUnitTest {
             return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                     new ObraSocial(1, "OSFATUN"), "000001", factoryAntecedenteMedico(), 0);
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-            return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;
@@ -155,9 +152,6 @@ public class ConsultarVisitaUnitTest {
                     "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
-            return null;
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
             return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();
@@ -184,9 +178,6 @@ public class ConsultarVisitaUnitTest {
             return personas;
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
-            return new ArrayList<>();
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
             return new ArrayList<>();
         } catch (DniConPuntosException e) {
             e.printStackTrace();

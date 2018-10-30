@@ -77,9 +77,6 @@ public class CambiarPlanAfiliadoAdapterTest {
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
             return new ArrayList<>();
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
-            return new ArrayList<>();
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -91,9 +88,6 @@ public class CambiarPlanAfiliadoAdapterTest {
             return Persona.instancia(1, "Torres", "German Federico Nicolas", LocalDate.of(1982, 9, 12),
                     "Sin Domicilio", new TipoDocumento(1, "DNI"), "14000001", new Sangre(1, "B", "RH+"), "3825672746",
                     new ObraSocial(1, "OSFATUN"), "000001", null, 0);
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-            return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;

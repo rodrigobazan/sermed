@@ -120,9 +120,6 @@ public class ConsultarVisitaPersonaUnitTest {
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-        return null;
         }
     }
 
