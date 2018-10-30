@@ -36,7 +36,7 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
 
         BuscarPersonaEntreAfiliadosUseCase buscarPersona = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersona(laPersona);
+        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
         Assertions.assertFalse(resultado);
 
 
@@ -51,7 +51,7 @@ public class BuscarPersonaEntreAfiliadosUnitTest {
 
         BuscarPersonaEntreAfiliadosUseCase buscarPersona = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersona(laPersona);
+        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
 
         Assertions.assertTrue(resultado);
 

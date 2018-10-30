@@ -36,7 +36,7 @@ public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
 
         BuscarPersonaEntreAfiliadosDeBajaUseCase buscarPersona = new BuscarPersonaEntreAfiliadosDeBajaUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
+        boolean resultado = buscarPersona.existePersona(laPersona);
         Assertions.assertFalse(resultado);
     }
 
@@ -49,7 +49,7 @@ public class BuscarPersonaEntreAfiliadosDeBajaUnitTest {
 
         BuscarPersonaEntreAfiliadosDeBajaUseCase buscarPersona = new BuscarPersonaEntreAfiliadosDeBajaUseCase(repositorioAfiliado);
 
-        boolean resultado = buscarPersona.existePersonaPorDNI(laPersona);
+        boolean resultado = buscarPersona.existePersona(laPersona);
         Assertions.assertTrue(resultado);
 
     }

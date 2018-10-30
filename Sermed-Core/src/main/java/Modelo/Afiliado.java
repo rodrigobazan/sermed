@@ -77,8 +77,11 @@ public class Afiliado {
 
     public void agregarPersona(Persona persona) {
         persona.setNumeroAfiliado(this.numeroAfiliado);
-        persona.setNroOrden(this.miembros.stream().max(Comparator.comparingInt(Persona::getNroOrden)).get().getNroOrden() + 1);
-
+        if(this.miembros != null && !this.miembros.isEmpty()){
+            persona.setNroOrden(this.miembros.stream().max(Comparator.comparingInt(Persona::getNroOrden)).get().getNroOrden() + 1);
+        }else{
+            persona.setNroOrden(1);
+        }
         this.miembros.add(persona);
     }
 
