@@ -68,9 +68,6 @@ public class GenerarComprobanteAfiliadoUnitTest {
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
             return null;
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
-            return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;
@@ -96,9 +93,6 @@ public class GenerarComprobanteAfiliadoUnitTest {
             return personas;
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
-            return new ArrayList<>();
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
             return new ArrayList<>();
         } catch (DniConPuntosException e) {
             e.printStackTrace();

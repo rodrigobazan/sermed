@@ -99,9 +99,6 @@ public class MostrarAfiliadosMorososUnitTest {
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
             return new ArrayList<>();
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
-            return new ArrayList<>();
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -138,9 +135,6 @@ public class MostrarAfiliadosMorososUnitTest {
                     "30672405", new Sangre(1, "A", "RH+"), "3825674978", new ObraSocial(1, "ASDA"), "", factoryAntecedenteMedico(), 0);
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
-            return null;
-        } catch (NumeroAfiliadoIncorrectoException ex) {
-            ex.printStackTrace();
             return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();

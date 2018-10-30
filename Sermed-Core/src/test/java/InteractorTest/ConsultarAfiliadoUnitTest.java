@@ -135,9 +135,6 @@ public class ConsultarAfiliadoUnitTest {
         } catch (PersonaIncompletaException e) {
             e.printStackTrace();
             return null;
-        } catch (NumeroAfiliadoIncorrectoException e) {
-            e.printStackTrace();
-            return null;
         } catch (DniConPuntosException e) {
             e.printStackTrace();
             return null;
