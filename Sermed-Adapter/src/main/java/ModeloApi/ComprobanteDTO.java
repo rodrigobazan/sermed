@@ -23,7 +23,7 @@ public class ComprobanteDTO {
     public final double total;
 
     @JsonProperty("fechaCreacion")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public final LocalDate fechaCreacion;
 
     @JsonProperty("modoPago")
