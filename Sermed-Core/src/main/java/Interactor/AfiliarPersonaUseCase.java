@@ -16,7 +16,7 @@ public class AfiliarPersonaUseCase implements AfiliarPersonaInput {
     @Override
     public boolean afiliarPersona(Persona persona, Afiliado afiliado) throws PersonaAfiliadaException {
         BuscarPersonaEntreAfiliadosUseCase buscarPersonaEntreAfiliadosUseCase = new BuscarPersonaEntreAfiliadosUseCase(repositorioAfiliado);
-        if(buscarPersonaEntreAfiliadosUseCase.existePersona(persona)) throw new PersonaAfiliadaException();
+        if(buscarPersonaEntreAfiliadosUseCase.existePersonaPorDNI(persona)) throw new PersonaAfiliadaException();
         else {
             afiliado.agregarPersona(persona);
             return repositorioAfiliado.update(afiliado);

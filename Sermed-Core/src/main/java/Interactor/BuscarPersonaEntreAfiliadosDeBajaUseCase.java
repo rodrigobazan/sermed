@@ -1,18 +1,19 @@
 package Interactor;
 
-import Inputs.BuscarPersonaEntreAfiliadosInput;
+import Inputs.BuscarPersonaEntreAfiliadosDeBajaInput;
 import Modelo.Persona;
 import Repositorio.IAfiliadoRepositorio;
 
-public class BuscarPersonaEntreAfiliadosDeBajaUseCase implements BuscarPersonaEntreAfiliadosInput {
+public class BuscarPersonaEntreAfiliadosDeBajaUseCase implements BuscarPersonaEntreAfiliadosDeBajaInput {
     private IAfiliadoRepositorio repositorioAfiliado;
 
     public BuscarPersonaEntreAfiliadosDeBajaUseCase(IAfiliadoRepositorio repositorioAfiliado) {
         this.repositorioAfiliado = repositorioAfiliado;
     }
 
-    @Override
-    public boolean existePersonaPorDNI(Persona laPersona) {
-        return repositorioAfiliado.findAllInactivos().stream().anyMatch(a -> a.contienePersona(laPersona));
-    }
+    
+	@Override
+	public boolean existePersona(Persona persona) {
+		return repositorioAfiliado.findAllInactivos().stream().anyMatch(a -> a.contienePersona(persona));
+	}
 }
