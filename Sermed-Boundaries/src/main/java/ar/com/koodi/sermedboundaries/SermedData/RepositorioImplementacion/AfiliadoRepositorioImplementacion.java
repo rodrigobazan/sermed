@@ -79,7 +79,13 @@ public class AfiliadoRepositorioImplementacion implements IAfiliadoRepositorio {
         titular.setIdPersona(afiliado.getTitular().getIdPersona());
         List<PersonaEntity> miembros = new ArrayList<>();
         if(afiliado.getMiembros() != null && !afiliado.getMiembros().isEmpty()){
-            afiliado.getMiembros().forEach(m -> miembros.add(personaRepositorioImplementacion.mapeoCoreData(m)));
+
+            afiliado.getMiembros().forEach(m -> {
+                PersonaEntity miembro = personaRepositorioImplementacion.mapeoCoreData(m);
+                miembro.setNroOrden(m.getNroOrden());
+                miembro.setNroAfiliado(m.getNroAfiliado());
+                miembros.add(miembro);
+            });
         }
         AfiliadoEntity afiliadoEntity = new AfiliadoEntity(afiliado.getFechaAfiliacion(), afiliado.getNumeroAfiliado(), miembros, titular, afiliado.getActivo(),
                 afiliado.getFechaDeBaja(), afiliado.getDiaDelMesPagoAcordado(), planEntity);

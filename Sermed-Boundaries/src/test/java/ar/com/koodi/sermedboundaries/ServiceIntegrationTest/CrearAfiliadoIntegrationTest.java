@@ -54,7 +54,7 @@ public class CrearAfiliadoIntegrationTest {
 
     private JSONObject factoryTitular() throws JSONException {
         JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 3);
+        personaJSON.put("idPersona", null);
         personaJSON.put("apellidos", "Titular");
         personaJSON.put("nombres", "Persona");
         personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
@@ -90,62 +90,6 @@ public class CrearAfiliadoIntegrationTest {
             e.printStackTrace();
             return new HashMap<>();
         }
-    }
-
-
-    public JSONArray factoryMiembros() throws JSONException {
-        JSONArray miembros = new JSONArray();
-        JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 1);
-        personaJSON.put("apellidos", "Power");
-        personaJSON.put("nombres", "Max");
-        personaJSON.put("fechaNacimiento", LocalDate.of(1999, 4, 30));
-        personaJSON.put("domicilio", "Av. Siempre Viva 400");
-        personaJSON.put("tipoDocumento", factoryTipoDocumento());
-        personaJSON.put("documento", "12345678");
-        personaJSON.put("sangre", factorySangre());
-        personaJSON.put("telefono","11111");
-        personaJSON.put("obraSocial", factoryObraSocial());
-        personaJSON.put("nroAfiliado", "191001");
-        personaJSON.put("nroOrden", 1);
-        personaJSON.put("antecedentesMedico", factoryAntecedentesMedicos());
-        JSONObject persona2JSON = new JSONObject();
-        persona2JSON.put("idPersona", 2);
-        persona2JSON.put("apellidos", "Simpson");
-        persona2JSON.put("nombres", "Homero");
-        persona2JSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
-        persona2JSON.put("domicilio", "Av. Siempre Viva 982");
-        persona2JSON.put("tipoDocumento", factoryTipoDocumentoDNI());
-        persona2JSON.put("documento", "12345678");
-        persona2JSON.put("sangre", factorySangre());
-        persona2JSON.put("telefono","11111");
-        persona2JSON.put("obraSocial", factoryObraSocial());
-        persona2JSON.put("nroAfiliado", "191001");
-        persona2JSON.put("nroOrden", 1);
-        persona2JSON.put("antecedentesMedico", factoryAntecedentesMedicos());
-        miembros.put(personaJSON);
-        miembros.put(persona2JSON);
-        return miembros;
-    }
-
-    public JSONArray factoryAntecedentesMedicos() throws JSONException {
-        JSONArray antecedentesArray = new JSONArray();
-        JSONObject antecedente = new JSONObject();
-        JSONObject afeccion = new JSONObject();
-        afeccion.put("idAfeccion", 2);
-        afeccion.put("nombreAfeccion", "Gripe");
-        antecedente.put("idAntecedenteMedico", null);
-        antecedente.put("afeccion", afeccion);
-        antecedente.put("observacion", "pa tras");
-        antecedentesArray.put(antecedente);
-        return antecedentesArray;
-    }
-
-    public JSONObject factoryTipoDocumento() throws JSONException {
-        JSONObject tipoDocumento = new JSONObject();
-        tipoDocumento.put("idTipoDocumento", 2);
-        tipoDocumento.put("nombre", "Libreta Civica");
-        return tipoDocumento;
     }
 
     private JSONObject factoryTipoDocumentoDNI() throws JSONException {
