@@ -32,7 +32,7 @@ public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMoros
                 if (comprobantesDeAfiliado.isEmpty())
                     morosos.add(afiliado);
                 else {
-                    if (!verificarPagoDePeriodo(comprobantesDeAfiliado, fecha.getMonthValue(), fecha.getDayOfMonth()) && afiliado.vencioPlazoPago(fecha.getDayOfMonth()))
+                    if (!verificarPagoDePeriodo(comprobantesDeAfiliado, fecha.getMonthValue(), fecha.getYear()) && afiliado.vencioPlazoPago(fecha.getDayOfMonth()))
                         morosos.add(afiliado);
                 }
             }
