@@ -22,7 +22,6 @@ public class DesafiliarPersonaUseCase implements DesafiliarPersonaInput {
             persona.setNroOrden(0);
             persona.setNumeroAfiliado("");
             return this.repositorioAfiliado.update(afiliado) && this.repositorioPersona.update(persona);
-
         }
         throw new PersonaNoAfiliadaException();
     }

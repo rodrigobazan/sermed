@@ -40,22 +40,6 @@ public class DarBajaAfiliadoIntegrationTest {
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
     }
 
-    @Test
-    public void darBajaAfiliado_AfiliadoInactivo_Devuelve412() throws Exception {
-        JSONObject afiliado = factoryAfiliado();
-        String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
-        Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpPost post = new HttpPost(url+"/sermed/afiliado/darBaja/"+LocalDate.now());
-        StringEntity se = new StringEntity(afiliado.toString());
-        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-        post.setEntity(se);
-        post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-        HttpUriRequest request = post;
-        request.setHeader(header);
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_PRECONDITION_FAILED));
-    }
-
     private JSONObject factoryAfiliado() throws JSONException {
         JSONObject afiliado = new JSONObject();
         afiliado.put("idAfiliado", 12);
