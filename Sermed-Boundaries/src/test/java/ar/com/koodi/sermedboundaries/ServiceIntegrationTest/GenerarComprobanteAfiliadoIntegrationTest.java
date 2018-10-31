@@ -20,37 +20,39 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
-import ModeloApi.FichaAfiliadoDTO;
+import ModeloApi.ComprobanteAfiliadoReporteDTO;
 
-public class GenerarFichaAfiliadoIntegrationTest {
+public class GenerarComprobanteAfiliadoIntegrationTest {
 
-	private String url="http://localhost:8080";
+	private String url ="http://localhost:8080";
 	
 	@Test
-	public void generarFichaAfiliado_GeneraCorrectamente_Devuelve200() throws Exception {
+	public void generarComprobanteAfiliadoReporte_generaCorrectamente_Devuelve200() throws Exception
+	{
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/190001");
+        HttpUriRequest request = new HttpGet(url+"/sermed/comprobante/numero/1234-567891");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
 	}
 	
 	@Test
-	public void generarFichaAfiliado_AfiliadoNoExiste_Devuelve412() throws Exception {
+	public void generarComprobanteAfiliadoReporte_comprobanteNoExiste_Devuelve204() throws Exception
+	{
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/000000");
+        HttpUriRequest request = new HttpGet(url+"/sermed/comprobante/numero/0000-567891");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_PRECONDITION_FAILED));
+        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
 	}
 	
 	@Test
 	public void generarFichaAfiliado_GeneraCorrectamente_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/190001");
+		HttpUriRequest request = new HttpGet(url+"/sermed/comprobante/numero/1234-567891");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());
@@ -58,7 +60,7 @@ public class GenerarFichaAfiliadoIntegrationTest {
         objectMapper.registerModule(new JavaTimeModule());
 		objectMapper.registerModule(new ParameterNamesModule());
 		objectMapper.registerModule(new Jdk8Module());
-		FichaAfiliadoDTO fichaAfiliadoDTO = objectMapper.readValue(response, FichaAfiliadoDTO.class);
-		assertNotNull(fichaAfiliadoDTO.titular.apellidos);
+		ComprobanteAfiliadoReporteDTO comprobanteAfiliadoReporteDTO = objectMapper.readValue(response, ComprobanteAfiliadoReporteDTO.class);
+		assertNotNull(comprobanteAfiliadoReporteDTO.nombreApellidoAfiliado);
 	}
 }
