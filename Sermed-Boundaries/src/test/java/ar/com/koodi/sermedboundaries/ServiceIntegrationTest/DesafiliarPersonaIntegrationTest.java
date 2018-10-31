@@ -10,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -20,17 +21,21 @@ import java.util.HashMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class DarBajaAfiliadoIntegrationTest {
+public class DesafiliarPersonaIntegrationTest {
 
     private String url="http://localhost:8080";
 
     @Test
-    public void darBajaAfiliado_AfiliadoEstaActivo_Devuelve200() throws Exception {
+    public void desafiliarPersona_personaAfiliada_Devuelve200() throws Exception {
+        JSONObject persona = factoryPersona();
         JSONObject afiliado = factoryAfiliado();
+        JSONObject envoltura = new JSONObject();
+        envoltura.put("persona", persona);
+        envoltura.put("afiliado", afiliado);
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpPost post = new HttpPost(url+"/sermed/afiliado/darBaja/"+LocalDate.now());
-        StringEntity se = new StringEntity(afiliado.toString());
+        HttpPost post = new HttpPost(url+"/sermed/afiliado/desafiliarPersona");
+        StringEntity se = new StringEntity(envoltura.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         post.setEntity(se);
         post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
@@ -39,37 +44,24 @@ public class DarBajaAfiliadoIntegrationTest {
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
     }
-
     private JSONObject factoryAfiliado() throws JSONException {
         JSONObject afiliado = new JSONObject();
         afiliado.put("idAfiliado", 12);
-        afiliado.put("fechaAfiliacion", LocalDate.of(2018, 3, 30));
-        afiliado.put("numeroAfiliado", "190600");
-        afiliado.put("miembros", null);
-        afiliado.put("titular", factoryTitular());
-        afiliado.put("activo", true);
-        afiliado.put("fechaDeBaja", null);
+        afiliado.put("activo", false);
         afiliado.put("diaDelMesPagoAcordado", 15);
+        afiliado.put("fechaAfiliacion", LocalDate.of(2018,3,30));
+        afiliado.put("fechaDeBaja", LocalDate.of(2018,10,31));
+        afiliado.put("numeroAfiliado", 190600);
         afiliado.put("plan", factoryPlan());
+        afiliado.put("titular", factoryPersona());
+        afiliado.put("miembros", factoryMiembros());
         return afiliado;
     }
 
-    private JSONObject factoryTitular() throws JSONException {
-        JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 5);
-        personaJSON.put("apellidos", "Titular");
-        personaJSON.put("nombres", "Persona");
-        personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
-        personaJSON.put("domicilio", "9 de Julio 530");
-        personaJSON.put("tipoDocumento", factoryTipoDocumentoDNI());
-        personaJSON.put("documento", "87654321");
-        personaJSON.put("sangre", factorySangre());
-        personaJSON.put("telefono","9999");
-        personaJSON.put("obraSocial", factoryObraSocial());
-        personaJSON.put("nroAfiliado", "");
-        personaJSON.put("nroOrden", "");
-        personaJSON.put("antecedentesMedico", null);
-        return personaJSON;
+    private JSONArray factoryMiembros() throws JSONException {
+        JSONArray array = new JSONArray();
+        array.put(factoryPersona());
+        return array;
     }
 
     private JSONObject factoryPlan() throws JSONException {
@@ -94,25 +86,31 @@ public class DarBajaAfiliadoIntegrationTest {
         }
     }
 
-    private JSONObject factoryTipoDocumentoDNI() throws JSONException {
+    private JSONObject factoryPersona() throws JSONException {
+        JSONObject personaJSON = new JSONObject();
+        personaJSON.put("idPersona", 2);
+        personaJSON.put("apellidos", "Simpson");
+        personaJSON.put("nombres", "Homero");
+        personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
+        personaJSON.put("domicilio", "Av. Siempre Viva 900");
         JSONObject tipoDocumento = new JSONObject();
         tipoDocumento.put("idTipoDocumento", 1);
         tipoDocumento.put("nombre", "DNI");
-        return tipoDocumento;
-    }
-
-    public JSONObject factorySangre() throws JSONException {
+        personaJSON.put("tipoDocumento", tipoDocumento);
+        personaJSON.put("documento", "11111111");
         JSONObject sangre = new JSONObject();
-        sangre.put("idSangre", 2);
+        sangre.put("idSangre", 1);
         sangre.put("grupo", "A");
-        sangre.put("factor", "RH-");
-        return sangre;
-    }
-
-    public JSONObject factoryObraSocial() throws JSONException {
+        sangre.put("factor", "RH+");
+        personaJSON.put("sangre", sangre);
+        personaJSON.put("telefono","9999");
         JSONObject obraSocial= new JSONObject();
-        obraSocial.put("idObraSocial", 2);
-        obraSocial.put("obraSocial", "OSDE");
-        return obraSocial;
+        obraSocial.put("idObraSocial", 1);
+        obraSocial.put("obraSocial", "OSFATUN");
+        personaJSON.put("obraSocial", obraSocial);
+        personaJSON.put("nroAfiliado", "190001");
+        personaJSON.put("nroOrden", 1);
+        personaJSON.put("antecedentesMedico", null);
+        return personaJSON;
     }
 }
