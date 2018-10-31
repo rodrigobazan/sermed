@@ -104,6 +104,9 @@ public class AdapterConfig {
 
     @Autowired
     private GenerarHistoriaClinicaPersonaInput generarHistoriaClinicaPersonaInput;
+    
+    @Autowired
+    private GenerarFichaAfiliadoInput generarFichaAfiliadoInput;
 
     @Autowired
     private ModificarEnfermeroInput modificarEnfermeroInput;
@@ -120,6 +123,10 @@ public class AdapterConfig {
     @Autowired
     private ModificarPlanInput modificarPlanInput;
 
+    @Bean
+    public GenerarFichaAfiliadoAdapter GenerarFichaAfiliadoAdapter() {
+    	return new GenerarFichaAfiliadoAdapter(generarFichaAfiliadoInput);
+    }
 
     @Bean
     public AfiliarPersonaAdapter afiliarPersonaAdapter(){
