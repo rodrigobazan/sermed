@@ -38,9 +38,13 @@ public class BuscarPersonaEntreAfiliadosDeBajaController {
 			@PathVariable("tipodocumento") String tipodocumento) {
 		PersonaDTO personaDTO = consultarPersonaAdapter.consultarPersonas().stream().filter(persona->persona.documento.equals(documento) && persona.tipoDocumento.nombre.equals(tipodocumento)).findAny().orElse(null);
 		try {
-			boolean resultado = buscarPersonaEntreAfiliadosDeBajaAdapter.existePersonaPorDNI(personaDTO);
-			if(resultado) return ResponseEntity.status(HttpStatus.OK).body(personaDTO);
-			else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if(personaDTO != null){
+				boolean resultado = buscarPersonaEntreAfiliadosDeBajaAdapter.existePersonaPorDNI(personaDTO);
+				if(resultado) return ResponseEntity.status(HttpStatus.OK).body(personaDTO);
+				else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			else return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Persona no existe en la Base de Datos");
+
 		} catch (PersonaIncompletaException | NumeroAfiliadoIncorrectoException | DniConPuntosException e) {
 			return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(e.getMessage());
 		}

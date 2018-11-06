@@ -33,15 +33,6 @@ public class ConsultarEnfermeroIntegrationTest {
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
 	}
 
-	@Test
-	public void consultarEnfermeros_NoExistenDatos_Devuelve204() throws Exception {
-		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
-        Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/enfermeros");
-        request.setHeader(header);
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
-	}
 	
 	@Test
 	public void consultarEnfermeros_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
@@ -60,7 +51,7 @@ public class ConsultarEnfermeroIntegrationTest {
 	public void consultarEnfermerosPorApellido_ExistenDatos_DevuelveColeccionConDatos() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/enfermeros/apellido/ba");
+        HttpUriRequest request = new HttpGet(url+"/sermed/enfermeros/apellido/no");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -80,7 +71,7 @@ public class ConsultarEnfermeroIntegrationTest {
 	public void consultarEnfermerosPorApellido_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/enfermeros/apellido/ba");
+        HttpUriRequest request = new HttpGet(url+"/sermed/enfermeros/apellido/no");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         String response= EntityUtils.toString(httpResponse.getEntity());
@@ -93,7 +84,7 @@ public class ConsultarEnfermeroIntegrationTest {
 	public void consultarEnfermeroPorMatricula_ExisteEnfermero_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/enfermero/matricula/1235");
+        HttpUriRequest request = new HttpGet(url+"/sermed/enfermero/matricula/999993");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -113,7 +104,7 @@ public class ConsultarEnfermeroIntegrationTest {
 	public void consultarEnfermeroPorMatricula_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/enfermero/matricula/1235");
+        HttpUriRequest request = new HttpGet(url+"/sermed/enfermero/matricula/999993");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         String response= EntityUtils.toString(httpResponse.getEntity());

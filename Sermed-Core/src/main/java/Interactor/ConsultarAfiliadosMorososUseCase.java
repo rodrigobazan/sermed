@@ -32,7 +32,7 @@ public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMoros
                 if (comprobantesDeAfiliado.isEmpty())
                     morosos.add(afiliado);
                 else {
-                    if (!verificarPagoDePeriodo(comprobantesDeAfiliado, fecha.getMonthValue(), fecha.getYear()) && afiliado.vencioPlazoPago(fecha.getDayOfMonth()))
+                    if (!verificarPagoDePeriodo(comprobantesDeAfiliado, fecha.getMonthValue(), fecha.getYear()) || afiliado.vencioPlazoPago(fecha.getDayOfMonth(), fecha.getYear()))
                         morosos.add(afiliado);
                 }
             }
@@ -41,6 +41,7 @@ public class ConsultarAfiliadosMorososUseCase implements ConsultarAfiliadosMoros
     }
 
     private boolean verificarPagoDePeriodo(List<Comprobante> comprobantes, int mes, int anio) {
+        if(anio > LocalDate.now().getYear()) return true;
         return comprobantes.stream().anyMatch(comprobante -> comprobante.contienePeriodo(mes, anio));
     }
 }

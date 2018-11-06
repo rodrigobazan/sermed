@@ -77,7 +77,7 @@ public class ObraSocialRepositorioImplementacion implements IObraSocialRepositor
 
     public ObraSocial mapeoDataCore(ObraSocialEntity obraSocialEntity) {
 		if(obraSocialEntity != null) return new ObraSocial(obraSocialEntity.getIdObraSocial(), obraSocialEntity.getNombre());
-		return new ObraSocial(null, obraSocialEntity.getNombre());
+		return null;
 	}
 	
 }

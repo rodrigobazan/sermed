@@ -40,19 +40,21 @@ public class AnularComprobanteController {
 	@ResponseBody
 	public ResponseEntity<?> anularComprobante(@PathVariable("nroComprobante")String nroComprobante){		
 		try {
-			ComprobanteDTO comprobanteAAnular;
-			comprobanteAAnular = consultarComprobantesAdapter.consultarComprobantePorNumero(nroComprobante);
-			boolean resultado;
-			resultado = anularComprobanteAdapter.anularComprobante(comprobanteAAnular);
-			if(resultado)return ResponseEntity.status(HttpStatus.OK).body(true);
-			else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			ComprobanteDTO comprobanteAAnular = consultarComprobantesAdapter.consultarComprobantePorNumero(nroComprobante);
+			if(comprobanteAAnular != null){
+				boolean resultado = anularComprobanteAdapter.anularComprobante(comprobanteAAnular);
+				if(resultado) return ResponseEntity.status(HttpStatus.OK).body(true);
+				else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}else{
+				return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Comprobante no existe en la BD");
+			}
 		} catch (ComprobanteNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Comprobante no existe");
 		}
 		 catch (PersonaIncompletaException | PlanIncompletoException | AfiliadoSinPlanException
 				| ComprobanteAnuladoException | DniConPuntosException | NumeroAfiliadoIncorrectoException
 				| AfiliadoSinTitularException e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
 		}
 		
 		

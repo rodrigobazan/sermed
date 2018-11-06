@@ -30,7 +30,7 @@ public class GenerarFichaAfiliadoIntegrationTest {
 	public void generarFichaAfiliado_GeneraCorrectamente_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/190001");
+        HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/999993");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -50,7 +50,7 @@ public class GenerarFichaAfiliadoIntegrationTest {
 	public void generarFichaAfiliado_GeneraCorrectamente_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/190001");
+		HttpUriRequest request = new HttpGet(url+"/sermed/ficha/numeroafiliado/999993");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());

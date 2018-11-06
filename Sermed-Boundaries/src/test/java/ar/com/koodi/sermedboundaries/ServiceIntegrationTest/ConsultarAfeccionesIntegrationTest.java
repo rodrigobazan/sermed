@@ -50,7 +50,7 @@ public class ConsultarAfeccionesIntegrationTest {
     public void consultarAfeccionesPorNombre_ExistenAfecciones_Devuelve200() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/afecciones/nombre/diab");
+        HttpUriRequest request = new HttpGet(url+"/sermed/afecciones/nombre/gripe");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -70,7 +70,7 @@ public class ConsultarAfeccionesIntegrationTest {
     public void consultarAfeccionesPorNombre_ExistenAfecciones_JsonCorrecto() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/afecciones/nombre/diab");
+        HttpUriRequest request = new HttpGet(url+"/sermed/afecciones/nombre/grip");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         String response = EntityUtils.toString(httpResponse.getEntity());
@@ -83,7 +83,7 @@ public class ConsultarAfeccionesIntegrationTest {
     public void consultarAfeccionPorNombre_ExisteAfeccion_Devuelve200() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/afeccion/nombre/Diabetes");
+        HttpUriRequest request = new HttpGet(url+"/sermed/afeccion/nombre/Gripe");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -103,13 +103,13 @@ public class ConsultarAfeccionesIntegrationTest {
     public void consultarAfeccionPorNombre_ExistenAfecciones_JsonCorrecto() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/afeccion/nombre/Diabetes");
+        HttpUriRequest request = new HttpGet(url+"/sermed/afeccion/nombre/Gripe");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         String response = EntityUtils.toString(httpResponse.getEntity());
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         AfeccionDTO afeccion = objectMapper.readValue(response, AfeccionDTO.class);
-        assertEquals("Diabetes", afeccion.nombreAfeccion);
+        assertEquals("Gripe", afeccion.nombreAfeccion);
     }
 
 

@@ -26,7 +26,7 @@ public class CrearMedicoIntegrationTest {
         jsonObject.put("idMedico", null);
         jsonObject.put("apellido", "Vega");
         jsonObject.put("nombre", "Romina");
-        jsonObject.put("matricula", 192035);
+        jsonObject.put("matricula", 192503);
         jsonObject.put("telefono", "123456789");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);

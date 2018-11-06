@@ -102,7 +102,7 @@ public class AfiliarPersonaIntegrationTest {
 
     private JSONObject factoryTitular() throws JSONException {
         JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 5);
+        personaJSON.put("idPersona", 36);
         personaJSON.put("apellidos", "Titular");
         personaJSON.put("nombres", "Persona");
         personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
@@ -120,15 +120,15 @@ public class AfiliarPersonaIntegrationTest {
 
     private JSONObject factoryPersona() throws JSONException {
         JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 2);
-        personaJSON.put("apellidos", "Simpson");
-        personaJSON.put("nombres", "Homero");
-        personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
-        personaJSON.put("domicilio", "Av. Siempre viva 900");
+        personaJSON.put("idPersona", 4);
+        personaJSON.put("apellidos", "Nuevo");
+        personaJSON.put("nombres", "Afiliado");
+        personaJSON.put("fechaNacimiento", LocalDate.of(1988, 4, 5));
+        personaJSON.put("domicilio", "Afiliado");
         personaJSON.put("tipoDocumento", factoryTipoDocumentoDNI());
-        personaJSON.put("documento", "11111111");
+        personaJSON.put("documento", "16030897");
         personaJSON.put("sangre", factorySangre());
-        personaJSON.put("telefono","9999");
+        personaJSON.put("telefono","s9");
         personaJSON.put("obraSocial", factoryObraSocial());
         personaJSON.put("nroAfiliado", "");
         personaJSON.put("nroOrden", "");

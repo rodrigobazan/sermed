@@ -30,7 +30,7 @@ public class BuscarPersonaEntreAfiliadosIntegrationTest {
 	public void existePersonaEntreAfiliados_ExistePersona_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/1234567/tipodocumento/DNI");
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/98765432/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -40,17 +40,17 @@ public class BuscarPersonaEntreAfiliadosIntegrationTest {
 	public void existePersonaEntreAfiliados_NoExistePersona_Devuelve204() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/7539516/tipodocumento/DNI");
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/6/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
+		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_PRECONDITION_FAILED));
 	}
 	
 	@Test
 	public void existePersonaEntreAfiliados_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/1234567/tipodocumento/DNI");
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/documento/98765432/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());

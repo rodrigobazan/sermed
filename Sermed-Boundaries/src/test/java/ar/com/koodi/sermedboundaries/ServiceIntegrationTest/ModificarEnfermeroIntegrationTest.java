@@ -26,10 +26,10 @@ public class ModificarEnfermeroIntegrationTest {
     public void modificarEnfermero_DatosCorrectos_Devuelve200() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("idEnfermero", 2);
-        jsonObject.put("apellido", "Bazan");
-        jsonObject.put("nombre", "Rodrigo");
-        jsonObject.put("matricula", 190202);
-        jsonObject.put("telefono", "123456789");
+        jsonObject.put("apellido", "No");
+        jsonObject.put("nombre", "Borrar");
+        jsonObject.put("matricula", 999993);
+        jsonObject.put("telefono", "876543219");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
         HttpPost post = new HttpPost(url+"/sermed/enfermero/modificar");
@@ -49,7 +49,7 @@ public class ModificarEnfermeroIntegrationTest {
         jsonObject.put("idEnfermero", 2);
         jsonObject.put("apellido", "Bazan");
         jsonObject.put("nombre", "Rodrigo");
-        jsonObject.put("matricula", 190300);
+        jsonObject.put("matricula", 190202);
         jsonObject.put("telefono", "987654321");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
@@ -71,7 +71,7 @@ public class ModificarEnfermeroIntegrationTest {
         jsonObject.put("idEnfermero", 2);
         jsonObject.put("apellido", "");
         jsonObject.put("nombre", "");
-        jsonObject.put("matricula", 190202);
+        jsonObject.put("matricula", 190300);
         jsonObject.put("telefono", "987654321");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);

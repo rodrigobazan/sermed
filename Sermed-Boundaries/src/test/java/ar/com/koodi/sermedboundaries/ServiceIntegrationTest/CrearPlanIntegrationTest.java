@@ -26,7 +26,7 @@ public class CrearPlanIntegrationTest {
     public void crearPlan_NoExistePlan_Devuelve200() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("idPlan", null);
-        jsonObject.put("nombrePlan", "Nuevo Plan");
+        jsonObject.put("nombrePlan", "Nuevo Plan Creado");
         jsonObject.put("listaPrecios", new JSONObject(factoryListaPrecios()));
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);

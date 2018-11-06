@@ -27,7 +27,7 @@ public class CrearEnfermeroIntegrationTest {
         jsonObject.put("idEnfermero", null);
         jsonObject.put("apellido", "Ruitti");
         jsonObject.put("nombre", "Javier");
-        jsonObject.put("matricula", 190202);
+        jsonObject.put("matricula", 190201);
         jsonObject.put("telefono", "123456789");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
@@ -48,7 +48,7 @@ public class CrearEnfermeroIntegrationTest {
         jsonObject.put("idEnfermero", null);
         jsonObject.put("apellido", "Ruitti");
         jsonObject.put("nombre", "Javier");
-        jsonObject.put("matricula", 190202);
+        jsonObject.put("matricula", 999993);
         jsonObject.put("telefono", "123456789");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);

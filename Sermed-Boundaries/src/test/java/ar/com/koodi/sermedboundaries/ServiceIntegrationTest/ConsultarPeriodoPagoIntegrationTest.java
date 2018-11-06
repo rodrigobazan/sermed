@@ -33,7 +33,7 @@ public class ConsultarPeriodoPagoIntegrationTest {
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
 	}
 	
-	@Test
+	/*@Test
 	public void consultarPeriodoPago_NoExistenDatos_Devuelve204() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
@@ -41,7 +41,7 @@ public class ConsultarPeriodoPagoIntegrationTest {
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
-	}
+	}*/
 	
 	@Test
 	public void consultarPeriodoPago_ExistenDatos_DevuelveJsonCorrecto() throws Exception {

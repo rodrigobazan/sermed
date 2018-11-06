@@ -1,0 +1,29 @@
+delete from visita;
+delete from comprobante_periodos_abonados;
+delete from afiliado_miembros;
+delete from comprobante where numerocomprobante = '1234-567891';
+delete from afiliado where numeroafiliado='190800';
+delete from obrasocial where obrasocial = 'Nueva Obra Social';
+delete from enfermero where matricula = 190201;
+delete from plan_lista_precios where plan_idplan=26; /*verificar id del nuevo plan*/
+delete from plan where nombreplan = 'Nuevo Plan Creado';
+delete from medico where matricula = 192503;
+delete from persona where documento = '37415281';
+
+insert into comprobante_periodos_abonados values (2,10);
+insert into comprobante_periodos_abonados values (2,11);
+insert into comprobante_periodos_abonados values (2,12);
+
+update afiliado set numeroafiliado = '190700' where idafiliado = 12;
+update persona set nroafiliado='190700' where idpersona = 15;
+update persona set nroafiliado='190600' where idpersona = 2;
+update persona set nroafiliado='' where idpersona = 4;
+update persona set nroorden=0 where idpersona = 4;
+update comprobante set activo = true where idcomprobante=10;
+
+
+
+
+
+
+

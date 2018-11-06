@@ -25,7 +25,7 @@ public class ModificarObraSocialIntegrationTest {
     @Test
     public void modificarObraSocial_DatosCorrectos_Devuelve200() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("idObraSocial", 12);
+        jsonObject.put("idObraSocial", 2);
         jsonObject.put("obraSocial", "OSDE");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
@@ -43,7 +43,7 @@ public class ModificarObraSocialIntegrationTest {
     @Test
     public void modificarObraSocial_ObraSocialYaExiste_Devuelve412() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("idObraSocial", 13);
+        jsonObject.put("idObraSocial", 4);
         jsonObject.put("obraSocial", "OSDE");
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);

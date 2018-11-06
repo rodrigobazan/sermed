@@ -39,15 +39,15 @@ public class CrearPersonaIntegrationTest {
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		JSONObject personaJSON = new JSONObject();
 		personaJSON.put("idPersona", null);
-		personaJSON.put("apellidos", "Simpson");
-		personaJSON.put("nombres", "Homero");
+		personaJSON.put("apellidos", "Nueva");
+		personaJSON.put("nombres", "Persona");
 		personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
 		personaJSON.put("domicilio", "Av. Siempre Viva 900");
 		JSONObject tipoDocumento = new JSONObject();
 		tipoDocumento.put("idTipoDocumento", 1);
 		tipoDocumento.put("nombre", "DNI");
 		personaJSON.put("tipoDocumento", tipoDocumento);
-		personaJSON.put("documento", "11111111");
+		personaJSON.put("documento", "37415281");
 		JSONObject sangre = new JSONObject();
 		sangre.put("idSangre", 1);
 		sangre.put("grupo", "A");

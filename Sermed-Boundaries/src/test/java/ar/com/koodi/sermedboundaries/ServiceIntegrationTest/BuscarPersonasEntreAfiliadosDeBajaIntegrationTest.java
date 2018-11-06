@@ -27,30 +27,41 @@ public class BuscarPersonasEntreAfiliadosDeBajaIntegrationTest {
 	private String url ="http://localhost:8080";
 	
 	@Test
-	public void existePersonaPorDNI_NoExistePersona_Devuelve204() throws Exception {
+	public void existePersonaPorDNI_NoExistePersonaBD_Devuelve412() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
 		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/1234567/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
+		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_PRECONDITION_FAILED));
 	}
 	
 	@Test
 	public void existePersonaPorDNI_ExistePersona_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/7654321/tipodocumento/DNI");
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/11111111/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
 	}
-	
+
+	@Test
+	public void existePersonaPorDNI_ExistePersonaNoEstaEntreAfiliadosDeBaja_Devuelve204() throws Exception {
+		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
+		Header header = new BasicHeader("Authorization", "Bearer " + token);
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/87654321/tipodocumento/DNI");
+		request.setHeader(header);
+		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
+	}
+
+
 	@Test
 	public void existePersonaEntreAfiliados_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/7654321/tipodocumento/DNI");
+		HttpUriRequest request = new HttpGet(url + "/sermed/persona/afiliados/baja/documento/11111111/tipodocumento/DNI");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());

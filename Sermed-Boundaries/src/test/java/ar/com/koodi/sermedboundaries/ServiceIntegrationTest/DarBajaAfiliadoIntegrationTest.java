@@ -56,13 +56,13 @@ public class DarBajaAfiliadoIntegrationTest {
 
     private JSONObject factoryTitular() throws JSONException {
         JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", 5);
-        personaJSON.put("apellidos", "Titular");
-        personaJSON.put("nombres", "Persona");
+        personaJSON.put("idPersona", 2);
+        personaJSON.put("apellidos", "Simpson");
+        personaJSON.put("nombres", "Homero");
         personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
-        personaJSON.put("domicilio", "9 de Julio 530");
+        personaJSON.put("domicilio", "Av. Siempre viva 900");
         personaJSON.put("tipoDocumento", factoryTipoDocumentoDNI());
-        personaJSON.put("documento", "87654321");
+        personaJSON.put("documento", "11111111");
         personaJSON.put("sangre", factorySangre());
         personaJSON.put("telefono","9999");
         personaJSON.put("obraSocial", factoryObraSocial());

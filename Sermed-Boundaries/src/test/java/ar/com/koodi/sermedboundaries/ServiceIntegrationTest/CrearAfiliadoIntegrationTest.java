@@ -30,11 +30,11 @@ public class CrearAfiliadoIntegrationTest {
         JSONObject afiliado = new JSONObject();
         afiliado.put("idAfiliado", null);
         afiliado.put("fechaAfiliacion", LocalDate.of(2018, 3, 30));
-        afiliado.put("numeroAfiliado", "190600");
+        afiliado.put("numeroAfiliado", "190800");
         afiliado.put("miembros", null);
         afiliado.put("titular", factoryTitular());
-        afiliado.put("activo", true);
-        afiliado.put("fechaDeBaja", null);
+        afiliado.put("activo", false);
+        afiliado.put("fechaDeBaja", LocalDate.now());
         afiliado.put("diaDelMesPagoAcordado", 15);
         afiliado.put("plan", factoryPlan());
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
@@ -54,13 +54,13 @@ public class CrearAfiliadoIntegrationTest {
 
     private JSONObject factoryTitular() throws JSONException {
         JSONObject personaJSON = new JSONObject();
-        personaJSON.put("idPersona", null);
-        personaJSON.put("apellidos", "Titular");
-        personaJSON.put("nombres", "Persona");
+        personaJSON.put("idPersona", 2);
+        personaJSON.put("apellidos", "Simpson");
+        personaJSON.put("nombres", "Homero");
         personaJSON.put("fechaNacimiento", LocalDate.of(2000, 3, 30));
-        personaJSON.put("domicilio", "9 de Julio 530");
+        personaJSON.put("domicilio", "Av. Siempre viva 900");
         personaJSON.put("tipoDocumento", factoryTipoDocumentoDNI());
-        personaJSON.put("documento", "87654321");
+        personaJSON.put("documento", "11111111");
         personaJSON.put("sangre", factorySangre());
         personaJSON.put("telefono","9999");
         personaJSON.put("obraSocial", factoryObraSocial());

@@ -1,0 +1,1156 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.23
+-- Dumped by pg_dump version 9.3.23
+-- Started on 2018-11-06 14:58:57 -03
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11756)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2101 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 198 (class 1259 OID 102582)
+-- Name: afeccion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.afeccion (
+    idafeccion integer,
+    nombreafeccion character varying(255)
+);
+
+
+ALTER TABLE public.afeccion OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 81551)
+-- Name: afeccion_idafeccion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.afeccion_idafeccion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.afeccion_idafeccion_seq OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 101699)
+-- Name: afiliado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.afiliado (
+    idafiliado integer NOT NULL,
+    activo boolean,
+    diadelmespagoacordado integer,
+    fechaafiliacion date,
+    fechadebaja date,
+    numeroafiliado character varying(255),
+    idplan integer,
+    idpersona integer
+);
+
+
+ALTER TABLE public.afiliado OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 81553)
+-- Name: afiliado_idafiliado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.afiliado_idafiliado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.afiliado_idafiliado_seq OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 101704)
+-- Name: afiliado_miembros; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.afiliado_miembros (
+    afiliado_idafiliado integer NOT NULL,
+    miembros_idpersona integer NOT NULL
+);
+
+
+ALTER TABLE public.afiliado_miembros OWNER TO postgres;
+
+--
+-- TOC entry 191 (class 1259 OID 101707)
+-- Name: antecedentemedico; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.antecedentemedico (
+    idantedecentemedico integer NOT NULL,
+    observacion character varying(255),
+    idafeccion integer
+);
+
+
+ALTER TABLE public.antecedentemedico OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 81555)
+-- Name: antecedentemedico_idantecedentemedico_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.antecedentemedico_idantecedentemedico_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.antecedentemedico_idantecedentemedico_seq OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 81468)
+-- Name: comprobante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.comprobante (
+    idcomprobante integer NOT NULL,
+    activo boolean,
+    fechacreacion date,
+    mododepago character varying(255),
+    numerocomprobante character varying(255),
+    total double precision,
+    afiliado integer
+);
+
+
+ALTER TABLE public.comprobante OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 81557)
+-- Name: comprobante_idcomprobante_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.comprobante_idcomprobante_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comprobante_idcomprobante_seq OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 81476)
+-- Name: comprobante_periodos_abonados; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.comprobante_periodos_abonados (
+    comprobante_idcomprobante integer NOT NULL,
+    periodos_abonados_idperiodopago integer NOT NULL
+);
+
+
+ALTER TABLE public.comprobante_periodos_abonados OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 100551)
+-- Name: enfermero; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.enfermero (
+    idenfermero integer NOT NULL,
+    apellido character varying(255),
+    matricula integer,
+    nombre character varying(255),
+    telefono character varying(255)
+);
+
+
+ALTER TABLE public.enfermero OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 81559)
+-- Name: enfermero_idenfermero_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.enfermero_idenfermero_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.enfermero_idenfermero_seq OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 100543)
+-- Name: medico; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.medico (
+    idmedico integer NOT NULL,
+    apellido character varying(255),
+    matricula integer,
+    nombre character varying(255),
+    telefono character varying(255)
+);
+
+
+ALTER TABLE public.medico OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 81561)
+-- Name: medico_idmedico_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.medico_idmedico_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.medico_idmedico_seq OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 102585)
+-- Name: obrasocial; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.obrasocial (
+    idobrasocial integer,
+    obrasocial character varying(255)
+);
+
+
+ALTER TABLE public.obrasocial OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 81563)
+-- Name: obrasocial_idobrasocial_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.obrasocial_idobrasocial_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.obrasocial_idobrasocial_seq OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 102588)
+-- Name: periodopago; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.periodopago (
+    idperiodopago integer,
+    mes integer,
+    anio integer
+);
+
+
+ALTER TABLE public.periodopago OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 81565)
+-- Name: periodopago_idperiodopago_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.periodopago_idperiodopago_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.periodopago_idperiodopago_seq OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 101717)
+-- Name: persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.persona (
+    idpersona integer NOT NULL,
+    apellidos character varying(255),
+    documento character varying(255),
+    domicilio character varying(255),
+    fechanacimiento date,
+    nombres character varying(255),
+    nroafiliado character varying(255),
+    nroorden integer,
+    telefono character varying(255),
+    obrasocial integer,
+    sangre integer,
+    tipodocumento integer
+);
+
+
+ALTER TABLE public.persona OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 101725)
+-- Name: persona_antecedente_medico_collection; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.persona_antecedente_medico_collection (
+    persona_idpersona integer NOT NULL,
+    antecedente_medico_collection_idantedecentemedico integer NOT NULL
+);
+
+
+ALTER TABLE public.persona_antecedente_medico_collection OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 81567)
+-- Name: persona_idpersona_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.persona_idpersona_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.persona_idpersona_seq OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 101728)
+-- Name: plan; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.plan (
+    idplan integer NOT NULL,
+    nombreplan character varying(255)
+);
+
+
+ALTER TABLE public.plan OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 81569)
+-- Name: plan_idplan_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.plan_idplan_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.plan_idplan_seq OWNER TO postgres;
+
+--
+-- TOC entry 195 (class 1259 OID 101733)
+-- Name: plan_lista_precios; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.plan_lista_precios (
+    plan_idplan integer NOT NULL,
+    listaprecios numeric,
+    lista_precios_key character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.plan_lista_precios OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 102576)
+-- Name: sangre; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.sangre (
+    idsangre integer,
+    grupo character varying(255),
+    factor character varying(255)
+);
+
+
+ALTER TABLE public.sangre OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 81571)
+-- Name: sangre_idsangre_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.sangre_idsangre_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sangre_idsangre_seq OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 102573)
+-- Name: tipodocumento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.tipodocumento (
+    idtipodocumento integer,
+    nombre character varying(255)
+);
+
+
+ALTER TABLE public.tipodocumento OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 81573)
+-- Name: tipodocumento_idtipodocumento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tipodocumento_idtipodocumento_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipodocumento_idtipodocumento_seq OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 81539)
+-- Name: visita; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.visita (
+    idvisita integer NOT NULL,
+    antecedentespatologicos character varying(255),
+    diagnosticopresuntivo character varying(255),
+    examenclinico character varying(255),
+    fechahoravisita timestamp without time zone,
+    frecuenciacardiaca integer,
+    medicacionhabitual character varying(255),
+    motivoconsulta character varying(255),
+    numerovisita integer,
+    observaciones character varying(255),
+    saturacionoxigeno integer,
+    temperatura real,
+    tesionarterial character varying(255),
+    tratamiento character varying(255),
+    idenfermero integer,
+    idmedico integer,
+    idpersona integer
+);
+
+
+ALTER TABLE public.visita OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 81575)
+-- Name: visita_idvisita_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.visita_idvisita_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.visita_idvisita_seq OWNER TO postgres;
+
+--
+-- TOC entry 2090 (class 0 OID 102582)
+-- Dependencies: 198
+-- Data for Name: afeccion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.afeccion (idafeccion, nombreafeccion) FROM stdin;
+1	Migraña Cronica
+2	Gripe
+3	Apendicitis
+4	Infección
+5	Infección Generalizada
+\.
+
+
+--
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: afeccion_idafeccion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.afeccion_idafeccion_seq', 1, false);
+
+
+--
+-- TOC entry 2081 (class 0 OID 101699)
+-- Dependencies: 189
+-- Data for Name: afiliado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.afiliado (idafiliado, activo, diadelmespagoacordado, fechaafiliacion, fechadebaja, numeroafiliado, idplan, idpersona) FROM stdin;
+10	t	15	2018-11-02	\N	999993	3	3
+46	f	15	2018-03-30	2018-11-06	190800	3	2
+12	t	15	2018-03-30	\N	190600	3	36
+13	t	15	2018-03-30	\N	190600	2	15
+\.
+
+
+--
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: afiliado_idafiliado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.afiliado_idafiliado_seq', 46, true);
+
+
+--
+-- TOC entry 2082 (class 0 OID 101704)
+-- Dependencies: 190
+-- Data for Name: afiliado_miembros; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.afiliado_miembros (afiliado_idafiliado, miembros_idpersona) FROM stdin;
+12	4
+\.
+
+
+--
+-- TOC entry 2083 (class 0 OID 101707)
+-- Dependencies: 191
+-- Data for Name: antecedentemedico; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.antecedentemedico (idantedecentemedico, observacion, idafeccion) FROM stdin;
+2	pa tras	2
+3	pa tras	2
+4	pa tras	2
+5	pa tras	2
+6	pa tras	2
+7	pa tras	2
+8	pa tras	2
+9	pa tras	2
+10	pa tras	2
+11	Cronica	2
+12	Cronica Tambien	4
+13	nerviosa	3
+14	Cronica	2
+15	Cronica Tambien	4
+16	nerviosa	3
+17	Cronica	2
+18	Cronica Tambien	4
+19	nerviosa	3
+20	Cronica	2
+21	Cronica Tambien	4
+22	nerviosa	3
+23	Cronica	2
+24	Cronica Tambien	4
+25	nerviosa	3
+26	Cronica	2
+27	Cronica Tambien	4
+28	nerviosa	3
+29	Cronica	2
+30	Cronica Tambien	4
+31	nerviosa	3
+32	Cronica	2
+33	Cronica Tambien	4
+34	nerviosa	3
+35	Cronica	2
+36	Cronica Tambien	4
+37	nerviosa	3
+38	pa tras	2
+39	pa tras	2
+40	pa tras	2
+41	pa tras	2
+42	pa tras	2
+43	pa tras	2
+44	pa tras	2
+45	pa tras	2
+46	pa tras	2
+47	pa tras	2
+48	pa tras	2
+49	pa tras	2
+50	pa tras	2
+51	pa tras	2
+52	pa tras	2
+53	pa tras	2
+54	pa tras	2
+55	pa tras	2
+56	pa tras	2
+57	pa tras	2
+58	pa tras	2
+59	pa tras	2
+60	pa tras	2
+61	pa tras	2
+62	pa tras	2
+63	pa tras	2
+\.
+
+
+--
+-- TOC entry 2104 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: antecedentemedico_idantecedentemedico_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.antecedentemedico_idantecedentemedico_seq', 63, true);
+
+
+--
+-- TOC entry 2063 (class 0 OID 81468)
+-- Dependencies: 171
+-- Data for Name: comprobante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.comprobante (idcomprobante, activo, fechacreacion, mododepago, numerocomprobante, total, afiliado) FROM stdin;
+2	t	2018-11-04	efectivo	3741-567891	350.5	13
+38	t	2018-11-06	efet papa	1234-567891	5000.64999999999964	12
+10	f	2018-11-02	tarjeta	9876-543211	500	10
+1	t	2018-11-04	efectivo	3741-567891	350.5	10
+\.
+
+
+--
+-- TOC entry 2105 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: comprobante_idcomprobante_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.comprobante_idcomprobante_seq', 38, true);
+
+
+--
+-- TOC entry 2064 (class 0 OID 81476)
+-- Dependencies: 172
+-- Data for Name: comprobante_periodos_abonados; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.comprobante_periodos_abonados (comprobante_idcomprobante, periodos_abonados_idperiodopago) FROM stdin;
+2	10
+2	11
+2	12
+38	10
+38	11
+38	12
+\.
+
+
+--
+-- TOC entry 2080 (class 0 OID 100551)
+-- Dependencies: 188
+-- Data for Name: enfermero; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.enfermero (idenfermero, apellido, matricula, nombre, telefono) FROM stdin;
+6	Ruitti	190202	Javier	123456789
+2	No	999993	Borrar	876543219
+19	Ruitti	190201	Javier	123456789
+\.
+
+
+--
+-- TOC entry 2106 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: enfermero_idenfermero_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.enfermero_idenfermero_seq', 19, true);
+
+
+--
+-- TOC entry 2079 (class 0 OID 100543)
+-- Dependencies: 187
+-- Data for Name: medico; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.medico (idmedico, apellido, matricula, nombre, telefono) FROM stdin;
+1	Paez Yaneez	192035	Martin	987654321
+2	Torres	156651	German	987654321
+24	Vega	192503	Romina	123456789
+\.
+
+
+--
+-- TOC entry 2107 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: medico_idmedico_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.medico_idmedico_seq', 24, true);
+
+
+--
+-- TOC entry 2091 (class 0 OID 102585)
+-- Dependencies: 199
+-- Data for Name: obrasocial; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.obrasocial (idobrasocial, obrasocial) FROM stdin;
+1	OSFATUN
+2	OSDE
+3	APOS
+4	PAMI
+5	SANCOR SALUD
+38	Nueva Obra Social
+\.
+
+
+--
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: obrasocial_idobrasocial_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.obrasocial_idobrasocial_seq', 38, true);
+
+
+--
+-- TOC entry 2092 (class 0 OID 102588)
+-- Dependencies: 200
+-- Data for Name: periodopago; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.periodopago (idperiodopago, mes, anio) FROM stdin;
+1	1	2018
+2	2	2018
+3	3	2018
+4	4	2018
+5	5	2018
+6	6	2018
+7	7	2018
+8	8	2018
+9	9	2018
+10	10	2018
+11	11	2018
+12	12	2018
+13	1	2017
+14	2	2017
+15	3	2017
+\.
+
+
+--
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: periodopago_idperiodopago_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.periodopago_idperiodopago_seq', 1, false);
+
+
+--
+-- TOC entry 2084 (class 0 OID 101717)
+-- Dependencies: 192
+-- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.persona (idpersona, apellidos, documento, domicilio, fechanacimiento, nombres, nroafiliado, nroorden, telefono, obrasocial, sangre, tipodocumento) FROM stdin;
+1	Power	12345678	Av. Siempre Viva 400	1999-04-30	Max	191001	0	11111	2	2	2
+36	Titular	87654321	9 de Julio 530	2000-03-30	Persona	190600	0	9999	2	2	1
+3	visita	98765432	en su casa	1993-05-31	no borrar	999993	0	s7	2	2	1
+15	Titular	87654321	9 de Julio 530	2000-03-30	Persona	190700	0	9999	2	2	1
+2	Simpson	11111111	Av. Siempre Viva 900	2000-03-30	Homero		0	9999	1	1	1
+39	Nueva	37415281	Av. Siempre Viva 900	2000-03-30	Persona	190001	1	9999	1	1	1
+4	Nuevo	16030897	Afiliado	1988-04-05	no borrar	190600	1	s9	2	2	1
+\.
+
+
+--
+-- TOC entry 2085 (class 0 OID 101725)
+-- Dependencies: 193
+-- Data for Name: persona_antecedente_medico_collection; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.persona_antecedente_medico_collection (persona_idpersona, antecedente_medico_collection_idantedecentemedico) FROM stdin;
+1	63
+\.
+
+
+--
+-- TOC entry 2110 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: persona_idpersona_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.persona_idpersona_seq', 39, true);
+
+
+--
+-- TOC entry 2086 (class 0 OID 101728)
+-- Dependencies: 194
+-- Data for Name: plan; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.plan (idplan, nombreplan) FROM stdin;
+3	Nuevo Plan
+2	Nuevo Plan Modificado
+27	Nuevo Plan Creado
+\.
+
+
+--
+-- TOC entry 2111 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: plan_idplan_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.plan_idplan_seq', 27, true);
+
+
+--
+-- TOC entry 2087 (class 0 OID 101733)
+-- Dependencies: 195
+-- Data for Name: plan_lista_precios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.plan_lista_precios (plan_idplan, listaprecios, lista_precios_key) FROM stdin;
+2	400	1
+2	500	2
+2	600	3
+2	700	4
+3	380	1
+3	480	2
+3	550	3
+3	600	4
+27	380	1
+27	480	2
+27	550	3
+27	600	4
+\.
+
+
+--
+-- TOC entry 2089 (class 0 OID 102576)
+-- Dependencies: 197
+-- Data for Name: sangre; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sangre (idsangre, grupo, factor) FROM stdin;
+1	A	RH+
+2	A	RH-
+3	B	RH+
+4	B	RH-
+5	0	RH+
+6	0	RH-
+7	AB	RH+
+8	AB	RH-
+\.
+
+
+--
+-- TOC entry 2112 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: sangre_idsangre_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.sangre_idsangre_seq', 1, false);
+
+
+--
+-- TOC entry 2088 (class 0 OID 102573)
+-- Dependencies: 196
+-- Data for Name: tipodocumento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tipodocumento (idtipodocumento, nombre) FROM stdin;
+1	DNI
+2	Libreta Civica
+3	Pasaporte
+4	Libreta de Enrolamiento
+\.
+
+
+--
+-- TOC entry 2113 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: tipodocumento_idtipodocumento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipodocumento_idtipodocumento_seq', 1, false);
+
+
+--
+-- TOC entry 2065 (class 0 OID 81539)
+-- Dependencies: 173
+-- Data for Name: visita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.visita (idvisita, antecedentespatologicos, diagnosticopresuntivo, examenclinico, fechahoravisita, frecuenciacardiaca, medicacionhabitual, motivoconsulta, numerovisita, observaciones, saturacionoxigeno, temperatura, tesionarterial, tratamiento, idenfermero, idmedico, idpersona) FROM stdin;
+41	Hipertension	Estres	Normal	2018-11-06 12:38:04.311	2		Presion Alta	10		2	36	14	Vacaciones	2	2	3
+\.
+
+
+--
+-- TOC entry 2114 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: visita_idvisita_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.visita_idvisita_seq', 41, true);
+
+
+--
+-- TOC entry 1931 (class 2606 OID 101703)
+-- Name: afiliado_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.afiliado
+    ADD CONSTRAINT afiliado_pkey PRIMARY KEY (idafiliado);
+
+
+--
+-- TOC entry 1935 (class 2606 OID 101711)
+-- Name: antecedentemedico_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.antecedentemedico
+    ADD CONSTRAINT antecedentemedico_pkey PRIMARY KEY (idantedecentemedico);
+
+
+--
+-- TOC entry 1923 (class 2606 OID 81475)
+-- Name: comprobante_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.comprobante
+    ADD CONSTRAINT comprobante_pkey PRIMARY KEY (idcomprobante);
+
+
+--
+-- TOC entry 1929 (class 2606 OID 100558)
+-- Name: enfermero_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.enfermero
+    ADD CONSTRAINT enfermero_pkey PRIMARY KEY (idenfermero);
+
+
+--
+-- TOC entry 1927 (class 2606 OID 100550)
+-- Name: medico_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.medico
+    ADD CONSTRAINT medico_pkey PRIMARY KEY (idmedico);
+
+
+--
+-- TOC entry 1937 (class 2606 OID 101724)
+-- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.persona
+    ADD CONSTRAINT persona_pkey PRIMARY KEY (idpersona);
+
+
+--
+-- TOC entry 1943 (class 2606 OID 101740)
+-- Name: plan_lista_precios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.plan_lista_precios
+    ADD CONSTRAINT plan_lista_precios_pkey PRIMARY KEY (plan_idplan, lista_precios_key);
+
+
+--
+-- TOC entry 1941 (class 2606 OID 101732)
+-- Name: plan_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.plan
+    ADD CONSTRAINT plan_pkey PRIMARY KEY (idplan);
+
+
+--
+-- TOC entry 1939 (class 2606 OID 101760)
+-- Name: uk_mmluino1qnlora1g3tmwn1mhw; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.persona_antecedente_medico_collection
+    ADD CONSTRAINT uk_mmluino1qnlora1g3tmwn1mhw UNIQUE (antecedente_medico_collection_idantedecentemedico);
+
+
+--
+-- TOC entry 1933 (class 2606 OID 101758)
+-- Name: uk_rkpgp9at8w04m76coqdc4ntq4; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.afiliado_miembros
+    ADD CONSTRAINT uk_rkpgp9at8w04m76coqdc4ntq4 UNIQUE (miembros_idpersona);
+
+
+--
+-- TOC entry 1925 (class 2606 OID 81546)
+-- Name: visita_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.visita
+    ADD CONSTRAINT visita_pkey PRIMARY KEY (idvisita);
+
+
+--
+-- TOC entry 1951 (class 2606 OID 101771)
+-- Name: fk2521iifrwajq04bygv92l9qak; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.afiliado_miembros
+    ADD CONSTRAINT fk2521iifrwajq04bygv92l9qak FOREIGN KEY (miembros_idpersona) REFERENCES public.persona(idpersona);
+
+
+--
+-- TOC entry 1955 (class 2606 OID 101811)
+-- Name: fk2lyxvkqsbyubh0do6av94corn; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.plan_lista_precios
+    ADD CONSTRAINT fk2lyxvkqsbyubh0do6av94corn FOREIGN KEY (plan_idplan) REFERENCES public.plan(idplan);
+
+
+--
+-- TOC entry 1946 (class 2606 OID 100623)
+-- Name: fk92e6b4oxkwuuswicm74ab2ike; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visita
+    ADD CONSTRAINT fk92e6b4oxkwuuswicm74ab2ike FOREIGN KEY (idenfermero) REFERENCES public.enfermero(idenfermero);
+
+
+--
+-- TOC entry 1947 (class 2606 OID 100628)
+-- Name: fk99r3fod8ioooqsdbhae2uausv; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visita
+    ADD CONSTRAINT fk99r3fod8ioooqsdbhae2uausv FOREIGN KEY (idmedico) REFERENCES public.medico(idmedico);
+
+
+--
+-- TOC entry 1944 (class 2606 OID 101816)
+-- Name: fkc27b8r1syjkdfnuyrc7489yq7; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comprobante
+    ADD CONSTRAINT fkc27b8r1syjkdfnuyrc7489yq7 FOREIGN KEY (afiliado) REFERENCES public.afiliado(idafiliado);
+
+
+--
+-- TOC entry 1953 (class 2606 OID 101801)
+-- Name: fkcfxlfh1gqjex7cic21h8dew2u; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.persona_antecedente_medico_collection
+    ADD CONSTRAINT fkcfxlfh1gqjex7cic21h8dew2u FOREIGN KEY (antecedente_medico_collection_idantedecentemedico) REFERENCES public.antecedentemedico(idantedecentemedico);
+
+
+--
+-- TOC entry 1948 (class 2606 OID 101821)
+-- Name: fkff2o9lte1vyvxjxghul2nl1db; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visita
+    ADD CONSTRAINT fkff2o9lte1vyvxjxghul2nl1db FOREIGN KEY (idpersona) REFERENCES public.persona(idpersona);
+
+
+--
+-- TOC entry 1954 (class 2606 OID 101806)
+-- Name: fkfnj2lqm09pb1hwwo0afejhlyc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.persona_antecedente_medico_collection
+    ADD CONSTRAINT fkfnj2lqm09pb1hwwo0afejhlyc FOREIGN KEY (persona_idpersona) REFERENCES public.persona(idpersona);
+
+
+--
+-- TOC entry 1950 (class 2606 OID 101766)
+-- Name: fkk860x7w4mb7u2to0rq3iyfmir; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.afiliado
+    ADD CONSTRAINT fkk860x7w4mb7u2to0rq3iyfmir FOREIGN KEY (idpersona) REFERENCES public.persona(idpersona);
+
+
+--
+-- TOC entry 1945 (class 2606 OID 81612)
+-- Name: fkokv7fdfxd3mcakb444dgrdts3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comprobante_periodos_abonados
+    ADD CONSTRAINT fkokv7fdfxd3mcakb444dgrdts3 FOREIGN KEY (comprobante_idcomprobante) REFERENCES public.comprobante(idcomprobante);
+
+
+--
+-- TOC entry 1949 (class 2606 OID 101761)
+-- Name: fkqlmkgvnlqposw5nffurhnfdnr; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.afiliado
+    ADD CONSTRAINT fkqlmkgvnlqposw5nffurhnfdnr FOREIGN KEY (idplan) REFERENCES public.plan(idplan);
+
+
+--
+-- TOC entry 1952 (class 2606 OID 101776)
+-- Name: fkrxasd9iw0v74msljaun7ocxrf; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.afiliado_miembros
+    ADD CONSTRAINT fkrxasd9iw0v74msljaun7ocxrf FOREIGN KEY (afiliado_idafiliado) REFERENCES public.afiliado(idafiliado);
+
+
+--
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-11-06 14:58:58 -03
+
+--
+-- PostgreSQL database dump complete
+--
+

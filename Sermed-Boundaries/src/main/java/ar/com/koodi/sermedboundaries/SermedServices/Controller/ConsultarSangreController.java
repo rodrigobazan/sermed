@@ -47,7 +47,7 @@ public class ConsultarSangreController {
         return ResponseEntity.status(HttpStatus.OK).body(sangreDTOS);
     }
 
-    @RequestMapping(value = "/sangre/factor/grupo/{factor}/{grupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sangre/factor/{factor}/grupo/{grupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> consultarSangrePorFactor(@PathVariable("factor")String factor, @PathVariable("grupo")String grupo){
         try {

@@ -30,7 +30,7 @@ public class GenerarHistoriaClinicaPersonaIntegrationTest {
 	public void generarHistoriaClinicaPersona_ExistePersona_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/historiaclinica/persona/numeroafiliado/190001/numeroorden/0");
+		HttpUriRequest request = new HttpGet(url + "/sermed/historiaclinica/persona/numeroafiliado/999993/numeroorden/0");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -50,7 +50,7 @@ public class GenerarHistoriaClinicaPersonaIntegrationTest {
 	public void generarHistoriaClinicaPersona_ExistenDatos_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/historiaclinica/persona/numeroafiliado/130000/numeroorden/0");
+		HttpUriRequest request = new HttpGet(url + "/sermed/historiaclinica/persona/numeroafiliado/999993/numeroorden/0");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());

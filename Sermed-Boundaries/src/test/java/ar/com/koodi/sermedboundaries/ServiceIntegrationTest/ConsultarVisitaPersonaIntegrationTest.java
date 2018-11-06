@@ -22,6 +22,8 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import ModeloApi.VisitaDTO;
 
+import java.time.LocalDate;
+
 public class ConsultarVisitaPersonaIntegrationTest {
 
 	private String url ="http://localhost:8080";
@@ -30,7 +32,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasDePersona_ExistenVisitas_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190000/0");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/999993/0");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -50,7 +52,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasDePersona_NoExistenVisitas_Devuelve204() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/130000/0");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190700/0");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
@@ -60,7 +62,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasDePersona_ExistenVisitas_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190000/0");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/999993/0");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());
@@ -76,7 +78,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasPersonaPorFechas_ExistenVisitas_Devuelve200() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190000/0/fechadesde/2018-09-01/fechahasta/2018-10-30");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/999993/0/fechadesde/2018-09-01/fechahasta/"+ LocalDate.now());
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
@@ -86,7 +88,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasPersonaPorFechas_NoExistenVisitas_Devuelve204() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190000/0/fechadesde/2018-10-01/fechahasta/2018-10-30");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/999993/0/fechadesde/2018-10-01/fechahasta/2018-10-30");
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));
@@ -106,7 +108,7 @@ public class ConsultarVisitaPersonaIntegrationTest {
 	public void consultarVisitasDePersonaPorFechas_ExistenVisitas_DevuelveJsonCorrecto() throws Exception {
 		String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
 		Header header = new BasicHeader("Authorization", "Bearer " + token);
-		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/190000/0/fechadesde/2018-09-01/fechahasta/2018-10-30");
+		HttpUriRequest request = new HttpGet(url + "/sermed/visitas/persona/999993/0/fechadesde/2018-09-01/fechahasta/"+ LocalDate.now());
 		request.setHeader(header);
 		HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 		String response = EntityUtils.toString(httpResponse.getEntity());

@@ -144,8 +144,8 @@ public class Afiliado {
         return this.titular.mostrarDomicilio();
     }
 
-    public boolean vencioPlazoPago(int diaDelMes) {
-        return (this.diaDelMesPagoAcordado + 7) < diaDelMes;
+    public boolean vencioPlazoPago(int diaDelMes, int anio) {
+        return (this.diaDelMesPagoAcordado + 7) < diaDelMes && anio == LocalDate.now().getYear();
     }
 
 	public LocalDate getFechaDeBaja() {

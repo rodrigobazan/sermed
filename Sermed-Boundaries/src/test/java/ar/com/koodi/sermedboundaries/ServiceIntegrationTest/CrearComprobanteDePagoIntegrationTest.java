@@ -40,6 +40,7 @@ public class CrearComprobanteDePagoIntegrationTest {
         Header header = new BasicHeader("Authorization", "Bearer "+token);
         HttpPost post = new HttpPost(url+"/sermed/comprobante/nuevo");
         StringEntity se = new StringEntity(comprobante.toString());
+        System.out.println(comprobante.toString());
         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         post.setEntity(se);
         post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");

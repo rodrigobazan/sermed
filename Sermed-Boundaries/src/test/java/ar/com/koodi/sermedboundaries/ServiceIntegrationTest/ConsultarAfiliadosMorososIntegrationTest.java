@@ -32,7 +32,7 @@ public class ConsultarAfiliadosMorososIntegrationTest {
     public void mostrarAfiliadosMorosos_NoExistenMorosos_Devuelve204() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("usuario", "123456");
         Header header = new BasicHeader("Authorization", "Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/afiliado/morosos/"+ LocalDate.of(2018,1,12));
+        HttpUriRequest request = new HttpGet(url+"/sermed/afiliado/morosos/"+ LocalDate.of(2019,1,12));
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NO_CONTENT));

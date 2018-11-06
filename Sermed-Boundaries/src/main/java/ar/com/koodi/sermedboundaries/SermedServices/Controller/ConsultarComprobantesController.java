@@ -45,9 +45,9 @@ public class ConsultarComprobantesController {
 
     @RequestMapping(value = "/comprobantes/fechas/{desde}/{hasta}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> consultarComprobantesPorFechas(@PathVariable("desde")LocalDate desde, @PathVariable("hasta")LocalDate hasta) throws FechaIncorrectaException {
+    public ResponseEntity<?> consultarComprobantesPorFechas(@PathVariable("desde")String desde, @PathVariable("hasta")String hasta) throws FechaIncorrectaException {
         Collection<ComprobanteDTO> comprobanteDTOS = new ArrayList<>();
-        consultarComprobantesAdapter.consultarComprobantesPorFechas(desde,hasta).forEach(comprobanteDTO -> comprobanteDTOS.add(comprobanteDTO));
+        consultarComprobantesAdapter.consultarComprobantesPorFechas(LocalDate.parse(desde),LocalDate.parse(hasta)).forEach(comprobanteDTO -> comprobanteDTOS.add(comprobanteDTO));
         if (comprobanteDTOS.isEmpty())return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return ResponseEntity.status(HttpStatus.OK).body(comprobanteDTOS);
     }

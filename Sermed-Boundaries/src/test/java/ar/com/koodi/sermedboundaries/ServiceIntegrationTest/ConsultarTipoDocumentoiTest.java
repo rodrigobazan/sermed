@@ -36,7 +36,7 @@ public class ConsultarTipoDocumentoiTest {
     public void consultarTipoDocumento_NoExistenTipoDocumento_Devuelve404() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("admin","123456");
         Header header = new BasicHeader("Authorization","Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumento");
+        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumentoasd");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
@@ -69,7 +69,7 @@ public class ConsultarTipoDocumentoiTest {
     public void consultarTipoDocumentoPorNombre_NoExistenDatos_Devuelve404() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("admin","123456");
         Header header = new BasicHeader("Authorization","Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumento/nombre/dni");
+        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumento/nombre/dni/ewre");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
@@ -101,7 +101,7 @@ public class ConsultarTipoDocumentoiTest {
     public void consultarTipoDocumentoPorNombreUnico_NoExistenTipoDocumento_Devuelve404() throws Exception {
         String token = TokenAuthentication.obtainAccessToken("admin","123456");
         Header header = new BasicHeader("Authorization","Bearer "+token);
-        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumento/nombreunico/dni");
+        HttpUriRequest request = new HttpGet(url+"/sermed/tipodocumento/nombreunico/dni/asda");
         request.setHeader(header);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
