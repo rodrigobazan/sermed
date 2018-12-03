@@ -17,7 +17,7 @@ import Excepciones.PersonaNoExisteException;
 import ModeloApi.PersonaDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarPersonaController {
 	
 	private ConsultarPersonaAdapter consultarPersonaAdapter;

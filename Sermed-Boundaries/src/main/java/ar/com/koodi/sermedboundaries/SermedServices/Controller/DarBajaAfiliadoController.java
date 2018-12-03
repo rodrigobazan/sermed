@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/sermed/afiliado")
+@RequestMapping("/afiliado")
 public class DarBajaAfiliadoController {
 
     private DarBajaAfiliadoAdapter darBajaAfiliadoAdapter;

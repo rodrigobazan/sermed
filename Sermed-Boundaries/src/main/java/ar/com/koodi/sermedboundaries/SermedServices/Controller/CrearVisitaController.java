@@ -18,7 +18,7 @@ import Excepciones.PersonaIncompletaException;
 import ModeloApi.VisitaDTO;
 
 @RestController
-@RequestMapping("/sermed/visita")
+@RequestMapping("/visita")
 public class CrearVisitaController {
 
 	private CrearVisitaAdapter crearVisitaAdapter;

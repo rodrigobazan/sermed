@@ -16,7 +16,7 @@ import Adaptadores.ConsultarPeriodoPagoAdapter;
 import ModeloApi.PeriodoPagoDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarPeriodoPagoController {
 
 	private ConsultarPeriodoPagoAdapter consultarPeriodoPagoAdapter;

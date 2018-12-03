@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/sermed/enfermero")
+@RequestMapping("/enfermero")
 public class CrearEnfermeroController {
 
     private final CrearEnfermeroAdapter crearEnfermeroAdapter;

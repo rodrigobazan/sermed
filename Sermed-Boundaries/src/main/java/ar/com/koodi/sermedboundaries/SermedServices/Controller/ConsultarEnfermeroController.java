@@ -17,7 +17,7 @@ import Excepciones.EnfermeroNoExisteException;
 import ModeloApi.EnfermeroDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarEnfermeroController {
 	
 	private final ConsultarEnfermeroAdapter consultarEnfermeroAdapter;

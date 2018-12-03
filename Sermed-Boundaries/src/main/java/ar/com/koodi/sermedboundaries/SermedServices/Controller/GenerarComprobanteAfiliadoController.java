@@ -14,7 +14,7 @@ import Excepciones.ComprobanteNoExisteException;
 import ModeloApi.ComprobanteAfiliadoReporteDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class GenerarComprobanteAfiliadoController {
 
 	private GenerarComprobanteAfiliadoAdapter generarComprobanteAfiliadoAdapter;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/sermed/obraSocial")
+@RequestMapping("/obraSocial")
 public class ModificarObraSocialController {
 
     private final ModificarObraSocialAdapter modificarObraSocialAdapter;

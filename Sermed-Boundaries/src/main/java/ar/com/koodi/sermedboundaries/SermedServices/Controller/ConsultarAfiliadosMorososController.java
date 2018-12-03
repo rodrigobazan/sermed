@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/sermed/afiliado/")
+@RequestMapping("/afiliado/")
 public class ConsultarAfiliadosMorososController {
 
     private ConsultarAfiliadosMorososAdapter consultarAfiliadosMorososAdapter;

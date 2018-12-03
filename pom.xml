@@ -12,7 +12,6 @@
     <modules>
         <module>Sermed-Core</module>
         <module>Sermed-Adapter</module>
-        <module>Sermed-Services</module>
         <module>Sermed-Boundaries</module>
     </modules>
 

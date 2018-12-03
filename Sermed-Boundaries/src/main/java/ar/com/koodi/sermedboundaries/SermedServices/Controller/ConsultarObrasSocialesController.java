@@ -17,7 +17,7 @@ import Excepciones.ObraSocialNoExisteException;
 import ModeloApi.ObraSocialDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarObrasSocialesController {
 
 	private ConsultarObrasSocialesAdapter consultarObrasSocialesAdapter;

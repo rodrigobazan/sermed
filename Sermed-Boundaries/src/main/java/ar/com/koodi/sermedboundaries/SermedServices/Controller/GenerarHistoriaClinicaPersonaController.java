@@ -14,7 +14,7 @@ import Excepciones.PersonaNoExisteException;
 import ModeloApi.HistoriaClinicaReporteDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class GenerarHistoriaClinicaPersonaController {
 
 	private GenerarHistoriaClinicaPersonaAdapter generarHistoriaClinicaPersonaAdapter;

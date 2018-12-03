@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/sermed/persona")
+@RequestMapping("/persona")
 public class ModificarPersonaController {
 
     private final ModificarPersonaAdapter modificarPersonaAdapter;

@@ -14,7 +14,7 @@ import Excepciones.AfiliadoNoExisteException;
 import ModeloApi.FichaAfiliadoDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class GenerarFichaAfiliadoController {
 
 	private GenerarFichaAfiliadoAdapter generarFichaAfiliadoAdapter;

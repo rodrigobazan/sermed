@@ -18,7 +18,7 @@ import Excepciones.PersonaIncompletaException;
 import ModeloApi.PersonaDTO;
 
 @RestController
-@RequestMapping("/sermed/persona")
+@RequestMapping("/persona")
 public class CrearPersonaController {
 
 	private CrearPersonaAdapter crearPersonaAdapter;

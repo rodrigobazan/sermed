@@ -17,7 +17,7 @@ import Excepciones.AfiliadoNoExisteException;
 import ModeloApi.AfiliadoDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarAfiliadoController {
 
 	private ConsultarAfiliadoAdapter consultarAfiliadoAdapter;

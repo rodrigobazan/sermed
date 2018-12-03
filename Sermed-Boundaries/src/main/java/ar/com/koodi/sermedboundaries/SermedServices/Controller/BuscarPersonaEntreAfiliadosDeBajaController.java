@@ -17,7 +17,7 @@ import Excepciones.PersonaIncompletaException;
 import ModeloApi.PersonaDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class BuscarPersonaEntreAfiliadosDeBajaController {
 
 	private BuscarPersonaEntreAfiliadosDeBajaAdapter buscarPersonaEntreAfiliadosDeBajaAdapter;

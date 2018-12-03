@@ -19,7 +19,7 @@ import Excepciones.VisitaNoExisteException;
 import ModeloApi.VisitaDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarVisitaController {
 
 	private ConsultarVisitaAdapter consultarVisitaAdapter;

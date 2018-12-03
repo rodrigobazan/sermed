@@ -28,7 +28,7 @@ import ModeloApi.AfiliadoDTO;
 import ModeloApi.ComprobanteDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarComprobantDeAfiliadoController {
 
 	private ConsultarComprobanteDeAfiliadoAdapter consultarComprobanteDeAfiliadoAdapter;

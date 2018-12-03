@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarPlanController {
 
     private ConsultarPlanAdapter consultarPlanAdapter;

@@ -24,7 +24,7 @@ import ModeloApi.PersonaDTO;
 import ModeloApi.VisitaDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class ConsultarVisitaDePersonaController {
 
 	private ConsultarPersonaAdapter consultarPersonaAdapter;

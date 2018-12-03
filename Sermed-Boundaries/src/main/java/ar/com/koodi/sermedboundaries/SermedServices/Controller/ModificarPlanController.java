@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/sermed/plan")
+@RequestMapping("/plan")
 public class ModificarPlanController {
 
     private final ModificarPlanAdapter modificarPlanAdapter;

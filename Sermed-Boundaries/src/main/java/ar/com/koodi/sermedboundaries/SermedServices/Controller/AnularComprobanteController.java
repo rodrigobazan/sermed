@@ -22,7 +22,7 @@ import Excepciones.PlanIncompletoException;
 import ModeloApi.ComprobanteDTO;
 
 @RestController
-@RequestMapping("/sermed/")
+@RequestMapping("/")
 public class AnularComprobanteController {
 
 	private AnularComprobanteAdapter anularComprobanteAdapter;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/sermed/comprobante")
+@RequestMapping("/comprobante")
 public class CrearComprobanteDePagoController {
 
     private final CrearComprobantePagoAdapter crearComprobantePagoAdapter;
